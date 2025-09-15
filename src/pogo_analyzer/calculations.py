@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from math import floor, sqrt
-from typing import Dict, Tuple
+from typing import Dict, Optional, Tuple
 
 from .models import PokemonSpecies, Move
 from . import data_loader
@@ -95,9 +95,15 @@ def maximize_stat_product(
 
 
 def pvp_recommendation(
-    species: PokemonSpecies, ivs: Tuple[int, int, int]
+    species: PokemonSpecies,
+    ivs: Tuple[int, int, int],
+    *,
+    league_caps: Optional[Dict[str, int]] = None,
 ) -> Dict[str, Dict[str, float]]:
-    rec = {}
-    for league, cap in data_loader.LEAGUE_CP_CAPS.items():
-        rec[league] = maximize_stat_product(species, ivs, cap)
+    caps = league_caps or data_loader.LEAGUE_CP_CAPS
+    rec: Dict[str, Dict[str, float]] = {}
+    for league, cap in caps.items():
+        league_rec = maximize_stat_product(species, ivs, cap)
+        league_rec["cap"] = cap
+        rec[league] = league_rec
     return rec

@@ -149,11 +149,46 @@ def main() -> None:
         print(json.dumps(result, indent=2))
     else:
         print(f"{result['name']} ({result['form']}) - CP {result['cp']}")
+        event_modifiers = result.get("event_modifiers", {})
+        active_events = event_modifiers.get("active_events", [])
+        if active_events:
+            print("Active modifiers: " + ", ".join(active_events))
+
+        move_override = (
+            event_modifiers.get("moves", {})
+            .get(result["name"], {})
+            .get(result["form"])
+        )
+        if move_override:
+            fast_moves = ", ".join(move_override.get("fast", [])) or "—"
+            charged_moves = ", ".join(move_override.get("charged", [])) or "—"
+            event_name = move_override.get("event")
+            if event_name:
+                print(
+                    f"Moves adjusted by {event_name}: fast {fast_moves}; "
+                    f"charged {charged_moves}"
+                )
+            else:
+                print(
+                    f"Moves adjusted for event: fast {fast_moves}; "
+                    f"charged {charged_moves}"
+                )
+
+        cp_overrides = event_modifiers.get("cp_caps", {})
         for league, data in result["pvp"].items():
-            print(
+            line = (
                 f"{league.title()} League: level {data['level']}, CP {data['cp']}, "
                 f"XL required: {data['requires_xl']}"
             )
+            override = cp_overrides.get(league)
+            if isinstance(override, dict) and override.get("value") is not None:
+                line += f" [Event cap {override['value']}"
+                if override.get("event"):
+                    line += f" ({override['event']})"
+                line += "]"
+            elif override:
+                line += f" [Event cap {override}]"
+            print(line)
 
 
 if __name__ == "__main__":  # pragma: no cover
