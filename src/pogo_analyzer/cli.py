@@ -5,7 +5,7 @@ import argparse
 import json
 from typing import Tuple
 
-from . import data_loader
+from . import data_loader, social
 from .analysis import analyze_pokemon
 from .team_builder import Roster
 
@@ -59,6 +59,28 @@ def build_parser() -> argparse.ArgumentParser:
     )
     recommend_parser.add_argument("--output", choices=["text", "json"], default="text")
 
+    leaderboard_parser = subparsers.add_parser(
+        "leaderboard", help="View or submit stored raid scores"
+    )
+    leaderboard_parser.add_argument(
+        "--login", metavar="USERNAME", help="Authenticate for storing scores"
+    )
+    leaderboard_parser.add_argument(
+        "--logout", action="store_true", help="Clear the saved login session"
+    )
+    leaderboard_parser.add_argument(
+        "--submit", type=float, metavar="SCORE", help="Submit a score to the leaderboard"
+    )
+    leaderboard_parser.add_argument(
+        "--label", help="Optional label describing the score entry"
+    )
+    leaderboard_parser.add_argument(
+        "--details", help="Additional context to store with the score"
+    )
+    leaderboard_parser.add_argument(
+        "--output", choices=["text", "json"], default="text"
+    )
+
     return parser
 
 
@@ -110,6 +132,53 @@ def main() -> None:
                     f"stat product {league_data['stat_product']:.0f}"
                 )
             return
+
+    if args.command == "leaderboard":
+        if args.logout:
+            social.logout()
+            print("Cleared saved login session.")
+        logged_in = None
+        if args.login:
+            try:
+                logged_in = social.login(args.login)
+            except ValueError as exc:
+                parser.error(str(exc))
+            print(f"Logged in as {logged_in}.")
+        if args.submit is not None:
+            try:
+                entry = social.record_score(
+                    args.submit,
+                    label=args.label,
+                    details=args.details,
+                )
+            except ValueError as exc:
+                parser.error(str(exc))
+            if args.output == "json":
+                print(json.dumps(entry, indent=2))
+            else:
+                label_text = f" [{entry['label']}]" if entry.get("label") else ""
+                detail_text = f" – {entry['details']}" if entry.get("details") else ""
+                print(
+                    f"Recorded {entry['score']:.2f} for {entry['user']}{label_text}{detail_text}"
+                )
+            return
+        leaderboard = social.load_leaderboard()
+        if args.output == "json":
+            print(json.dumps(leaderboard, indent=2))
+        else:
+            if not leaderboard:
+                print("Leaderboard is empty.")
+            else:
+                for idx, entry in enumerate(leaderboard, 1):
+                    label_text = f" [{entry['label']}]" if entry.get("label") else ""
+                    detail_text = f" – {entry['details']}" if entry.get("details") else ""
+                    print(
+                        f"{idx}. {entry['user']} – {entry['score']:.2f}{label_text}{detail_text}"
+                    )
+            active_user = social.get_current_user()
+            if active_user:
+                print(f"Logged in as: {active_user}")
+        return
 
     if args.screenshot:
         from .vision import scan_screenshot

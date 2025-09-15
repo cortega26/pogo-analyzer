@@ -13,13 +13,26 @@ Outputs:
 - Console preview (head of table)
 - CSV at ./raid_scoreboard.csv with full data
 - Excel at ./raid_scoreboard.xlsx with full data
+- JSON + optional PNG share artifacts for quick posting
 
 Notes:
 - This is a guide heuristic, not a simulator. Use it to set priorities quickly.
 """
 
-import pandas as pd
+from __future__ import annotations
+
+import base64
+import importlib.util
+import json
+from io import BytesIO
 from pathlib import Path
+from typing import Any, Dict, List
+from urllib.parse import quote_plus
+
+import pandas as pd
+
+
+HAS_MATPLOTLIB = importlib.util.find_spec("matplotlib") is not None
 
 
 def iv_bonus(a: int, d: int, s: int) -> float:
@@ -291,6 +304,124 @@ def add_priority_tier(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
+def _escape_markdown_cell(value: str) -> str:
+    return value.replace("|", r"\|").replace("\n", " ")
+
+
+def _build_markdown_table(entries: List[Dict[str, Any]]) -> str:
+    header = "| Rank | Pokémon | Final Form | Score | Tier |"
+    separator = "| ---: | :------ | :--------- | ----: | :--- |"
+    rows = [header, separator]
+    for idx, entry in enumerate(entries, 1):
+        name = _escape_markdown_cell(entry["name"])
+        form = _escape_markdown_cell(entry.get("form", ""))
+        tier = _escape_markdown_cell(entry.get("tier", ""))
+        rows.append(
+            f"| {idx} | {name} | {form or '—'} | {entry['score']:.1f} | {tier or '—'} |"
+        )
+    return "\n".join(rows)
+
+
+def _build_chart_url(entries: List[Dict[str, Any]]) -> str:
+    labels = [entry["name"] for entry in entries]
+    scores = [entry["score"] for entry in entries]
+    height = max(240, 80 * len(labels))
+    chart_config = {
+        "type": "bar",
+        "data": {
+            "labels": labels,
+            "datasets": [
+                {
+                    "label": "Raid Score",
+                    "data": scores,
+                    "backgroundColor": "#2563EB",
+                    "borderRadius": 6,
+                }
+            ],
+        },
+        "options": {
+            "indexAxis": "y",
+            "plugins": {"legend": {"display": False}},
+            "scales": {
+                "x": {"min": 0, "max": 100},
+                "y": {"ticks": {"autoSkip": False}},
+            },
+        },
+    }
+    payload = json.dumps(chart_config, separators=(",", ":"))
+    return (
+        f"https://quickchart.io/chart?width=720&height={height}&backgroundColor=white&c="
+        f"{quote_plus(payload)}"
+    )
+
+
+def _build_data_url(markdown: str) -> str:
+    encoded = base64.b64encode(markdown.encode("utf-8")).decode("ascii")
+    return f"data:text/markdown;base64,{encoded}"
+
+
+def _render_bar_chart(entries: List[Dict[str, Any]]) -> bytes | None:
+    if not HAS_MATPLOTLIB:
+        return None
+    from matplotlib import pyplot as plt  # type: ignore[import]
+
+    labels = [entry["name"] for entry in entries]
+    scores = [entry["score"] for entry in entries]
+    fig_height = max(3.5, 0.6 * len(labels) + 1.0)
+    fig, ax = plt.subplots(figsize=(8, fig_height))
+    y_positions = list(range(len(labels)))
+    ax.barh(y_positions, scores, color="#2563EB")
+    ax.set_xlim(0, 100)
+    ax.set_xlabel("Raid Score")
+    ax.set_yticks(y_positions)
+    ax.set_yticklabels(labels)
+    ax.invert_yaxis()
+    for idx, value in enumerate(scores):
+        ax.text(value + 1, idx, f"{value:.1f}", va="center", fontsize=9)
+    ax.grid(axis="x", linestyle="--", linewidth=0.5, alpha=0.4)
+    fig.tight_layout()
+    buffer = BytesIO()
+    fig.savefig(buffer, format="png", dpi=200, bbox_inches="tight")
+    plt.close(fig)
+    return buffer.getvalue()
+
+
+def create_share_payload(df: pd.DataFrame, *, top_n: int = 10) -> Dict[str, Any]:
+    subset = df.head(top_n).copy()
+    subset["Raid Score (1-100)"] = subset["Raid Score (1-100)"].astype(float)
+    entries: List[Dict[str, Any]] = []
+    for row in subset.to_dict("records"):
+        entries.append(
+            {
+                "name": str(row.get("Your Pokémon") or ""),
+                "form": str(row.get("Final Raid Form") or ""),
+                "score": float(row.get("Raid Score (1-100)", 0.0)),
+                "tier": str(row.get("Priority Tier") or ""),
+            }
+        )
+
+    markdown = _build_markdown_table(entries)
+    data_url = _build_data_url(markdown)
+    share_url = _build_chart_url(entries)
+    image_bytes = _render_bar_chart(entries)
+    image_path: Path | None = None
+    image_data_url: str | None = None
+    if image_bytes:
+        image_path = Path("raid_scoreboard.png")
+        image_path.write_bytes(image_bytes)
+        image_data_url = "data:image/png;base64," + base64.b64encode(image_bytes).decode("ascii")
+
+    return {
+        "title": "Raid Scoreboard Top Entries",
+        "top_entries": entries,
+        "markdown": markdown,
+        "data_url": data_url,
+        "share_url": share_url,
+        "image_path": image_path,
+        "image_data_url": image_data_url,
+    }
+
+
 def main() -> None:
     df = build_dataframe()
     df = df.sort_values(by="Raid Score (1-100)",
@@ -312,6 +443,30 @@ def main() -> None:
     print()
     print("Top 10 preview:")
     print(df.head(10).to_string(index=False))
+
+    share_payload = create_share_payload(df)
+    export = {
+        "title": share_payload["title"],
+        "share_url": share_payload["share_url"],
+        "markdown": share_payload["markdown"],
+        "data_url": share_payload["data_url"],
+        "image_path": str(share_payload["image_path"].resolve())
+        if share_payload["image_path"]
+        else None,
+        "top_entries": share_payload["top_entries"],
+    }
+    share_file = Path("raid_scoreboard_share.json")
+    share_file.write_text(json.dumps(export, indent=2))
+    print()
+    print("Share image URL:", share_payload["share_url"])
+    if share_payload["image_path"]:
+        print("Saved:", share_payload["image_path"].resolve())
+    elif not HAS_MATPLOTLIB:
+        print("Matplotlib not available; skipped generating PNG preview.")
+    print("Markdown table for sharing:")
+    print(share_payload["markdown"])
+    print("Markdown data URL:", share_payload["data_url"])
+    print("Saved:", share_file.resolve())
 
 
 if __name__ == "__main__":
