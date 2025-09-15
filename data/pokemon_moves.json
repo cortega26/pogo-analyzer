@@ -1,0 +1,20 @@
+[
+  {
+    "pokemon_name": "Bulbasaur",
+    "form": "Normal",
+    "fast_moves": ["Vine Whip", "Tackle"],
+    "charged_moves": ["Power Whip", "Sludge Bomb", "Seed Bomb"]
+  },
+  {
+    "pokemon_name": "Charmander",
+    "form": "Normal",
+    "fast_moves": ["Ember", "Scratch"],
+    "charged_moves": ["Flame Burst", "Flamethrower", "Flame Charge"]
+  },
+  {
+    "pokemon_name": "Squirtle",
+    "form": "Normal",
+    "fast_moves": ["Bubble", "Tackle"],
+    "charged_moves": ["Aqua Tail", "Water Pulse", "Hydro Pump"]
+  }
+]
