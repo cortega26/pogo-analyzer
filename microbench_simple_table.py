@@ -7,7 +7,7 @@ import statistics
 import time
 from typing import List
 
-from raid_scoreboard_generator import Row, SimpleTable
+from pogo_analyzer.simple_table import Row, SimpleTable
 
 
 def build_rows(num_rows: int, num_cols: int) -> List[Row]:

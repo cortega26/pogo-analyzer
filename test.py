@@ -65,6 +65,56 @@ class RaidScoreboardTests(unittest.TestCase):
         self.assertEqual(table._columns, ["a", "b", "c", "d"])  # type: ignore[attr-defined]
         self.assertEqual([row["d"] for row in table._rows], [5, 6])  # type: ignore[attr-defined]
 
+    def test_pokemon_entry_row_generation(self) -> None:
+        """PokemonRaidEntry should format names, IVs, and scores consistently."""
+
+        entry = rsg.PokemonRaidEntry(
+            "Tester",
+            (15, 14, 13),
+            final_form="Mega Tester",
+            role="Support",
+            base=81,
+            lucky=True,
+            shadow=True,
+            needs_tm=True,
+            mega_soon=True,
+            notes="Example entry for unit tests.",
+        )
+        row = entry.as_row()
+        expected_score = rsg.raid_score(
+            81,
+            rsg.iv_bonus(15, 14, 13),
+            lucky=True,
+            needs_tm=True,
+            mega_bonus_soon=True,
+            mega_bonus_now=False,
+        )
+        self.assertEqual(row["Your Pokémon"], "Tester (lucky) (shadow)")
+        self.assertEqual(row["IV (Atk/Def/Sta)"], "15/14/13")
+        self.assertEqual(row["Move Needs (CD/ETM?)"], "Yes")
+        self.assertEqual(row["Mega Available"], "Soon")
+        self.assertEqual(row["Raid Score (1-100)"], expected_score)
+
+    def test_build_dataframe_allows_custom_entries(self) -> None:
+        """Custom entry sequences should build into data frames or tables."""
+
+        entry = rsg.PokemonRaidEntry(
+            "Solo",
+            (10, 11, 12),
+            final_form="Final",
+            role="Utility",
+            base=70,
+            notes="Single test entry.",
+        )
+        df = rsg.build_dataframe([entry])
+        if isinstance(df, rsg.SimpleTable):
+            data_row = df._rows[0]  # type: ignore[attr-defined]
+        else:
+            data_row = df.iloc[0].to_dict()
+        self.assertEqual(data_row["Your Pokémon"], "Solo")
+        self.assertEqual(data_row["Final Raid Form"], "Final")
+        self.assertEqual(data_row["Primary Role"], "Utility")
+
 
 if __name__ == "__main__":
     unittest.main()
