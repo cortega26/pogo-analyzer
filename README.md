@@ -38,11 +38,25 @@ If you only need the CSV output, you can skip installing pandas entirely.
    python raid_scoreboard_generator.py
    ```
 
-3. Inspect the generated files in the project root:
+   Use ``--output-dir``/``--csv-name``/``--excel-name`` to customise export
+   locations, or ``--no-excel`` when you only want the CSV output. ``--preview-limit``
+   controls how many rows are printed to the console preview.
+
+3. Inspect the generated files in the project root (or your configured directory):
    - `raid_scoreboard.csv` – always produced
    - `raid_scoreboard.xlsx` – requires pandas with an Excel engine
 
 The script also prints a preview of the top ten entries to standard output.
+
+### Configuration
+
+The generator follows 12-factor-style configuration. Environment variables are
+merged with CLI options so you can adjust defaults without editing code:
+
+- ``RAID_SCOREBOARD_OUTPUT_DIR`` – base directory for exports.
+- ``RAID_SCOREBOARD_CSV`` / ``RAID_SCOREBOARD_EXCEL`` – override file names.
+- ``RAID_SCOREBOARD_DISABLE_EXCEL`` – set to ``true``/``1`` to skip Excel.
+- ``RAID_SCOREBOARD_PREVIEW_LIMIT`` – change the default preview row count.
 
 ### Library usage
 
@@ -93,7 +107,7 @@ Each raid entry is defined via the [`PokemonRaidEntry`](docs/api.md#pokemonraide
 Run the unit tests whenever you change scoring logic or table utilities:
 
 ```bash
-python -m unittest
+pytest
 ```
 
 ## Contributing

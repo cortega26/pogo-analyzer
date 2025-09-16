@@ -16,12 +16,17 @@ To keep the codebase predictable we follow these naming rules:
 
 | Symbol | Description |
 | ------ | ----------- |
+| `ScoreboardExportConfig` | Dataclass describing CSV/Excel destinations and preview behaviour. Instances are created via `build_export_config`. |
+| `ExportResult` | Dataclass returned by `generate_scoreboard`/`main` summarising the produced table and file outcomes. |
 | `build_dataframe(entries: Sequence[PokemonRaidEntry] = RAID_ENTRIES)` | Convert a sequence of raid entries into either a `pandas.DataFrame` (when pandas is installed) or a [`SimpleTable`](#module-pogo_analyzertablessimple_table). |
 | `build_entry_rows(entries: Sequence[PokemonRaidEntry])` | Helper that transforms raid entries into dictionaries. Re-exported for convenience. |
 | `add_priority_tier(df)` | Add a `"Priority Tier"` column derived from the computed raid score. Works with both DataFrame and SimpleTable instances. |
+| `build_export_config(args, env=os.environ)` | Merge CLI arguments and environment variables into a `ScoreboardExportConfig`. |
+| `generate_scoreboard(entries=RAID_ENTRIES, *, config)` | Build the table, apply sorting/tiers, and persist CSV/Excel files according to `config`. Returns an `ExportResult`. |
+| `parse_args(argv=None)` | Convenience wrapper around `argparse` used by `main`. |
 | `calculate_iv_bonus(attack_iv, defence_iv, stamina_iv)` | Re-export of `pogo_analyzer.scoring.calculate_iv_bonus`. |
 | `calculate_raid_score(base_score, iv_bonus_value, **modifiers)` | Re-export of `pogo_analyzer.scoring.calculate_raid_score`. |
-| `main()` | Command-line entry point. Builds the table, writes CSV/Excel files, and prints a preview. |
+| `main(argv=None)` | Command-line entry point. Builds the table, writes CSV/Excel files, and prints a preview. Respects CLI flags and environment variables documented in the README. |
 
 Legacy aliases `build_rows`, `iv_bonus`, `raid_score`, and `score` are still exported for compatibility with existing scripts.
 
@@ -75,6 +80,10 @@ Immutable dataclass representing one row on the raid scoreboard.
 | `mega_now` | `bool` | Adds +4 points when a relevant mega evolution is currently available. |
 | `mega_soon` | `bool` | Adds +1 point when a mega evolution is confirmed but not yet released. |
 | `notes` | `str` | Free-form explanation shown in the scoreboard. |
+
+Invalid IV spreads, empty names, and baseline scores outside the inclusive
+range `[1, 100]` now raise exceptions during construction so issues surface
+early when assembling datasets.
 
 Convenience methods:
 
@@ -148,9 +157,9 @@ A dependency-free subset of the `pandas.DataFrame` API. Returned when pandas is 
 ### `SimpleTable`
 
 - `SimpleTable(rows, columns=None)` – Construct a table from a list of dictionaries. Missing values default to empty strings. When `columns` is omitted, headers are discovered from the supplied rows in order of first appearance.
-- `sort_values(by, ascending=True)` – Return a new table sorted by the provided column.
+- `sort_values(by, ascending=True)` – Return a new table sorted by the provided column. Raises `KeyError` when the column is missing.
 - `reset_index(drop=False)` – Mirror `pandas.DataFrame.reset_index`. When `drop=False`, an `index` column is added.
-- `__getitem__(column)` – Provide a `SimpleSeries` for compatibility with pandas' column access.
+- `__getitem__(column)` – Provide a `SimpleSeries` for compatibility with pandas' column access. Raises `KeyError` when the column is missing, matching pandas semantics.
 - `__setitem__(column, values)` – Add or overwrite a column. Accepts iterables or other `SimpleSeries` instances.
 - `to_csv(path, index=False)` – Persist the table as UTF-8 CSV.
 - `to_excel(path, index=False)` – Raise `RuntimeError`; included for parity with pandas.

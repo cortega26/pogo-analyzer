@@ -85,8 +85,10 @@ class SimpleTable:
     def sort_values(self, by: str, ascending: bool = True) -> SimpleTable:
         """Return a table sorted by ``by``; mirrors ``DataFrame.sort_values``."""
 
+        if by not in self._column_set:
+            raise KeyError(f"Column '{by}' does not exist.")
         reverse = not ascending
-        sorted_rows = sorted(self._rows, key=lambda item: item.get(by), reverse=reverse)
+        sorted_rows = sorted(self._rows, key=lambda item: item[by], reverse=reverse)
         return SimpleTable(sorted_rows, self._columns)
 
     def reset_index(self, drop: bool = False) -> SimpleTable:
@@ -109,7 +111,9 @@ class SimpleTable:
     def __getitem__(self, key: str) -> SimpleSeries:
         """Return a :class:`SimpleSeries` for the requested column."""
 
-        return SimpleSeries(row.get(key, "") for row in self._rows)
+        if key not in self._column_set:
+            raise KeyError(key)
+        return SimpleSeries(row[key] for row in self._rows)
 
     def __setitem__(self, key: str, value: Iterable[Any]) -> None:
         """Assign ``value`` to ``key``, matching ``pandas.DataFrame`` semantics."""
@@ -126,9 +130,7 @@ class SimpleTable:
             self._columns.append(key)
             self._column_set.add(key)
 
-    def to_csv(
-        self, path: Path, index: bool = False
-    ) -> None:  # noqa: ARG002 - parity with pandas signature
+    def to_csv(self, path: Path, index: bool = False) -> None:  # noqa: ARG002 - parity with pandas signature
         """Write the table to ``path`` in UTF-8 CSV format."""
 
         with Path(path).open("w", newline="", encoding="utf-8") as handle:
@@ -136,9 +138,7 @@ class SimpleTable:
             writer.writeheader()
             writer.writerows(self._rows)
 
-    def to_excel(
-        self, path: Path, index: bool = False
-    ) -> None:  # noqa: ARG002 - parity with pandas signature
+    def to_excel(self, path: Path, index: bool = False) -> None:  # noqa: ARG002 - parity with pandas signature
         """Mimic ``DataFrame.to_excel`` but raise when pandas is absent."""
 
         raise RuntimeError("Excel export requires pandas to be installed.")

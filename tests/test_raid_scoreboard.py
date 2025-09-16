@@ -1,0 +1,209 @@
+"""Regression tests for the raid scoreboard generator."""
+
+from __future__ import annotations
+
+from pathlib import Path
+
+import pytest
+
+import pogo_analyzer as pa
+import raid_scoreboard_generator as rsg
+
+
+@pytest.fixture(autouse=True)
+def clear_scoreboard_env(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Ensure configuration environment variables do not leak between tests."""
+
+    for name in {
+        "RAID_SCOREBOARD_OUTPUT_DIR",
+        "RAID_SCOREBOARD_CSV",
+        "RAID_SCOREBOARD_EXCEL",
+        "RAID_SCOREBOARD_DISABLE_EXCEL",
+        "RAID_SCOREBOARD_PREVIEW_LIMIT",
+    }:
+        monkeypatch.delenv(name, raising=False)
+
+
+@pytest.fixture
+def tmp_workdir(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
+    """Execute the scoreboard generator from an isolated working directory."""
+
+    monkeypatch.chdir(tmp_path)
+    return tmp_path
+
+
+def test_missing_pandas_skips_excel_export(
+    tmp_workdir: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    """Ensure the user guidance is correct when pandas isn't available."""
+
+    monkeypatch.setattr(rsg, "pd", None)
+    result = rsg.main(argv=[])
+    out = capsys.readouterr().out
+
+    assert "install pandas" in out
+    assert result.csv_path.exists()
+    assert result.excel_path is not None
+    assert not result.excel_written
+    assert not result.excel_path.exists()
+
+
+def test_simple_table_column_management() -> None:
+    """SimpleTable should preserve column order and guard against missing columns."""
+
+    rows = [{"a": 1, "b": 2}, {"b": 3, "c": 4}]
+    table = rsg.SimpleTable(rows)
+
+    assert table._columns == ["a", "b", "c"]  # type: ignore[attr-defined]
+    assert table._rows[0]["c"] == ""  # type: ignore[attr-defined]
+
+    table["d"] = [5, 6]
+    assert table._columns == ["a", "b", "c", "d"]  # type: ignore[attr-defined]
+    assert [row["d"] for row in table._rows] == [5, 6]  # type: ignore[attr-defined]
+
+    with pytest.raises(KeyError):
+        _ = table["missing"]
+    with pytest.raises(KeyError):
+        table.sort_values("missing")
+
+
+def test_pokemon_entry_row_generation() -> None:
+    """PokemonRaidEntry should format names, IVs, and scores consistently."""
+
+    entry = rsg.PokemonRaidEntry(
+        "Tester",
+        (15, 14, 13),
+        final_form="Mega Tester",
+        role="Support",
+        base=81,
+        lucky=True,
+        shadow=True,
+        needs_tm=True,
+        mega_soon=True,
+        notes="Example entry for unit tests.",
+    )
+    row = entry.as_row()
+    expected_score = rsg.raid_score(
+        81,
+        rsg.iv_bonus(15, 14, 13),
+        lucky=True,
+        needs_tm=True,
+        mega_bonus_soon=True,
+        mega_bonus_now=False,
+    )
+    assert row["Your Pokémon"] == "Tester (lucky) (shadow)"
+    assert row["IV (Atk/Def/Sta)"] == "15/14/13"
+    assert row["Move Needs (CD/ETM?)"] == "Yes"
+    assert row["Mega Available"] == "Soon"
+    assert row["Raid Score (1-100)"] == expected_score
+
+
+def test_build_dataframe_allows_custom_entries() -> None:
+    """Custom entry sequences should build into data frames or tables."""
+
+    entry = rsg.PokemonRaidEntry(
+        "Solo",
+        (10, 11, 12),
+        final_form="Final",
+        role="Utility",
+        base=70,
+        notes="Single test entry.",
+    )
+    df = rsg.build_dataframe([entry])
+    if isinstance(df, rsg.SimpleTable):
+        data_row = df._rows[0]  # type: ignore[attr-defined]
+    else:
+        data_row = df.iloc[0].to_dict()
+    assert data_row["Your Pokémon"] == "Solo"
+    assert data_row["Final Raid Form"] == "Final"
+    assert data_row["Primary Role"] == "Utility"
+
+
+def test_add_priority_tier_assigns_expected_labels() -> None:
+    """Threshold boundaries should map onto documented priority tiers."""
+
+    table = rsg.SimpleTable(
+        [
+            {"Raid Score (1-100)": 90.0},
+            {"Raid Score (1-100)": 86.0},
+            {"Raid Score (1-100)": 78.0},
+            {"Raid Score (1-100)": 70.0},
+            {"Raid Score (1-100)": 65.0},
+        ]
+    )
+    tiered = rsg.add_priority_tier(table)
+    tiers = [row["Priority Tier"] for row in tiered._rows]  # type: ignore[attr-defined]
+    assert tiers == [
+        "S (Build ASAP)",
+        "A (High)",
+        "B (Good)",
+        "C (Situational)",
+        "D (Doesn't belong on a Raids list)",
+    ]
+
+
+def test_canonical_api_aliases() -> None:
+    """New naming exports should remain in sync with legacy helpers."""
+
+    entry = pa.DEFAULT_RAID_ENTRIES[0]
+    canonical_rows = pa.build_entry_rows([entry])
+    legacy_rows = rsg.build_rows([entry])
+    assert canonical_rows == legacy_rows
+
+    attack, defence, stamina = entry.ivs
+    canonical_score = pa.calculate_raid_score(
+        entry.base,
+        pa.calculate_iv_bonus(attack, defence, stamina),
+        lucky=entry.lucky,
+        needs_tm=entry.needs_tm,
+        mega_bonus_now=entry.mega_now,
+        mega_bonus_soon=entry.mega_soon,
+    )
+    legacy_score = rsg.raid_score(
+        entry.base,
+        rsg.iv_bonus(attack, defence, stamina),
+        lucky=entry.lucky,
+        needs_tm=entry.needs_tm,
+        mega_bonus_now=entry.mega_now,
+        mega_bonus_soon=entry.mega_soon,
+    )
+    assert canonical_score == legacy_score
+
+
+def test_pokemon_entry_validation_rejects_bad_inputs() -> None:
+    """Dataclass construction enforces score and IV constraints."""
+
+    with pytest.raises(ValueError):
+        rsg.PokemonRaidEntry("", (15, 15, 15))
+    with pytest.raises(ValueError):
+        rsg.PokemonRaidEntry("Bad IVs", (16, 0, 0))
+    with pytest.raises(ValueError):
+        rsg.PokemonRaidEntry("Low base", (15, 15, 15), base=0)
+    with pytest.raises(TypeError):
+        rsg.PokemonRaidEntry("Float IV", (15, 15, 15.0))  # type: ignore[arg-type]
+
+
+def test_main_respects_env_configuration(
+    tmp_workdir: Path,
+    monkeypatch: pytest.MonkeyPatch,
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    """Environment variables should override defaults and allow disabling Excel."""
+
+    output_dir = tmp_workdir / "exports"
+    monkeypatch.setenv("RAID_SCOREBOARD_OUTPUT_DIR", str(output_dir))
+    monkeypatch.setenv("RAID_SCOREBOARD_CSV", "custom.csv")
+    monkeypatch.setenv("RAID_SCOREBOARD_DISABLE_EXCEL", "true")
+    monkeypatch.setenv("RAID_SCOREBOARD_PREVIEW_LIMIT", "2")
+
+    result = rsg.main(argv=[])
+    out = capsys.readouterr().out
+
+    expected_csv = (output_dir / "custom.csv").resolve()
+    assert result.csv_path == expected_csv
+    assert result.csv_path.exists()
+    assert "Top 2 preview" in out
+    assert "disabled via configuration" in out
+    assert result.excel_path is None
