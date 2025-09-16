@@ -1,3 +1,40 @@
+[build-system]
+requires = [
+    "setuptools>=69",
+    "wheel",
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pogo-analyzer"
+version = "0.1.0"
+description = "Pokémon GO raid scoring utilities and scoreboard generator."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { file = "LICENSE" }
+authors = [
+    { name = "PoGo Analyzer Contributors" },
+]
+dependencies = []
+
+[project.optional-dependencies]
+pandas = [
+    "pandas>=2.0",
+    "openpyxl>=3.1",
+]
+
+[project.scripts]
+pogo-raid-scoreboard = "raid_scoreboard_generator:main"
+
+[tool.setuptools]
+py-modules = [
+    "raid_scoreboard_generator",
+    "microbench_simple_table",
+]
+
+[tool.setuptools.packages.find]
+include = ["pogo_analyzer*"]
+
 [tool.black]
 line-length = 88
 target-version = ["py39"]
