@@ -2,10 +2,33 @@
 from __future__ import annotations
 
 from math import floor, sqrt
-from typing import Dict, Optional, Tuple
+from typing import Dict, NotRequired, Optional, Tuple, TypedDict
 
 from .models import PokemonSpecies, Move
 from . import data_loader
+
+
+class SecondMoveCost(TypedDict):
+    stardust: int
+    candy: int
+
+
+class StatProductResult(TypedDict):
+    level: float
+    cp: int
+    stat_product: float
+    requires_xl: bool
+    second_move_cost: SecondMoveCost
+
+
+class EventCapModifier(TypedDict):
+    value: int
+    event: str | None
+
+
+class PvPLeagueRecommendation(StatProductResult):
+    cap: int
+    event_modifier: NotRequired[EventCapModifier]
 
 
 def compute_stats(
@@ -17,9 +40,9 @@ def compute_stats(
     buddy: bool = False,
 ) -> Dict[str, float]:
     """Return effective attack, defense, stamina, and level."""
-    atk = species.base_attack + ivs[0]
-    defense = species.base_defense + ivs[1]
-    stamina = species.base_stamina + ivs[2]
+    atk = float(species.base_attack + ivs[0])
+    defense = float(species.base_defense + ivs[1])
+    stamina = float(species.base_stamina + ivs[2])
     if shadow:
         atk *= data_loader.SHADOW_ATTACK_MULT
         defense *= data_loader.SHADOW_DEFENSE_MULT
@@ -67,13 +90,14 @@ def pve_score(stats: Dict[str, float], moveset: Dict[str, Move]) -> float:
 
 def maximize_stat_product(
     species: PokemonSpecies, ivs: Tuple[int, int, int], league_cap: int
-) -> Dict[str, float]:
+) -> StatProductResult:
     mults = data_loader.load_cp_multipliers()
-    best = {
+    best: StatProductResult = {
         "level": 1.0,
         "cp": 10,
         "stat_product": 0.0,
         "requires_xl": False,
+        "second_move_cost": {"stardust": 50000, "candy": 50},
     }
     for level in sorted(mults):
         if level > 55:
@@ -89,8 +113,8 @@ def maximize_stat_product(
                 "cp": cp,
                 "stat_product": product,
                 "requires_xl": level > 40,
+                "second_move_cost": {"stardust": 50000, "candy": 50},
             }
-    best["second_move_cost"] = {"stardust": 50000, "candy": 50}
     return best
 
 
@@ -99,11 +123,18 @@ def pvp_recommendation(
     ivs: Tuple[int, int, int],
     *,
     league_caps: Optional[Dict[str, int]] = None,
-) -> Dict[str, Dict[str, float]]:
+) -> Dict[str, PvPLeagueRecommendation]:
     caps = league_caps or data_loader.LEAGUE_CP_CAPS
-    rec: Dict[str, Dict[str, float]] = {}
+    rec: Dict[str, PvPLeagueRecommendation] = {}
     for league, cap in caps.items():
-        league_rec = maximize_stat_product(species, ivs, cap)
-        league_rec["cap"] = cap
+        base = maximize_stat_product(species, ivs, cap)
+        league_rec: PvPLeagueRecommendation = {
+            "level": base["level"],
+            "cp": base["cp"],
+            "stat_product": base["stat_product"],
+            "requires_xl": base["requires_xl"],
+            "second_move_cost": base["second_move_cost"],
+            "cap": cap,
+        }
         rec[league] = league_rec
     return rec

@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Dict, List
+from typing import Any, Dict, List
 
 from .models import PokemonSpecies, Move, CPMultiplier
 
@@ -19,7 +19,7 @@ BEST_BUDDY_LEVEL_BONUS = 1.0
 LEAGUE_CP_CAPS = {"great": 1500, "ultra": 2500, "master": 10000}
 
 
-def _load_json(name: str) -> List[Dict]:
+def _load_json(name: str) -> Any:
     return json.loads((DATA_DIR / name).read_text())
 
 
