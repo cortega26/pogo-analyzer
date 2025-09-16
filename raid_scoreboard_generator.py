@@ -14,17 +14,8 @@ import os
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from pathlib import Path
-from typing import TYPE_CHECKING, Any
-
-try:  # Pandas provides richer output; fall back to a lightweight table otherwise.
-    import pandas as pd
-except ModuleNotFoundError:  # pragma: no cover - exercised when pandas is absent.
-    pd = None  # type: ignore[assignment]
-
-if TYPE_CHECKING:  # pragma: no cover - type checking only.
-    from pandas import DataFrame as PandasDataFrame
-else:  # pragma: no cover - runtime fallback for type checking hints.
-    PandasDataFrame = Any  # type: ignore[assignment]
+from types import ModuleType
+from typing import TYPE_CHECKING, Any, TypeAlias
 
 from pogo_analyzer.data import DEFAULT_RAID_ENTRIES, PokemonRaidEntry, build_entry_rows
 from pogo_analyzer.scoring import (
