@@ -1,6 +1,16 @@
 """Pokémon GO analysis library."""
 
-from . import analysis, api, calculations, data_loader, events, social, team_builder
+from . import (
+    analysis,
+    api,
+    calculations,
+    data_loader,
+    errors,
+    events,
+    observability,
+    social,
+    team_builder,
+)
 
 __all__ = [
     "data_loader",
@@ -10,4 +20,6 @@ __all__ = [
     "events",
     "social",
     "api",
+    "errors",
+    "observability",
 ]

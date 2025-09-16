@@ -6,6 +6,7 @@ import pytest
 sys.path.append(str(Path(__file__).resolve().parents[1] / "src"))
 
 from pogo_analyzer import vision
+from pogo_analyzer.errors import DependencyError
 
 
 class DummyImage:
@@ -93,6 +94,6 @@ def test_scan_screenshot_requires_tesseract(tmp_path, monkeypatch):
     configure_dummy_imaging(monkeypatch)
     monkeypatch.setattr(vision, "pytesseract", None, raising=False)
 
-    with pytest.raises(RuntimeError):
+    with pytest.raises(DependencyError):
         vision.scan_screenshot(screenshot)
 
