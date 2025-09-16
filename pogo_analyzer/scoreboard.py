@@ -23,11 +23,13 @@ if TYPE_CHECKING:  # pragma: no cover - type checking only.
 else:  # pragma: no cover - runtime fallback for type checking hints.
     PandasDataFrame = Any
 
-pd: ModuleType | None
+pd: ModuleType | None = None
 try:  # Prefer pandas for richer tabular output when available.
-    import pandas as pd
+    import pandas as _pd
 except ModuleNotFoundError:  # pragma: no cover - executed when pandas is absent.
     pd = None
+else:
+    pd = _pd
 
 TableLike: TypeAlias = SimpleTable | PandasDataFrame
 

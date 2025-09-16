@@ -48,11 +48,13 @@ from pogo_analyzer.scoreboard import (
     generate_scoreboard as _scoreboard_generate_scoreboard,
 )
 
-pd: ModuleType | None
+pd: ModuleType | None = None
 try:  # Pandas provides richer output; fall back to a lightweight table otherwise.
-    import pandas as pd
+    import pandas as _pd
 except ModuleNotFoundError:  # pragma: no cover - exercised when pandas is absent.
     pd = None
+else:
+    pd = _pd
 
 # Re-export data helpers for compatibility with historical imports.
 build_entry_rows = _scoreboard_build_entry_rows
