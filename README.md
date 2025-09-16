@@ -1,6 +1,6 @@
 # PoGo Analyzer
 
-[![CI](https://github.com/cortega26/pogo-analyzer/actions/workflows/ci.yml/badge.svg)](https://github.com/cortega26/pogo-analyzer/actions/workflows/ci.yml>)
+[![CI](https://github.com/cortega26/pogo-analyzer/actions/workflows/ci.yml/badge.svg)](https://github.com/cortega26/pogo-analyzer/actions/workflows/ci.yml)
 [![CI – Linux/macOS/Windows](https://img.shields.io/github/actions/workflow/status/pogo-analyzer/pogo-analyzer/ci.yml?branch=main&label=Linux%2FmacOS%2FWindows)](https://github.com/cortega26/pogo-analyzer/actions/workflows/ci.yml)
 [![CI – Python 3.9–3.12](https://img.shields.io/github/actions/workflow/status/pogo-analyzer/pogo-analyzer/ci.yml?branch=main&label=Python%203.9%E2%80%933.12)](https://github.com/cortega26/pogo-analyzer/actions/workflows/ci.yml)
 
