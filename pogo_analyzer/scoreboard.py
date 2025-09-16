@@ -147,4 +147,3 @@ __all__ = [
     "raid_score",
     "score",
 ]
-
