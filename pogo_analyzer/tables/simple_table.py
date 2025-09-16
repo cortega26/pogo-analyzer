@@ -130,7 +130,9 @@ class SimpleTable:
             self._columns.append(key)
             self._column_set.add(key)
 
-    def to_csv(self, path: Path, index: bool = False) -> None:  # noqa: ARG002 - parity with pandas signature
+    def to_csv(
+        self, path: Path, index: bool = False
+    ) -> None:  # noqa: ARG002 - parity with pandas signature
         """Write the table to ``path`` in UTF-8 CSV format."""
 
         with Path(path).open("w", newline="", encoding="utf-8") as handle:
@@ -138,7 +140,9 @@ class SimpleTable:
             writer.writeheader()
             writer.writerows(self._rows)
 
-    def to_excel(self, path: Path, index: bool = False) -> None:  # noqa: ARG002 - parity with pandas signature
+    def to_excel(
+        self, path: Path, index: bool = False
+    ) -> None:  # noqa: ARG002 - parity with pandas signature
         """Mimic ``DataFrame.to_excel`` but raise when pandas is absent."""
 
         raise RuntimeError("Excel export requires pandas to be installed.")
