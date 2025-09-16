@@ -56,3 +56,7 @@ skip-magic-trailing-comma = false
 
 [tool.mypy]
 exclude = ["^build/"]
+
+[[tool.mypy.overrides]]
+module = ["pandas", "pandas.*", "tomli"]
+ignore_missing_imports = true

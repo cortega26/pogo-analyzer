@@ -18,16 +18,16 @@ from pogo_analyzer.scoring import (
 )
 from pogo_analyzer.tables import Row, SimpleTable
 
+if TYPE_CHECKING:  # pragma: no cover - type checking only.
+    from pandas import DataFrame as PandasDataFrame
+else:  # pragma: no cover - runtime fallback for type checking hints.
+    PandasDataFrame = Any
+
 pd: ModuleType | None
 try:  # Prefer pandas for richer tabular output when available.
     import pandas as pd
 except ModuleNotFoundError:  # pragma: no cover - executed when pandas is absent.
     pd = None
-
-if TYPE_CHECKING:  # pragma: no cover - type checking only.
-    from pandas import DataFrame as PandasDataFrame
-else:  # pragma: no cover - runtime fallback for type checking hints.
-    PandasDataFrame = Any
 
 TableLike: TypeAlias = SimpleTable | PandasDataFrame
 
