@@ -6,9 +6,8 @@ from collections.abc import Sequence
 from dataclasses import dataclass
 from pathlib import Path
 from types import ModuleType
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING, Any, Union
 
-from typing_extensions import TypeAlias
 
 from pogo_analyzer.data import DEFAULT_RAID_ENTRIES, PokemonRaidEntry, build_entry_rows
 from pogo_analyzer.export_config import ScoreboardExportConfig, build_export_config
@@ -33,7 +32,7 @@ except ModuleNotFoundError:  # pragma: no cover - executed when pandas is absent
 else:
     pd = _pd
 
-TableLike: TypeAlias = SimpleTable | PandasDataFrame
+TableLike = Union[SimpleTable, PandasDataFrame]
 
 RAID_ENTRIES = DEFAULT_RAID_ENTRIES
 build_rows = build_entry_rows
