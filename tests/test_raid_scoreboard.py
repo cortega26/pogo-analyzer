@@ -69,6 +69,32 @@ def test_simple_table_column_management() -> None:
         table.sort_values("missing")
 
 
+def test_simple_table_reset_index_adds_position_column() -> None:
+    """reset_index should prepend an index column without mutating existing data."""
+
+    rows = [{"value": 10}, {"value": 20}]
+    table = rsg.SimpleTable(rows)
+
+    reset = table.reset_index()
+
+    assert reset._columns[0] == "index"  # type: ignore[attr-defined]
+    assert [row["index"] for row in reset._rows] == [0, 1]  # type: ignore[attr-defined]
+    assert [row["value"] for row in reset._rows] == [10, 20]  # type: ignore[attr-defined]
+
+
+def test_simple_table_reset_index_preserves_existing_index_column() -> None:
+    """Existing "index" columns should be kept when adding the positional index."""
+
+    rows = [{"index": "Alpha", "value": 1}, {"index": "Beta", "value": 2}]
+    table = rsg.SimpleTable(rows)
+
+    reset = table.reset_index()
+
+    assert reset._columns[:3] == ["level_0", "index", "value"]  # type: ignore[attr-defined]
+    assert [row["level_0"] for row in reset._rows] == [0, 1]  # type: ignore[attr-defined]
+    assert [row["index"] for row in reset._rows] == ["Alpha", "Beta"]  # type: ignore[attr-defined]
+
+
 def test_pokemon_entry_row_generation() -> None:
     """PokemonRaidEntry should format names, IVs, and scores consistently."""
 

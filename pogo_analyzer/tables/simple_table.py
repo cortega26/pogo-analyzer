@@ -94,18 +94,32 @@ class SimpleTable:
     def reset_index(self, drop: bool = False) -> SimpleTable:
         """Return a table with a reset positional index.
 
-        When ``drop`` is ``False`` (the default) a new ``index`` column is
-        prepended to mimic pandas' behaviour.
+        When ``drop`` is ``False`` (the default) a positional column mirroring
+        pandas' behaviour is prepended without clobbering existing data.
         """
 
         if drop:
             return SimpleTable(self._rows, self._columns)
+
+        existing_columns = list(self._columns)
+        available = set(self._column_set)
+        index_name = "index"
+        if index_name in available:
+            suffix = 0
+            while True:
+                candidate = f"level_{suffix}"
+                if candidate not in available:
+                    index_name = candidate
+                    break
+                suffix += 1
+
         indexed_rows: list[Row] = []
         for idx, row in enumerate(self._rows):
             new_row = dict(row)
-            new_row["index"] = idx
+            new_row[index_name] = idx
             indexed_rows.append(new_row)
-        columns = ["index"] + [col for col in self._columns if col != "index"]
+
+        columns = [index_name] + existing_columns
         return SimpleTable(indexed_rows, columns)
 
     def __getitem__(self, key: str) -> SimpleSeries:
