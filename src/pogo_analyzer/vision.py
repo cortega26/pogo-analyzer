@@ -13,6 +13,8 @@ except Exception:  # pragma: no cover - gracefully handled at runtime
     ImageOps = None  # type: ignore
 
 from . import calculations, data_loader
+from .errors import DependencyError, InputValidationError, PogoAnalyzerError, ProcessingError
+from .observability import get_logger
 
 try:  # pragma: no cover - exercised via tests when pytesseract is available
     import pytesseract  # type: ignore
@@ -22,6 +24,8 @@ except Exception:  # pragma: no cover - gracefully handled at runtime
 _STATS_CACHE: Optional[Dict[str, Dict[str, data_loader.PokemonSpecies]]] = None
 _SPECIES_INDEX: Optional[Dict[str, str]] = None
 _FORM_INDEX: Optional[Dict[str, str]] = None
+
+LOGGER = get_logger(__name__)
 
 CP_PATTERN = re.compile(r"CP\s*[:#-]?\s*(\d+)", re.IGNORECASE)
 IV_PATTERN = re.compile(
@@ -47,6 +51,13 @@ def _load_caches() -> None:
         for form_name in forms:
             form_index.setdefault(_normalise(form_name), form_name)
     _FORM_INDEX = form_index
+    LOGGER.info(
+        "vision_caches_initialised",
+        extra={
+            "event": "vision_caches_initialised",
+            "species_count": len(stats),
+        },
+    )
 
 
 def _get_species_entry(name: str, form: str) -> data_loader.PokemonSpecies:
@@ -54,13 +65,21 @@ def _get_species_entry(name: str, form: str) -> data_loader.PokemonSpecies:
     assert _STATS_CACHE is not None
     species_forms = _STATS_CACHE.get(name)
     if not species_forms:
-        raise ValueError(f"Unknown Pokémon species: {name}")
+        raise ProcessingError(
+            f"Unknown Pokémon species: {name}",
+            remediation="Confirm the screenshot text is legible or specify --species manually.",
+            context={"candidate": name},
+        )
     if form in species_forms:
         return species_forms[form]
     if form != "Normal" and "Normal" in species_forms:
         return species_forms["Normal"]
     available = ", ".join(sorted(species_forms))
-    raise ValueError(f"Form '{form}' not available for {name}. Available: {available}")
+    raise ProcessingError(
+        f"Form '{form}' not available for {name}.",
+        remediation="Select one of the recognised forms and retry.",
+        context={"requested_form": form, "available_forms": available.split(", ")},
+    )
 
 
 def _clean_line(line: str) -> str:
@@ -69,16 +88,35 @@ def _clean_line(line: str) -> str:
 
 def _extract_text_lines(image: Image.Image) -> List[str]:
     if ImageOps is None or ImageFilter is None:
-        raise RuntimeError("Pillow is required to process screenshots.")
+        raise DependencyError(
+            "Pillow is required to process screenshots.",
+            remediation="Install pillow to enable screenshot analysis.",
+        )
     if pytesseract is None:  # pragma: no cover - behaviour tested explicitly
-        raise RuntimeError(
-            "pytesseract is required to scan screenshots. Install Tesseract OCR first."
+        raise DependencyError(
+            "pytesseract is required to scan screenshots.",
+            remediation="Install Tesseract OCR and the pytesseract bindings.",
         )
     grayscale = ImageOps.grayscale(image)
     contrasted = ImageOps.autocontrast(grayscale)
     sharpened = contrasted.filter(ImageFilter.SHARPEN)
-    text = pytesseract.image_to_string(sharpened, config="--psm 6")
-    return [line.strip() for line in text.splitlines() if line.strip()]
+    try:
+        text = pytesseract.image_to_string(sharpened, config="--psm 6")
+    except Exception as exc:
+        LOGGER.exception(
+            "ocr_failure",
+            extra={"event": "ocr_failure", "exception": str(exc)},
+        )
+        raise ProcessingError(
+            "Unable to extract text from screenshot.",
+            remediation="Ensure the screenshot is clear and language settings are supported.",
+        ) from exc
+    lines = [line.strip() for line in text.splitlines() if line.strip()]
+    LOGGER.info(
+        "ocr_completed",
+        extra={"event": "ocr_completed", "line_count": len(lines)},
+    )
+    return lines
 
 
 def _match_species(candidate: str) -> Optional[str]:
@@ -106,7 +144,8 @@ def _match_form(candidate: str, species: str) -> str:
 
 
 def _extract_name_and_form(lines: Iterable[str]) -> Tuple[str, str]:
-    for raw_line in lines:
+    collected = list(lines)
+    for raw_line in collected:
         cleaned = _clean_line(raw_line)
         if not cleaned:
             continue
@@ -141,23 +180,46 @@ def _extract_name_and_form(lines: Iterable[str]) -> Tuple[str, str]:
                 if form != "Normal" or possible_form.lower() != "cp":
                     return species, form
                 return species, "Normal"
-    raise ValueError("Unable to determine Pokémon name from screenshot text")
+    LOGGER.warning(
+        "name_detection_failed",
+        extra={"event": "name_detection_failed", "line_sample": collected[:3]},
+    )
+    raise ProcessingError(
+        "Unable to determine Pokémon name from screenshot text.",
+        remediation="Double-check the screenshot clarity or provide --species manually.",
+    )
 
 
 def _extract_cp(lines: Iterable[str]) -> int:
-    for line in lines:
+    collected = list(lines)
+    for line in collected:
         match = CP_PATTERN.search(line)
         if match:
             return int(match.group(1))
-    raise ValueError("Unable to determine CP from screenshot text")
+    LOGGER.warning(
+        "cp_detection_failed",
+        extra={"event": "cp_detection_failed", "line_count": len(collected)},
+    )
+    raise ProcessingError(
+        "Unable to determine CP from screenshot text.",
+        remediation="Ensure the CP value is visible in the screenshot.",
+    )
 
 
 def _extract_ivs(lines: Iterable[str]) -> Tuple[int, int, int]:
-    for line in lines:
+    collected = list(lines)
+    for line in collected:
         match = IV_PATTERN.search(line)
         if match:
             return tuple(int(match.group(i)) for i in range(1, 4))  # type: ignore[return-value]
-    raise ValueError("Unable to determine IVs from screenshot text")
+    LOGGER.warning(
+        "iv_detection_failed",
+        extra={"event": "iv_detection_failed", "line_count": len(collected)},
+    )
+    raise ProcessingError(
+        "Unable to determine IVs from screenshot text.",
+        remediation="Ensure the IVs are visible and use the standard layout.",
+    )
 
 
 def _extract_level(lines: Iterable[str]) -> Optional[float]:
@@ -184,8 +246,20 @@ def _infer_level(name: str, form: str, ivs: Tuple[int, int, int], cp: int) -> fl
             if delta == 0:
                 break
     if best_level is None or best_delta > 5:
-        raise ValueError(
-            f"Unable to infer level for {name} {form} with CP {cp} and IVs {ivs}"
+        LOGGER.warning(
+            "level_inference_failed",
+            extra={
+                "event": "level_inference_failed",
+                "pokemon_name": name,
+                "form": form,
+                "cp": cp,
+                "ivs": ivs,
+                "delta": best_delta,
+            },
+        )
+        raise ProcessingError(
+            f"Unable to infer level for {name} {form} with CP {cp} and IVs {ivs}",
+            remediation="Provide the level manually or rescan with a clearer screenshot.",
         )
     return float(best_level)
 
@@ -206,17 +280,47 @@ def scan_screenshot(path: Path | str) -> Dict[str, object]:
     """
 
     if Image is None:
-        raise RuntimeError("Pillow is required to open screenshots.")
+        raise DependencyError(
+            "Pillow is required to open screenshots.",
+            remediation="Install pillow to enable screenshot scanning.",
+        )
 
     image_path = Path(path)
-    if not image_path.exists():
-        raise FileNotFoundError(f"Screenshot not found: {path}")
+    LOGGER.info(
+        "scan_started",
+        extra={
+            "event": "scan_started",
+            "file_extension": image_path.suffix.lower(),
+        },
+    )
 
-    with Image.open(image_path) as raw_image:
-        lines = _extract_text_lines(raw_image)
+    if not image_path.exists():
+        raise InputValidationError(
+            f"Screenshot not found: {path}",
+            remediation="Verify the file path before retrying.",
+            context={"requested_path": str(path)},
+        )
+
+    try:
+        with Image.open(image_path) as raw_image:
+            lines = _extract_text_lines(raw_image)
+    except PogoAnalyzerError:
+        raise
+    except Exception as exc:
+        LOGGER.exception(
+            "image_open_failed",
+            extra={"event": "image_open_failed", "file_extension": image_path.suffix},
+        )
+        raise ProcessingError(
+            "Failed to open screenshot for analysis.",
+            remediation="Ensure the file is an accessible image and retry.",
+        ) from exc
 
     if not lines:
-        raise ValueError("OCR returned no usable text")
+        raise ProcessingError(
+            "OCR returned no usable text.",
+            remediation="Capture a clearer screenshot and ensure text is visible.",
+        )
 
     name, form = _extract_name_and_form(lines)
     cp = _extract_cp(lines)
@@ -225,7 +329,17 @@ def scan_screenshot(path: Path | str) -> Dict[str, object]:
     if level is None:
         level = _infer_level(name, form, ivs, cp)
 
-    return {"name": name, "form": form, "ivs": ivs, "level": level}
+    result = {"name": name, "form": form, "ivs": ivs, "level": level}
+    LOGGER.info(
+        "scan_completed",
+        extra={
+            "event": "scan_completed",
+            "pokemon_name": name,
+            "form": form,
+            "level": level,
+        },
+    )
+    return result
 
 
 __all__ = ["scan_screenshot"]
