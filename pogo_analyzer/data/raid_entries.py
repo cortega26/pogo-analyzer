@@ -6,6 +6,7 @@ from collections.abc import Sequence
 from dataclasses import dataclass
 
 from pogo_analyzer.scoring import calculate_iv_bonus, calculate_raid_score
+from pogo_analyzer.scoring.metrics import SCORE_MAX, SCORE_MIN
 from pogo_analyzer.tables import Row
 
 IVSpread = tuple[int, int, int]
@@ -26,6 +27,29 @@ class PokemonRaidEntry:
     mega_now: bool = False
     mega_soon: bool = False
     notes: str = ""
+
+    def __post_init__(self) -> None:
+        """Validate the supplied metadata so rows remain well-formed."""
+
+        if not self.name or not self.name.strip():
+            raise ValueError("PokemonRaidEntry.name must be a non-empty string.")
+
+        if len(self.ivs) != 3:
+            raise ValueError("PokemonRaidEntry.ivs must contain exactly three values.")
+
+        for value in self.ivs:
+            if not isinstance(value, int):
+                raise TypeError("PokemonRaidEntry.ivs values must be integers.")
+            if not 0 <= value <= 15:
+                msg = "PokemonRaidEntry.ivs values must be between 0 and 15 inclusive."
+                raise ValueError(msg)
+
+        if not SCORE_MIN <= self.base <= SCORE_MAX:
+            msg = (
+                "PokemonRaidEntry.base must fall within the inclusive raid score "
+                f"range [{SCORE_MIN}, {SCORE_MAX}]."
+            )
+            raise ValueError(msg)
 
     def formatted_name(self) -> str:
         """Return the display name with ``(lucky)``/``(shadow)`` suffixes."""
