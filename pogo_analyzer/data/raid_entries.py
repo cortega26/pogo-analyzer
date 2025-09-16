@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from collections.abc import Sequence
 from dataclasses import dataclass
+from functools import cache
 
 from pogo_analyzer.scoring import calculate_iv_bonus, calculate_raid_score
 from pogo_analyzer.scoring.metrics import SCORE_MAX, SCORE_MIN
@@ -109,10 +110,18 @@ class PokemonRaidEntry:
         return self.to_row()
 
 
+@cache
+def _entry_row_items(entry: PokemonRaidEntry) -> tuple[tuple[str, object], ...]:
+    """Return a cached tuple of row items for a raid entry."""
+
+    row = entry.to_row()
+    return tuple(row.items())
+
+
 def build_entry_rows(entries: Sequence[PokemonRaidEntry]) -> list[Row]:
     """Convert entries to dictionaries ready for :class:`~tables.SimpleTable`."""
 
-    return [entry.to_row() for entry in entries]
+    return [dict(_entry_row_items(entry)) for entry in entries]
 
 
 def build_rows(entries: Sequence[PokemonRaidEntry]) -> list[Row]:
