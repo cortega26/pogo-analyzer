@@ -9,18 +9,22 @@ PoGo Analyzer is a lightweight toolkit for evaluating Pokémon GO raid investmen
 
 ## Table of contents
 
-- [Features](#features)
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [CLI usage](#cli-usage)
-  - [Basic scoreboard generation](#basic-scoreboard-generation)
-  - [Custom export locations](#custom-export-locations)
-  - [Environment configuration](#environment-configuration)
-- [Library examples](#library-examples)
-- [Dataset maintenance](#dataset-maintenance)
-- [Testing](#testing)
-- [Contributing](#contributing)
-- [License](#license)
+- [PoGo Analyzer](#pogo-analyzer)
+  - [Table of contents](#table-of-contents)
+  - [Features](#features)
+  - [Requirements](#requirements)
+  - [Installation](#installation)
+    - [Excel export extras](#excel-export-extras)
+  - [CLI usage](#cli-usage)
+    - [Basic scoreboard generation](#basic-scoreboard-generation)
+    - [Custom export locations](#custom-export-locations)
+    - [Environment configuration](#environment-configuration)
+    - [Single Pokémon quick check](#single-pokémon-quick-check)
+  - [Library examples](#library-examples)
+  - [Dataset maintenance](#dataset-maintenance)
+  - [Testing](#testing)
+  - [Contributing](#contributing)
+  - [License](#license)
 
 ## Features
 
@@ -110,7 +114,6 @@ export RAID_SCOREBOARD_OUTPUT_DIR=~/Documents/PoGo/weekly
 export RAID_SCOREBOARD_DISABLE_EXCEL=1
 pogo-raid-scoreboard
 ```
-
 
 ### Single Pokémon quick check
 
