@@ -9,17 +9,25 @@ own scripts for more control over data filtering and presentation.
 
 from __future__ import annotations
 
+from collections.abc import Sequence
 from pathlib import Path
-from typing import Sequence
 
 try:  # Pandas provides richer output; fall back to a lightweight table otherwise.
     import pandas as pd
 except ModuleNotFoundError:  # pragma: no cover - exercised when pandas is absent.
     pd = None  # type: ignore[assignment]
 
-from pogo_analyzer.raid_entries import RAID_ENTRIES, PokemonRaidEntry, build_rows
-from pogo_analyzer.scoring import iv_bonus, raid_score
-from pogo_analyzer.simple_table import Row, SimpleTable
+from pogo_analyzer.data import DEFAULT_RAID_ENTRIES, PokemonRaidEntry, build_entry_rows
+from pogo_analyzer.scoring import (
+    calculate_iv_bonus,
+    calculate_raid_score,
+    iv_bonus,
+    raid_score,
+)
+from pogo_analyzer.tables import Row, SimpleTable
+
+RAID_ENTRIES = DEFAULT_RAID_ENTRIES
+build_rows = build_entry_rows
 
 # Backwards-compatibility alias: historical name retained for callers.
 score = raid_score
@@ -49,7 +57,7 @@ def build_dataframe(entries: Sequence[PokemonRaidEntry] = RAID_ENTRIES):
         :class:`~pogo_analyzer.simple_table.SimpleTable`.
     """
 
-    rows = build_rows(entries)
+    rows = build_entry_rows(entries)
     return _as_table(rows)
 
 
@@ -109,8 +117,12 @@ __all__ = [
     "PokemonRaidEntry",
     "Row",
     "SimpleTable",
+    "build_entry_rows",
+    "build_rows",
     "add_priority_tier",
     "build_dataframe",
+    "calculate_iv_bonus",
+    "calculate_raid_score",
     "iv_bonus",
     "raid_score",
     "score",
