@@ -53,3 +53,6 @@ ignore = ["E501"]
 quote-style = "double"
 indent-style = "space"
 skip-magic-trailing-comma = false
+
+[tool.mypy]
+exclude = ["^build/"]
