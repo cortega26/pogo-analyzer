@@ -26,7 +26,18 @@ from pogo_analyzer.scoring import (
 )
 from pogo_analyzer.tables import Row, SimpleTable
 
-TableLike = SimpleTable | PandasDataFrame
+pd: ModuleType | None
+try:  # Pandas provides richer output; fall back to a lightweight table otherwise.
+    import pandas as pd
+except ModuleNotFoundError:  # pragma: no cover - exercised when pandas is absent.
+    pd = None
+
+if TYPE_CHECKING:  # pragma: no cover - type checking only.
+    from pandas import DataFrame as PandasDataFrame
+else:  # pragma: no cover - runtime fallback for type checking hints.
+    PandasDataFrame = Any
+
+TableLike: TypeAlias = SimpleTable | PandasDataFrame
 
 RAID_ENTRIES = DEFAULT_RAID_ENTRIES
 build_rows = build_entry_rows
@@ -119,10 +130,12 @@ def build_export_config(
         env_dir = env.get("RAID_SCOREBOARD_OUTPUT_DIR")
         base_dir = Path(env_dir).expanduser() if env_dir else Path.cwd()
 
-    csv_name = args.csv_name or env.get("RAID_SCOREBOARD_CSV") or "raid_scoreboard.csv"
+    csv_name = args.csv_name or env.get(
+        "RAID_SCOREBOARD_CSV") or "raid_scoreboard.csv"
     csv_path = _resolve_output_path(base_dir, csv_name)
 
-    disable_excel = args.no_excel or _truthy(env.get("RAID_SCOREBOARD_DISABLE_EXCEL"))
+    disable_excel = args.no_excel or _truthy(
+        env.get("RAID_SCOREBOARD_DISABLE_EXCEL"))
     if disable_excel:
         excel_path = None
     else:
@@ -268,7 +281,8 @@ def main(argv: Sequence[str] | None = None) -> ExportResult:
                 suggestion = " (install openpyxl)"
             elif "xlsxwriter" in lower_reason:
                 suggestion = " (install xlsxwriter)"
-            print(f"Warning: failed to write Excel{suggestion}. Reason:", reason)
+            print(
+                f"Warning: failed to write Excel{suggestion}. Reason:", reason)
 
     preview_limit = config.preview_limit
     print()

@@ -23,7 +23,7 @@ PoGo Analyzer is a lightweight toolkit for evaluating Pokémon GO raid investmen
 Clone the repository and install the package into your virtual environment:
 
 ```bash
-git clone https://github.com/<your-user>/pogo-analyzer.git
+git clone https://github.com/cortega26/pogo-analyzer.git
 cd pogo-analyzer
 python -m venv .venv
 source .venv/bin/activate
