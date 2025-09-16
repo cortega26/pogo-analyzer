@@ -116,4 +116,4 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for pull request, coding-style, and docum
 
 ## License
 
-This project inherits the license of the upstream repository. Add a LICENSE file if you plan to distribute your own fork.
+This project is licensed under the [MIT License](LICENSE).
