@@ -16,7 +16,7 @@ PoGo Analyzer is a lightweight toolkit for evaluating Pokémon GO raid investmen
 
 ## Installation
 
-Clone the repository and install the optional dependencies when you want Excel output:
+Clone the repository and install the package into your virtual environment:
 
 ```bash
 git clone https://github.com/<your-user>/pogo-analyzer.git
@@ -24,10 +24,12 @@ cd pogo-analyzer
 python -m venv .venv
 source .venv/bin/activate
 pip install --upgrade pip
-pip install -r requirements.txt  # if you create one, otherwise install pandas manually
+pip install .
+# Enable Excel exports with pandas and openpyxl
+pip install .[pandas]
 ```
 
-If you only need the CSV output, you can skip installing pandas entirely.
+If you only need the CSV output, you can skip installing the optional ``[pandas]`` extra.
 
 ## Quick start
 
@@ -35,7 +37,7 @@ If you only need the CSV output, you can skip installing pandas entirely.
 2. Run the scoreboard generator:
 
    ```bash
-   python raid_scoreboard_generator.py
+   pogo-raid-scoreboard
    ```
 
    Use ``--output-dir``/``--csv-name``/``--excel-name`` to customise export
