@@ -1,0 +1,4 @@
+# Optional dependencies for Excel export support
+pandas>=2.0
+openpyxl>=3.1
+xlsxwriter>=3.1

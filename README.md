@@ -12,7 +12,7 @@ PoGo Analyzer is a lightweight toolkit for evaluating Pokémon GO raid investmen
 ## Requirements
 
 - Python 3.9 or newer
-- Optional: [pandas](https://pandas.pydata.org/) plus an Excel writer (``openpyxl`` or ``xlsxwriter``) for `.xlsx` export
+- Optional: [pandas](https://pandas.pydata.org/) with an Excel writer engine for `.xlsx` export (`openpyxl` or `xlsxwriter`)
 
 ## Installation
 
@@ -30,6 +30,15 @@ pip install .[pandas]
 ```
 
 If you only need the CSV output, you can skip installing the optional ``[pandas]`` extra.
+
+### Excel export extras
+
+Excel files are produced through pandas and an accompanying writer engine:
+
+- ``pogo-analyzer[pandas]`` installs pandas alongside ``openpyxl`` (the default writer)
+- ``xlsxwriter`` can be installed separately if you prefer that engine over ``openpyxl``
+
+The [`requirements.txt`](requirements.txt) file lists these optional dependencies when you need to vendor them explicitly.
 
 ## Quick start
 
