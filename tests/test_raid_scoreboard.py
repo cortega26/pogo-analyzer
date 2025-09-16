@@ -41,6 +41,7 @@ def test_missing_pandas_skips_excel_export(
 
     monkeypatch.setattr(rsg, "pd", None)
     result = rsg.main(argv=[])
+    assert result is not None
     out = capsys.readouterr().out
 
     assert "install pandas" in out
@@ -211,6 +212,36 @@ def test_pokemon_entry_validation_rejects_bad_inputs() -> None:
         rsg.PokemonRaidEntry("Float IV", (15, 15, 15.0))  # type: ignore[arg-type]
 
 
+
+
+def test_single_pokemon_cli_output(monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]) -> None:
+    """The CLI should print a recommendation when a single Pokémon is supplied."""
+
+    result = rsg.main(
+        argv=[
+            "--pokemon-name",
+            "Hydreigon",
+            "--combat-power",
+            "3200",
+            "--ivs",
+            "15",
+            "14",
+            "15",
+            "--shadow",
+            "--needs-tm",
+            "--notes",
+            "Community Day move required.",
+        ]
+    )
+    out = capsys.readouterr().out
+
+    assert result is None
+    assert "Hydreigon" in out
+    assert "Raid Score" in out
+    assert "Priority Tier" in out
+    assert "Recommended Charged Move" in out
+    assert "Exclusive move missing" in out
+
 def test_main_respects_env_configuration(
     tmp_workdir: Path,
     monkeypatch: pytest.MonkeyPatch,
@@ -225,6 +256,7 @@ def test_main_respects_env_configuration(
     monkeypatch.setenv("RAID_SCOREBOARD_PREVIEW_LIMIT", "2")
 
     result = rsg.main(argv=[])
+    assert result is not None
     out = capsys.readouterr().out
 
     expected_csv = (output_dir / "custom.csv").resolve()

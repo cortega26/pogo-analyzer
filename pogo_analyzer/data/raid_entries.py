@@ -28,6 +28,8 @@ class PokemonRaidEntry:
     mega_now: bool = False
     mega_soon: bool = False
     notes: str = ""
+    purified: bool = False
+    best_buddy: bool = False
 
     def __post_init__(self) -> None:
         """Validate the supplied metadata so rows remain well-formed."""
@@ -60,6 +62,10 @@ class PokemonRaidEntry:
             suffix += " (lucky)"
         if self.shadow:
             suffix += " (shadow)"
+        if self.purified:
+            suffix += " (purified)"
+        if self.best_buddy:
+            suffix += " (best buddy)"
         return f"{self.name}{suffix}"
 
     def iv_text(self) -> str:
@@ -86,6 +92,28 @@ class PokemonRaidEntry:
         """Convert the dataclass into the row structure consumed by tables."""
 
         attack_iv, defence_iv, stamina_iv = self.ivs
+        score = calculate_raid_score(
+            self.base,
+            calculate_iv_bonus(attack_iv, defence_iv, stamina_iv),
+            lucky=self.lucky,
+            needs_tm=self.needs_tm,
+            mega_bonus_now=self.mega_now,
+            mega_bonus_soon=self.mega_soon,
+        )
+        if self.purified:
+            score += 1
+        if self.best_buddy:
+            score += 2
+        score = max(SCORE_MIN, min(SCORE_MAX, round(score, 1)))
+        extra_notes: list[str] = []
+        if self.purified:
+            extra_notes.append("Purified bonus applied.")
+        if self.best_buddy:
+            extra_notes.append("Best Buddy bonus applied.")
+        notes = self.notes
+        if extra_notes:
+            joined = " ".join(extra_notes)
+            notes = f"{notes} {joined}".strip()
         return {
             "Your Pokémon": self.formatted_name(),
             "IV (Atk/Def/Sta)": self.iv_text(),
@@ -93,15 +121,8 @@ class PokemonRaidEntry:
             "Primary Role": self.role,
             "Move Needs (CD/ETM?)": self.move_text(),
             "Mega Available": self.mega_text(),
-            "Raid Score (1-100)": calculate_raid_score(
-                self.base,
-                calculate_iv_bonus(attack_iv, defence_iv, stamina_iv),
-                lucky=self.lucky,
-                needs_tm=self.needs_tm,
-                mega_bonus_now=self.mega_now,
-                mega_bonus_soon=self.mega_soon,
-            ),
-            "Why it scores like this": self.notes,
+            "Raid Score (1-100)": score,
+            "Why it scores like this": notes,
         }
 
     def as_row(self) -> Row:

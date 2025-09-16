@@ -111,6 +111,24 @@ export RAID_SCOREBOARD_DISABLE_EXCEL=1
 pogo-raid-scoreboard
 ```
 
+
+### Single Pokémon quick check
+
+When you want a recommendation for one Pokémon, pass its details directly:
+
+```bash
+pogo-raid-scoreboard \
+  --pokemon-name Hydreigon \
+  --combat-power 3200 \
+  --ivs 15 14 15 \
+  --shadow \
+  --needs-tm \
+  --notes "Needs Brutal Swing from CD."
+```
+
+The CLI prints an on-the-spot summary including the computed raid score and priority tier without generating files.
+If you already have the exclusive move unlocked, add `--has-special-move` to suppress the reminder.
+
 ## Library examples
 
 Import the package if you want to automate scoring in another script or notebook:

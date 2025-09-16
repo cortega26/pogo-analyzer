@@ -16,6 +16,7 @@ from types import ModuleType
 
 from pogo_analyzer import scoreboard as _scoreboard
 from pogo_analyzer.data import PokemonRaidEntry
+from pogo_analyzer.data.move_guidance import get_move_guidance
 from pogo_analyzer.scoreboard import (
     RAID_ENTRIES,
     ExportResult,
@@ -47,6 +48,7 @@ from pogo_analyzer.scoreboard import (
 from pogo_analyzer.scoreboard import (
     generate_scoreboard as _scoreboard_generate_scoreboard,
 )
+from pogo_analyzer.scoring.metrics import SCORE_MAX, SCORE_MIN
 
 pd: ModuleType | None = None
 try:  # Pandas provides richer output; fall back to a lightweight table otherwise.
@@ -94,6 +96,49 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         type=int,
         help="Number of rows to include in the console preview (default: 10).",
     )
+    parser.add_argument(
+        "--pokemon-name",
+        help="Evaluate a single Pokémon and print a recommendation instead of exporting files.",
+    )
+    parser.add_argument(
+        "--combat-power", type=int, help="Combat Power displayed in-game."
+    )
+    parser.add_argument(
+        "--ivs",
+        type=int,
+        nargs=3,
+        metavar=("ATK", "DEF", "STA"),
+        help="Individual values in Attack/Defence/Stamina order.",
+    )
+    parser.add_argument(
+        "--shadow", action="store_true", help="Mark the Pokémon as a shadow variant."
+    )
+    parser.add_argument(
+        "--purified", action="store_true", help="Mark the Pokémon as purified."
+    )
+    parser.add_argument(
+        "--lucky", action="store_true", help="Apply the lucky trade bonus."
+    )
+    parser.add_argument(
+        "--best-buddy", action="store_true", help="Apply the best buddy bonus."
+    )
+    parser.add_argument(
+        "--needs-tm",
+        action="store_true",
+        help="Indicate that an Elite TM or special move is required.",
+    )
+    parser.add_argument(
+        "--has-special-move",
+        action="store_true",
+        help="Set when the exclusive move is already unlocked.",
+    )
+    parser.add_argument(
+        "--final-form", help="Override the final evolution name used in the report."
+    )
+    parser.add_argument("--role", help="Short description of the Pokémon's raid role.")
+    parser.add_argument(
+        "--notes", help="Additional context to display in the recommendation."
+    )
     return parser.parse_args(argv)
 
 
@@ -121,6 +166,102 @@ def add_priority_tier(df: TableLike) -> TableLike:
     return _scoreboard_add_priority_tier(df)
 
 
+def _priority_label(score: float) -> str:
+    """Return the qualitative tier used in the scoreboard."""
+
+    if score >= 90:
+        return "S (Build ASAP)"
+    if score >= 85:
+        return "A (High)"
+    if score >= 78:
+        return "B (Good)"
+    if score >= 70:
+        return "C (Situational)"
+    return "D (Doesn't belong on a Raids list)"
+
+
+def _score_from_combat_power(combat_power: int) -> float:
+    """Normalise combat power into the 1–100 raid score baseline."""
+
+    scaled = (combat_power - 2000) / 100 + 70
+    return max(SCORE_MIN, min(SCORE_MAX, round(scaled, 1)))
+
+
+def _evaluate_single_pokemon(args: argparse.Namespace) -> None:
+    """Print a recommendation for a single Pokémon supplied via CLI."""
+
+    if args.combat_power is None or args.pokemon_name is None or args.ivs is None:
+        raise SystemExit(
+            "--pokemon-name, --combat-power, and --ivs must be provided to evaluate a single Pokémon."
+        )
+
+    ivs = tuple(args.ivs)
+    guidance = get_move_guidance(args.pokemon_name) if args.pokemon_name else None
+
+    if guidance and not args.needs_tm and not args.has_special_move:
+        needs_tm = guidance.needs_tm
+    else:
+        needs_tm = bool(args.needs_tm)
+    if args.has_special_move:
+        needs_tm = False
+
+    notes = args.notes or ""
+    if guidance and guidance.note:
+        if not notes:
+            notes = guidance.note
+        elif guidance.note not in notes:
+            notes = f"{notes} {guidance.note}".strip()
+
+    entry = PokemonRaidEntry(
+        args.pokemon_name,
+        ivs,
+        final_form=args.final_form or "",
+        role=args.role or "",
+        base=_score_from_combat_power(args.combat_power),
+        lucky=args.lucky,
+        shadow=args.shadow,
+        needs_tm=needs_tm,
+        notes=notes,
+        purified=args.purified,
+        best_buddy=args.best_buddy,
+    )
+
+    row = entry.to_row()
+    score = row["Raid Score (1-100)"]
+    tier = _priority_label(score)
+
+    status_bits: list[str] = []
+    if args.shadow:
+        status_bits.append("Shadow")
+    if args.purified:
+        status_bits.append("Purified")
+    if args.lucky:
+        status_bits.append("Lucky")
+    if args.best_buddy:
+        status_bits.append("Best Buddy")
+    if needs_tm:
+        status_bits.append("Exclusive move missing")
+
+    print("Single Pokémon evaluation")
+    print("-------------------------")
+    print(f"Name: {entry.formatted_name()}")
+    print(f"Combat Power: {args.combat_power}")
+    print(f"IVs: {ivs[0]}/{ivs[1]}/{ivs[2]}")
+    if guidance and guidance.required_move:
+        print(f"Recommended Charged Move: {guidance.required_move}")
+    if guidance and guidance.needs_tm and not args.has_special_move:
+        print(f"Action: {guidance.note}")
+    if args.has_special_move and guidance and guidance.needs_tm:
+        print("Exclusive move already unlocked.")
+    if status_bits:
+        print("Status: " + ", ".join(status_bits))
+    print(f"Raid Score: {score}/100")
+    print(f"Priority Tier: {tier}")
+    note = row.get("Why it scores like this")
+    if note:
+        print("Notes: " + note)
+
+
 def generate_scoreboard(
     entries: Sequence[PokemonRaidEntry] = RAID_ENTRIES,
     *,
@@ -132,10 +273,14 @@ def generate_scoreboard(
     return _scoreboard_generate_scoreboard(entries, config=config)
 
 
-def main(argv: Sequence[str] | None = None) -> ExportResult:
+def main(argv: Sequence[str] | None = None) -> ExportResult | None:
     """Command-line entry point for generating raid scoreboard exports."""
 
     args = parse_args(argv)
+    if args.pokemon_name:
+        _evaluate_single_pokemon(args)
+        return None
+
     try:
         config = build_export_config(args)
     except ValueError as exc:  # pragma: no cover - handled via CLI exit code.
