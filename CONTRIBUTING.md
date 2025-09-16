@@ -29,6 +29,14 @@ Thanks for your interest in improving PoGo Analyzer! This guide explains how to 
 - **Coding style** – follow the naming conventions documented in `docs/api.md`. Run `ruff check` and `black .` to verify formatting before submitting.
 - **Data updates** – when editing `pogo_analyzer/data/raid_entries.py`, make sure notes explain any special move requirements or mega considerations so readers understand the resulting score.
 
+## Release process
+
+1. Make sure the `CHANGELOG.md` "Unreleased" section accurately reflects the upcoming release. Move its entries into a new version section dated for the release.
+2. Bump the version number in `pyproject.toml`. The package exposes the `pogo_analyzer.__version__` attribute via this value, so no other files need manual edits.
+3. Run `ruff check`, `black . --check`, and `python -m unittest` to verify the codebase is clean and the tests pass.
+4. Commit the changes, create an annotated tag such as `git tag -a vX.Y.Z -m "Release vX.Y.Z"`, and push both the branch and tag.
+5. Build the distribution artifacts with `python -m build` and upload them using `twine upload dist/*` once you're ready to publish on PyPI.
+
 ## Pull requests
 
 1. Create a descriptive branch name (e.g., `feature/add-shadow-support`).
