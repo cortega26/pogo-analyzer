@@ -50,6 +50,21 @@ class RaidScoreboardTests(unittest.TestCase):
         finally:
             rsg.pd = original_pd
 
+    def test_simple_table_column_management(self) -> None:
+        """SimpleTable should preserve column order and support new columns."""
+
+        rows = [{"a": 1, "b": 2}, {"b": 3, "c": 4}]
+        table = rsg.SimpleTable(rows)
+
+        # Columns discovered in order of appearance with fallbacks filled in.
+        self.assertEqual(table._columns, ["a", "b", "c"])  # type: ignore[attr-defined]
+        self.assertEqual(table._rows[0]["c"], "")  # type: ignore[attr-defined]
+
+        # Adding a new column should append it only once.
+        table["d"] = [5, 6]
+        self.assertEqual(table._columns, ["a", "b", "c", "d"])  # type: ignore[attr-defined]
+        self.assertEqual([row["d"] for row in table._rows], [5, 6])  # type: ignore[attr-defined]
+
 
 if __name__ == "__main__":
     unittest.main()

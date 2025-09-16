@@ -57,18 +57,24 @@ class SimpleTable:
 
     def __init__(self, rows: Sequence[Row], columns: Sequence[str] | None = None):
         self._rows = [dict(row) for row in rows]
-        ordered_columns: List[str] = []
+        discovered_columns: List[str] = []
+        discovered_set: set[str] = set()
         for row in self._rows:
             for key in row.keys():
-                if key not in ordered_columns:
-                    ordered_columns.append(key)
+                if key not in discovered_set:
+                    discovered_columns.append(key)
+                    discovered_set.add(key)
         if columns is None:
-            columns = ordered_columns
+            final_columns: List[str] = list(discovered_columns)
         else:
-            for key in ordered_columns:
-                if key not in columns:
-                    columns = list(columns) + [key]
-        self._columns: List[str] = list(columns)
+            final_columns = list(columns)
+            column_set = set(final_columns)
+            for key in discovered_columns:
+                if key not in column_set:
+                    final_columns.append(key)
+                    column_set.add(key)
+        self._columns: List[str] = list(final_columns)
+        self._column_set: set[str] = set(self._columns)
         for row in self._rows:
             for column in self._columns:
                 row.setdefault(column, "")
@@ -101,8 +107,9 @@ class SimpleTable:
             raise ValueError("Column length mismatch.")
         for row, val in zip(self._rows, values):
             row[key] = val
-        if key not in self._columns:
+        if key not in self._column_set:
             self._columns.append(key)
+            self._column_set.add(key)
 
     def to_csv(self, path: Path, index: bool = False) -> None:  # noqa: ARG002 - parity with pandas signature
         with Path(path).open("w", newline="", encoding="utf-8") as handle:
