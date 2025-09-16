@@ -14,14 +14,20 @@ Thanks for your interest in improving PoGo Analyzer! This guide explains how to 
    pip install pandas openpyxl  # optional, enables Excel exports during testing
    ```
 
-3. Install any additional tooling you prefer (e.g., `black`, `ruff`, `mypy`) for local linting. The repository does not currently enforce a specific formatter, but PEP 8 style is encouraged.
+3. Install the tooling used by the repository:
+
+   ```bash
+   pip install black ruff
+   ```
+
+   Formatting and linting are enforced via the shared `pyproject.toml` configuration.
 
 ## Making changes
 
 - **Tests first** – update or add unit tests alongside your changes. Run `python -m unittest` before opening a pull request.
 - **Document behavior** – keep README, API docs, and docstrings in sync with the code. Include runnable examples whenever possible.
-- **Coding style** – favour clear naming, small functions, and descriptive docstrings. Avoid adding pandas-only constructs inside the core package so scripts remain usable without optional dependencies.
-- **Data updates** – when editing `pogo_analyzer/raid_entries.py`, make sure notes explain any special move requirements or mega considerations so readers understand the resulting score.
+- **Coding style** – follow the naming conventions documented in `docs/api.md`. Run `ruff check` and `black .` to verify formatting before submitting.
+- **Data updates** – when editing `pogo_analyzer/data/raid_entries.py`, make sure notes explain any special move requirements or mega considerations so readers understand the resulting score.
 
 ## Pull requests
 

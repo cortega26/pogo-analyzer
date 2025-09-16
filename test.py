@@ -6,10 +6,10 @@ import contextlib
 import io
 import os
 import tempfile
+import unittest
 from pathlib import Path
 
-import unittest
-
+import pogo_analyzer as pa
 import raid_scoreboard_generator as rsg
 
 
@@ -139,6 +139,33 @@ class RaidScoreboardTests(unittest.TestCase):
                 "D (Doesn't belong on a Raids list)",
             ],
         )
+
+    def test_canonical_api_aliases(self) -> None:
+        """New naming exports should remain in sync with legacy helpers."""
+
+        entry = pa.DEFAULT_RAID_ENTRIES[0]
+        canonical_rows = pa.build_entry_rows([entry])
+        legacy_rows = rsg.build_rows([entry])
+        self.assertEqual(canonical_rows, legacy_rows)
+
+        attack, defence, stamina = entry.ivs
+        canonical_score = pa.calculate_raid_score(
+            entry.base,
+            pa.calculate_iv_bonus(attack, defence, stamina),
+            lucky=entry.lucky,
+            needs_tm=entry.needs_tm,
+            mega_bonus_now=entry.mega_now,
+            mega_bonus_soon=entry.mega_soon,
+        )
+        legacy_score = rsg.raid_score(
+            entry.base,
+            rsg.iv_bonus(attack, defence, stamina),
+            lucky=entry.lucky,
+            needs_tm=entry.needs_tm,
+            mega_bonus_now=entry.mega_now,
+            mega_bonus_soon=entry.mega_soon,
+        )
+        self.assertEqual(canonical_score, legacy_score)
 
 
 if __name__ == "__main__":

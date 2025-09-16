@@ -2,28 +2,46 @@
 
 This document highlights the public entry points exposed by PoGo Analyzer. All examples are runnable with Python 3.9+ and assume you are working from the repository root.
 
+## Naming conventions
+
+To keep the codebase predictable we follow these naming rules:
+
+- **Modules and files** use `snake_case` (for example `raid_scoreboard_generator.py`).
+- **Classes and dataclasses** use `PascalCase` (`PokemonRaidEntry`, `SimpleTable`).
+- **Functions and methods** use descriptive `snake_case` verbs (`build_entry_rows`, `calculate_raid_score`).
+- **Constants** are upper-case with underscores. Shared datasets use the `DEFAULT_` prefix (for example `DEFAULT_RAID_ENTRIES`).
+- Backwards-compatible aliases such as `build_rows` or `raid_score` remain available, but new code should prefer the canonical names above.
+
 ## Module: `raid_scoreboard_generator`
 
 | Symbol | Description |
 | ------ | ----------- |
-| `build_dataframe(entries: Sequence[PokemonRaidEntry] = RAID_ENTRIES)` | Convert a sequence of raid entries into either a `pandas.DataFrame` (when pandas is installed) or a [`SimpleTable`](#module-pogo_analyzersimple_table). |
+| `build_dataframe(entries: Sequence[PokemonRaidEntry] = RAID_ENTRIES)` | Convert a sequence of raid entries into either a `pandas.DataFrame` (when pandas is installed) or a [`SimpleTable`](#module-pogo_analyzertablessimple_table). |
+| `build_entry_rows(entries: Sequence[PokemonRaidEntry])` | Helper that transforms raid entries into dictionaries. Re-exported for convenience. |
 | `add_priority_tier(df)` | Add a `"Priority Tier"` column derived from the computed raid score. Works with both DataFrame and SimpleTable instances. |
+| `calculate_iv_bonus(attack_iv, defence_iv, stamina_iv)` | Re-export of `pogo_analyzer.scoring.calculate_iv_bonus`. |
+| `calculate_raid_score(base_score, iv_bonus_value, **modifiers)` | Re-export of `pogo_analyzer.scoring.calculate_raid_score`. |
 | `main()` | Command-line entry point. Builds the table, writes CSV/Excel files, and prints a preview. |
+
+Legacy aliases `build_rows`, `iv_bonus`, `raid_score`, and `score` are still exported for compatibility with existing scripts.
 
 ### Building a scoreboard programmatically
 
 ```python
 from raid_scoreboard_generator import (
+    DEFAULT_RAID_ENTRIES,
     PokemonRaidEntry,
-    build_dataframe,
     add_priority_tier,
+    build_dataframe,
 )
+
 
 def preview(entries):
     df = build_dataframe(entries)
     df = df.sort_values(by="Raid Score (1-100)", ascending=False)
     df = add_priority_tier(df)
     print(df.head(5).to_string(index=False))
+
 
 preview([
     PokemonRaidEntry(
@@ -38,7 +56,7 @@ preview([
 ])
 ```
 
-## Module: `pogo_analyzer.raid_entries`
+## Module: `pogo_analyzer.data.raid_entries`
 
 ### `PokemonRaidEntry`
 
@@ -64,13 +82,14 @@ Convenience methods:
 - `iv_text()` – Render the IV tuple as `"15/14/13"`.
 - `mega_text()` – Display `"Yes"`, `"Soon"`, or `"No"` for mega availability.
 - `move_text()` – Return `"Yes"` when special moves are needed.
-- `as_row()` – Produce a `dict[str, Any]` matching the scoreboard column schema.
+- `to_row()` – Produce a `dict[str, Any]` matching the scoreboard column schema.
+- `as_row()` – Backwards-compatible alias for `to_row()`.
 
 #### Building rows manually
 
 ```python
-from pogo_analyzer.raid_entries import PokemonRaidEntry, build_rows
-from pogo_analyzer.scoring import iv_bonus
+from pogo_analyzer.data import DEFAULT_RAID_ENTRIES, PokemonRaidEntry, build_entry_rows
+from pogo_analyzer.scoring import calculate_iv_bonus
 
 entry = PokemonRaidEntry(
     "Kartana",
@@ -81,37 +100,41 @@ entry = PokemonRaidEntry(
     notes="One of the strongest Grass attackers even without mega support.",
 )
 
-rows = build_rows([entry])
+rows = build_entry_rows([entry])
 score = rows[0]["Raid Score (1-100)"]
 print("Computed score:", score)
-print("IV bonus portion:", iv_bonus(*entry.ivs))
+print("IV bonus portion:", calculate_iv_bonus(*entry.ivs))
+print("Default dataset entries:", len(DEFAULT_RAID_ENTRIES))
 ```
+
+`RAID_ENTRIES` and `build_rows` remain available as aliases for existing imports.
 
 ## Module: `pogo_analyzer.scoring`
 
-- `iv_bonus(a: int, d: int, s: int) -> float` – Calculate the additive IV modifier with Attack weighted ×2 and Defence/Stamina weighted ×0.5. The return value is rounded to two decimal places (maximum of roughly 3.0).
-- `raid_score(base: float, ivb: float = 0.0, *, lucky: bool = False, needs_tm: bool = False, mega_bonus_now: bool = False, mega_bonus_soon: bool = False) -> float` – Combine the baseline score, IV bonus, and optional modifiers. Results are clamped to the inclusive range [1, 100].
+- `calculate_iv_bonus(attack_iv: int, defence_iv: int, stamina_iv: int) -> float` – Calculate the additive IV modifier with Attack weighted ×2 and Defence/Stamina weighted ×0.5. The return value is rounded to two decimal places (maximum of roughly 3.0).
+- `calculate_raid_score(base_score: float, iv_bonus_value: float = 0.0, *, lucky: bool = False, needs_tm: bool = False, mega_bonus_now: bool = False, mega_bonus_soon: bool = False) -> float` – Combine the baseline score, IV bonus, and optional modifiers. Results are clamped to the inclusive range [1, 100].
+- `iv_bonus(...)` / `raid_score(...)` – Compatibility wrappers for the legacy function names.
 
 ### Reproducing the score used in the dataset
 
 ```python
-from pogo_analyzer.raid_entries import RAID_ENTRIES
-from pogo_analyzer.scoring import iv_bonus, raid_score
+from pogo_analyzer.data import DEFAULT_RAID_ENTRIES
+from pogo_analyzer.scoring import calculate_iv_bonus, calculate_raid_score
 
-first = RAID_ENTRIES[0]
+first = DEFAULT_RAID_ENTRIES[0]
 attack, defence, stamina = first.ivs
-computed = raid_score(
+computed = calculate_raid_score(
     first.base,
-    iv_bonus(attack, defence, stamina),
+    calculate_iv_bonus(attack, defence, stamina),
     lucky=first.lucky,
     needs_tm=first.needs_tm,
     mega_bonus_now=first.mega_now,
     mega_bonus_soon=first.mega_soon,
 )
-assert computed == first.as_row()["Raid Score (1-100)"]
+assert computed == first.to_row()["Raid Score (1-100)"]
 ```
 
-## Module: `pogo_analyzer.simple_table`
+## Module: `pogo_analyzer.tables.simple_table`
 
 A dependency-free subset of the `pandas.DataFrame` API. Returned when pandas is unavailable.
 
@@ -135,7 +158,7 @@ A dependency-free subset of the `pandas.DataFrame` API. Returned when pandas is 
 - `to_string(index=True)` – Render a padded table string for console previews.
 
 ```python
-from pogo_analyzer.simple_table import SimpleTable
+from pogo_analyzer.tables import SimpleTable
 
 rows = [
     {"Name": "Shadow Mamoswine", "Raid Score (1-100)": 91.2},
@@ -145,4 +168,3 @@ rows = [
 preview = SimpleTable(rows).to_string(index=False)
 print(preview)
 ```
-

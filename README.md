@@ -31,7 +31,7 @@ If you only need the CSV output, you can skip installing pandas entirely.
 
 ## Quick start
 
-1. Add or adjust your Pokémon entries in [`pogo_analyzer/raid_entries.py`](pogo_analyzer/raid_entries.py).
+1. Add or adjust your Pokémon entries in [`pogo_analyzer/data/raid_entries.py`](pogo_analyzer/data/raid_entries.py).
 2. Run the scoreboard generator:
 
    ```bash
@@ -49,7 +49,13 @@ The script also prints a preview of the top ten entries to standard output.
 Import the package if you want to automate scoring in another script or notebook:
 
 ```python
-from pogo_analyzer import PokemonRaidEntry, build_rows, SimpleTable, raid_score
+from pogo_analyzer import (
+    PokemonRaidEntry,
+    build_entry_rows,
+    calculate_iv_bonus,
+    calculate_raid_score,
+    SimpleTable,
+)
 
 entries = [
     PokemonRaidEntry(
@@ -63,11 +69,15 @@ entries = [
     )
 ]
 
-rows = build_rows(entries)
+rows = build_entry_rows(entries)
 # Use pandas when available; SimpleTable otherwise.
 table = SimpleTable(rows)
 table = table.sort_values(by="Raid Score (1-100)", ascending=False)
 print(table.to_string(index=False))
+print(
+    "Score:",
+    calculate_raid_score(entries[0].base, calculate_iv_bonus(*entries[0].ivs)),
+)
 ```
 
 ### Exporting without pandas
