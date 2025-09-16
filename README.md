@@ -1,5 +1,9 @@
 # PoGo Analyzer
 
+[![CI](https://github.com/pogo-analyzer/pogo-analyzer/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/pogo-analyzer/pogo-analyzer/actions/workflows/ci.yml)
+[![CI – Linux/macOS/Windows](https://img.shields.io/github/actions/workflow/status/pogo-analyzer/pogo-analyzer/ci.yml?branch=main&label=Linux%2FmacOS%2FWindows)](https://github.com/pogo-analyzer/pogo-analyzer/actions/workflows/ci.yml)
+[![CI – Python 3.9–3.12](https://img.shields.io/github/actions/workflow/status/pogo-analyzer/pogo-analyzer/ci.yml?branch=main&label=Python%203.9%E2%80%933.12)](https://github.com/pogo-analyzer/pogo-analyzer/actions/workflows/ci.yml)
+
 PoGo Analyzer is a lightweight toolkit for evaluating Pokémon GO raid investments. It ships with a ready-to-run scoreboard generator that grades your Pokémon on a 1–100 scale and exports the results as CSV (and Excel when pandas is available). All functionality is implemented in pure Python so you can run the scripts anywhere, with optional pandas support for richer tabular output.
 
 ## Features
