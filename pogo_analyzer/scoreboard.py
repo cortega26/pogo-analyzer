@@ -92,7 +92,9 @@ def generate_scoreboard(
     """Build, rank, and persist the raid scoreboard."""
 
     table = build_dataframe(entries)
-    table = table.sort_values(by="Raid Score (1-100)", ascending=False).reset_index(drop=True)
+    table = table.sort_values(by="Raid Score (1-100)", ascending=False).reset_index(
+        drop=True
+    )
     table = add_priority_tier(table)
 
     config.csv_path.parent.mkdir(parents=True, exist_ok=True)

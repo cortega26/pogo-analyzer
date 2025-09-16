@@ -157,8 +157,7 @@ def main(argv: Sequence[str] | None = None) -> ExportResult:
                 suggestion = " (install openpyxl)"
             elif "xlsxwriter" in lower_reason:
                 suggestion = " (install xlsxwriter)"
-            print(
-                f"Warning: failed to write Excel{suggestion}. Reason:", reason)
+            print(f"Warning: failed to write Excel{suggestion}. Reason:", reason)
 
     preview_limit = config.preview_limit
     print()
@@ -193,5 +192,3 @@ __all__ = [
 
 if __name__ == "__main__":
     main()
-
-

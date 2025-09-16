@@ -31,7 +31,9 @@ def _read_local_version() -> str:
 
     pyproject = Path(__file__).resolve().parent.parent / "pyproject.toml"
     if pyproject.is_file():
-        match = re.search(r'^version\s*=\s*"([^"]+)"', pyproject.read_text(), re.MULTILINE)
+        match = re.search(
+            r'^version\s*=\s*"([^"]+)"', pyproject.read_text(), re.MULTILINE
+        )
         if match:
             return match.group(1)
     return "0.0.0"

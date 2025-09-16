@@ -9,7 +9,9 @@ from pogo_analyzer.data import PokemonRaidEntry, build_entry_rows
 from pogo_analyzer.data.raid_entries import _entry_row_items as _cached_entry_row_items
 
 
-def baseline_build_entry_rows(entries: list[PokemonRaidEntry]) -> list[dict[str, object]]:
+def baseline_build_entry_rows(
+    entries: list[PokemonRaidEntry],
+) -> list[dict[str, object]]:
     """Replicate the pre-optimization behaviour for comparison."""
 
     return [entry.to_row() for entry in entries]
@@ -72,9 +74,13 @@ def main() -> None:
     cached_min, cached_mean = time_runs(lambda: build_entry_rows(entries), repetitions)
 
     print(f"Baseline first run: {baseline_first:.6f}s")
-    print(f"Baseline min/mean over {repetitions:d} runs: {baseline_min:.6f}s / {baseline_mean:.6f}s")
+    print(
+        f"Baseline min/mean over {repetitions:d} runs: {baseline_min:.6f}s / {baseline_mean:.6f}s"
+    )
     print(f"Optimised first run: {cached_first:.6f}s")
-    print(f"Optimised min/mean over {repetitions:d} runs: {cached_min:.6f}s / {cached_mean:.6f}s")
+    print(
+        f"Optimised min/mean over {repetitions:d} runs: {cached_min:.6f}s / {cached_mean:.6f}s"
+    )
     if cached_mean:
         print(f"Steady-state speed-up: {baseline_mean / cached_mean:.2f}x")
 
