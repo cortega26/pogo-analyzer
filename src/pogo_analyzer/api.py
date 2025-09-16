@@ -8,9 +8,9 @@ from typing import Any, Dict
 from .vision import scan_screenshot
 
 try:  # pragma: no cover - optional dependency
-    from fastapi import FastAPI, File, HTTPException, UploadFile
-    from fastapi.encoders import jsonable_encoder
-    from fastapi.responses import JSONResponse
+    from fastapi import FastAPI, File, HTTPException, UploadFile  # type: ignore[import-not-found]
+    from fastapi.encoders import jsonable_encoder  # type: ignore[import-not-found]
+    from fastapi.responses import JSONResponse  # type: ignore[import-not-found]
 except Exception:  # pragma: no cover - gracefully handled at runtime
     FastAPI = None  # type: ignore
     File = None  # type: ignore

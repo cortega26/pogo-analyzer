@@ -1,7 +1,7 @@
 """High level Pokémon analysis functions."""
 from __future__ import annotations
 
-from typing import Dict, Tuple
+from typing import Any, Dict, Tuple
 
 from . import data_loader, calculations, events
 from .models import PokemonSpecies, Move
@@ -45,7 +45,7 @@ def analyze_pokemon(
         if event_move_override.get("charged"):
             selected_moves["charged"] = event_move_override["charged"]
 
-    def resolve_move(candidates, fallback):
+    def resolve_move(candidates: Tuple[str, ...] | list[str], fallback: Tuple[str, ...] | list[str]) -> Move:
         for move_name in candidates:
             move = move_data.get(move_name)
             if move is not None:
@@ -60,8 +60,8 @@ def analyze_pokemon(
     charged_move: Move = resolve_move(selected_moves["charged"], moves["charged"])
     pve_bp = calculations.pve_breakpoints(stats, fast_move, boss_def=200)
     pve_sc = calculations.pve_score(stats, {"fast": fast_move, "charged": charged_move})
-    league_caps = dict(data_loader.LEAGUE_CP_CAPS)
-    applied_cp_caps = {}
+    league_caps: Dict[str, int] = dict(data_loader.LEAGUE_CP_CAPS)
+    applied_cp_caps: Dict[str, calculations.EventCapModifier] = {}
     for league, override in event_modifiers.get("cp_caps", {}).items():
         value = override.get("value") if isinstance(override, dict) else override
         if value is None:
@@ -77,7 +77,7 @@ def analyze_pokemon(
         if league in pvp_rec:
             pvp_rec[league]["event_modifier"] = modifier
 
-    event_summary = {
+    event_summary: Dict[str, Any] = {
         "active_events": list(event_modifiers.get("active_events", [])),
         "moves": {},
         "cp_caps": applied_cp_caps,

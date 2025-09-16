@@ -3,17 +3,18 @@ from __future__ import annotations
 
 import argparse
 import json
-from typing import Tuple
+from typing import Sequence, Tuple, cast
 
 from . import data_loader, social
 from .analysis import analyze_pokemon
 from .team_builder import Roster
 
 
-def parse_iv(string_list) -> Tuple[int, int, int]:
-    if len(string_list) != 3:
+def parse_iv(values: Sequence[str]) -> Tuple[int, int, int]:
+    if len(values) != 3:
         raise argparse.ArgumentTypeError("IV requires three integers")
-    return tuple(int(x) for x in string_list)
+    converted = [int(part) for part in values]
+    return converted[0], converted[1], converted[2]
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -98,7 +99,7 @@ def main() -> None:
             print(f"Created team '{args.name}'.")
             return
         if args.team_command == "add":
-            ivs = parse_iv(args.iv)
+            ivs = parse_iv(cast(Sequence[str], args.iv))
             try:
                 roster.add_member(
                     args.name,
@@ -184,10 +185,14 @@ def main() -> None:
         from .vision import scan_screenshot
 
         scanned = scan_screenshot(args.screenshot)
-        species = args.species or scanned["name"]
-        form = args.form or scanned["form"]
-        ivs = parse_iv(args.iv) if args.iv else scanned["ivs"]
-        level = args.level if args.level is not None else scanned["level"]
+        species = args.species or cast(str, scanned["name"])
+        form = args.form or cast(str, scanned["form"])
+        ivs = (
+            parse_iv(cast(Sequence[str], args.iv))
+            if args.iv
+            else cast(Tuple[int, int, int], scanned["ivs"])
+        )
+        level = args.level if args.level is not None else cast(float, scanned["level"])
         if species is None:
             parser.error("Unable to determine species from screenshot; please specify --species")
         if ivs is None:
@@ -201,14 +206,14 @@ def main() -> None:
             parser.error("--iv is required when --screenshot is not provided")
         species = args.species
         form = args.form or "Normal"
-        ivs = parse_iv(args.iv)
+        ivs = parse_iv(cast(Sequence[str], args.iv))
         level = args.level if args.level is not None else 1.0
 
     result = analyze_pokemon(
-        species,
-        form,
-        ivs,
-        level,
+        cast(str, species),
+        cast(str, form),
+        cast(Tuple[int, int, int], ivs),
+        cast(float, level),
         shadow=args.shadow,
         purified=args.purified,
         best_buddy=args.best_buddy,
