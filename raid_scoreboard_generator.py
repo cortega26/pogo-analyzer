@@ -425,13 +425,22 @@ def main() -> None:
 
     # Save CSV
     df.to_csv(out_csv, index=False)
-    # Save Excel (requires openpyxl or xlsxwriter installed)
-    try:
-        df.to_excel(out_xlsx, index=False)
-        print("Saved:", out_xlsx.resolve())
-    except Exception as e:
-        # Still consider CSV as the primary artifact if Excel engine is missing
-        print("Warning: failed to write Excel (install openpyxl). Reason:", str(e))
+    # Save Excel (requires pandas with an Excel engine installed)
+    if isinstance(df, SimpleTable) or pd is None:
+        print("Skipped Excel export: install pandas to enable Excel output.")
+    else:
+        try:
+            df.to_excel(out_xlsx, index=False)
+            print("Saved:", out_xlsx.resolve())
+        except Exception as e:
+            reason = str(e)
+            lower_reason = reason.lower()
+            suggestion = ""
+            if "openpyxl" in lower_reason:
+                suggestion = " (install openpyxl)"
+            elif "xlsxwriter" in lower_reason:
+                suggestion = " (install xlsxwriter)"
+            print(f"Warning: failed to write Excel{suggestion}. Reason:", reason)
     print("Saved:", out_csv.resolve())
     print()
     print("Top 10 preview:")
