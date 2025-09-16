@@ -115,6 +115,31 @@ class RaidScoreboardTests(unittest.TestCase):
         self.assertEqual(data_row["Final Raid Form"], "Final")
         self.assertEqual(data_row["Primary Role"], "Utility")
 
+    def test_add_priority_tier_assigns_expected_labels(self) -> None:
+        """Threshold boundaries should map onto documented priority tiers."""
+
+        table = rsg.SimpleTable(
+            [
+                {"Raid Score (1-100)": 90.0},
+                {"Raid Score (1-100)": 86.0},
+                {"Raid Score (1-100)": 78.0},
+                {"Raid Score (1-100)": 70.0},
+                {"Raid Score (1-100)": 65.0},
+            ]
+        )
+        tiered = rsg.add_priority_tier(table)
+        tiers = [row["Priority Tier"] for row in tiered._rows]  # type: ignore[attr-defined]
+        self.assertEqual(
+            tiers,
+            [
+                "S (Build ASAP)",
+                "A (High)",
+                "B (Good)",
+                "C (Situational)",
+                "D (Doesn't belong on a Raids list)",
+            ],
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

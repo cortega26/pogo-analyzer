@@ -1,4 +1,9 @@
-"""Data structures describing the raid scoreboard entries."""
+"""Data structures and helpers that back the raid scoreboard dataset.
+
+The :class:`PokemonRaidEntry` dataclass captures every attribute that feeds into
+``raid_score`` so the generator can produce consistent rows across CSV, Excel,
+and console previews.
+"""
 
 from __future__ import annotations
 
@@ -11,7 +16,13 @@ from .simple_table import Row
 
 @dataclass(frozen=True)
 class PokemonRaidEntry:
-    """Descriptor for a single Pokémon entry on the scoreboard."""
+    """Descriptor for a single Pokémon entry on the raid scoreboard.
+
+    The base score you supply should already account for the Pokémon's overall
+    value in raids (species, moves, availability, etc.). Modifiers like lucky
+    status or mega availability are then layered on top via
+    :func:`pogo_analyzer.scoring.raid_score`.
+    """
 
     name: str
     ivs: Tuple[int, int, int]
@@ -26,6 +37,8 @@ class PokemonRaidEntry:
     notes: str = ""
 
     def formatted_name(self) -> str:
+        """Return the display name with ``(lucky)``/``(shadow)`` suffixes."""
+
         suffix = ""
         if self.lucky:
             suffix += " (lucky)"
@@ -34,10 +47,14 @@ class PokemonRaidEntry:
         return f"{self.name}{suffix}"
 
     def iv_text(self) -> str:
+        """Render the IV tuple in ``Atk/Def/Sta`` order."""
+
         a, d, s = self.ivs
         return f"{a}/{d}/{s}"
 
     def mega_text(self) -> str:
+        """Return ``Yes``, ``Soon``, or ``No`` for the mega availability column."""
+
         if self.mega_now:
             return "Yes"
         if self.mega_soon:
@@ -45,9 +62,13 @@ class PokemonRaidEntry:
         return "No"
 
     def move_text(self) -> str:
+        """Return ``Yes`` when the Pokémon relies on a special move."""
+
         return "Yes" if self.needs_tm else "No"
 
     def as_row(self) -> Row:
+        """Convert the dataclass into the row structure consumed by tables."""
+
         a, d, s = self.ivs
         return {
             "Your Pokémon": self.formatted_name(),
@@ -69,7 +90,11 @@ class PokemonRaidEntry:
 
 
 def build_rows(entries: Sequence[PokemonRaidEntry]) -> List[Row]:
-    """Convert entries to row dictionaries ready for table construction."""
+    """Convert entries to dictionaries ready for :class:`SimpleTable`.
+
+    ``raid_scoreboard_generator`` defers to this helper so the transformation
+    logic is shared between pandas and the internal ``SimpleTable`` type.
+    """
 
     return [entry.as_row() for entry in entries]
 

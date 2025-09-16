@@ -1,21 +1,10 @@
 """
-Raid Scoreboard Generator
--------------------------
-This script builds a sortable raid value scoreboard for your listed Pokémon,
-scoring each entry on a 1–100 scale based on:
-- Species baseline (final raid form & meta placement)
-- IV contribution (Atk-weighted for raids)
-- Lucky cost efficiency
-- Move requirements (Community Day / Elite TM)
-- Mega availability (now/soon) for team boost utility
+Generate a ranked raid scoreboard from curated Pokémon entries.
 
-Outputs:
-- Console preview (head of table)
-- CSV at ./raid_scoreboard.csv with full data
-- Excel at ./raid_scoreboard.xlsx with full data
-
-Notes:
-- This is a guide heuristic, not a simulator. Use it to set priorities quickly.
+The script mirrors the heuristics used in the original spreadsheet-based
+workflow and produces the same set of columns regardless of whether pandas is
+installed. Invoke :func:`main` directly or import the helper functions into your
+own scripts for more control over data filtering and presentation.
 """
 
 from __future__ import annotations
@@ -37,19 +26,36 @@ score = raid_score
 
 
 def _as_table(rows: Sequence[Row]):
+    """Return a pandas DataFrame or :class:`SimpleTable` depending on availability."""
+
     if pd is not None:
         return pd.DataFrame(rows)
     return SimpleTable(rows)
 
 
 def build_dataframe(entries: Sequence[PokemonRaidEntry] = RAID_ENTRIES):
-    """Construct a table for the provided raid entries."""
+    """Construct a tabular object from raid entries.
+
+    Parameters
+    ----------
+    entries:
+        Iterable of :class:`PokemonRaidEntry` instances. Defaults to the bundled
+        dataset but you can supply your own selection to customise the output.
+
+    Returns
+    -------
+    DataFrame | SimpleTable
+        ``pandas.DataFrame`` when pandas is installed, otherwise
+        :class:`~pogo_analyzer.simple_table.SimpleTable`.
+    """
 
     rows = build_rows(entries)
     return _as_table(rows)
 
 
 def add_priority_tier(df):
+    """Append a human-readable priority tier based on ``Raid Score (1-100)``."""
+
     def tier(x: float) -> str:
         if x >= 90:
             return "S (Build ASAP)"
@@ -66,6 +72,8 @@ def add_priority_tier(df):
 
 
 def main() -> None:
+    """Command-line entry point for generating raid scoreboard exports."""
+
     df = build_dataframe()
     df = df.sort_values(by="Raid Score (1-100)", ascending=False).reset_index(drop=True)
     df = add_priority_tier(df)
