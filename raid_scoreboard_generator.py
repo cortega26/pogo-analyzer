@@ -3,7 +3,7 @@ Raid Scoreboard Generator
 -------------------------
 This script builds a sortable raid value scoreboard for your listed Pokémon,
 scoring each entry on a 1–100 scale based on:
-- Species baseline (final raid form & meta placement) 
+- Species baseline (final raid form & meta placement)
 - IV contribution (Atk-weighted for raids)
 - Lucky cost efficiency
 - Move requirements (Community Day / Elite TM)
@@ -18,8 +18,133 @@ Notes:
 - This is a guide heuristic, not a simulator. Use it to set priorities quickly.
 """
 
-import pandas as pd
+from __future__ import annotations
+
+import csv
 from pathlib import Path
+from typing import Any, Callable, Dict, Iterable, List, Sequence
+
+try:  # Pandas provides richer output; fall back to a lightweight table otherwise.
+    import pandas as pd
+except ModuleNotFoundError:  # pragma: no cover - exercised when pandas is absent.
+    pd = None  # type: ignore[assignment]
+
+
+Row = Dict[str, Any]
+
+
+class SimpleSeries:
+    """Minimal pandas.Series stand-in used when pandas is unavailable."""
+
+    def __init__(self, data: Iterable[Any]):
+        self._data = list(data)
+
+    def apply(self, func: Callable[[Any], Any]):
+        return SimpleSeries(func(item) for item in self._data)
+
+    def to_list(self) -> List[Any]:
+        return list(self._data)
+
+    def __iter__(self):
+        return iter(self._data)
+
+    def __len__(self) -> int:
+        return len(self._data)
+
+
+class SimpleTable:
+    """Lightweight, pandas-like table to keep the script functional without pandas."""
+
+    def __init__(self, rows: Sequence[Row], columns: Sequence[str] | None = None):
+        self._rows = [dict(row) for row in rows]
+        ordered_columns: List[str] = []
+        for row in self._rows:
+            for key in row.keys():
+                if key not in ordered_columns:
+                    ordered_columns.append(key)
+        if columns is None:
+            columns = ordered_columns
+        else:
+            for key in ordered_columns:
+                if key not in columns:
+                    columns = list(columns) + [key]
+        self._columns: List[str] = list(columns)
+        for row in self._rows:
+            for column in self._columns:
+                row.setdefault(column, "")
+
+    def sort_values(self, by: str, ascending: bool = True):
+        reverse = not ascending
+        sorted_rows = sorted(self._rows, key=lambda item: item.get(by), reverse=reverse)
+        return SimpleTable(sorted_rows, self._columns)
+
+    def reset_index(self, drop: bool = False):
+        if drop:
+            return SimpleTable(self._rows, self._columns)
+        indexed_rows: List[Row] = []
+        for idx, row in enumerate(self._rows):
+            new_row = dict(row)
+            new_row["index"] = idx
+            indexed_rows.append(new_row)
+        columns = ["index"] + [col for col in self._columns if col != "index"]
+        return SimpleTable(indexed_rows, columns)
+
+    def __getitem__(self, key: str) -> SimpleSeries:
+        return SimpleSeries(row.get(key, "") for row in self._rows)
+
+    def __setitem__(self, key: str, value: Iterable[Any]) -> None:
+        if isinstance(value, SimpleSeries):
+            values = value.to_list()
+        else:
+            values = list(value)
+        if len(values) != len(self._rows):
+            raise ValueError("Column length mismatch.")
+        for row, val in zip(self._rows, values):
+            row[key] = val
+        if key not in self._columns:
+            self._columns.append(key)
+
+    def to_csv(self, path: Path, index: bool = False) -> None:  # noqa: ARG002 - parity with pandas signature
+        with Path(path).open("w", newline="", encoding="utf-8") as handle:
+            writer = csv.DictWriter(handle, fieldnames=self._columns)
+            writer.writeheader()
+            writer.writerows(self._rows)
+
+    def to_excel(self, path: Path, index: bool = False) -> None:  # noqa: ARG002 - parity with pandas signature
+        raise RuntimeError("Excel export requires pandas to be installed.")
+
+    def head(self, n: int):
+        return SimpleTable(self._rows[:n], self._columns)
+
+    def to_string(self, index: bool = True) -> str:
+        if not self._rows:
+            return ""
+        columns = list(self._columns)
+        data = [[str(row.get(col, "")) for col in columns] for row in self._rows]
+        if index:
+            index_width = max(len(str(len(data) - 1)), len("index"))
+            index_header = "index"
+            headers = [index_header] + columns
+            widths = [index_width] + [len(col) for col in columns]
+            rows = [[str(i)] + row for i, row in enumerate(data)]
+        else:
+            headers = columns
+            widths = [len(col) for col in columns]
+            rows = data
+        for row in rows:
+            for idx, cell in enumerate(row):
+                widths[idx] = max(widths[idx], len(cell))
+        header_line = "  ".join(title.ljust(widths[idx]) for idx, title in enumerate(headers)).rstrip()
+        line_items = [header_line]
+        for row in rows:
+            line_items.append("  ".join(cell.ljust(widths[idx]) for idx, cell in enumerate(row)).rstrip())
+        return "\n".join(line_items)
+
+
+def _as_table(rows: Sequence[Row]):
+    if pd is not None:
+        return pd.DataFrame(rows)
+    return SimpleTable(rows)
 
 
 def iv_bonus(a: int, d: int, s: int) -> float:
@@ -60,8 +185,8 @@ def add(rows: list, name: str, ivs: tuple, lucky: bool = False, shadow: bool = F
     })
 
 
-def build_dataframe() -> pd.DataFrame:
-    """Construct the full dataframe with all entries."""
+def build_dataframe():
+    """Construct the full table with all entries."""
     rows = []
 
     # 1) Snover -> Abomasnow/Mega Abomasnow
@@ -272,11 +397,10 @@ def build_dataframe() -> pd.DataFrame:
         role="Ground DPS (top non-legend)", base=86,
         notes="Dynamax tag doesn't change its standard raid role; very good Ground attacker.")
 
-    df = pd.DataFrame(rows)
-    return df
+    return _as_table(rows)
 
 
-def add_priority_tier(df: pd.DataFrame) -> pd.DataFrame:
+def add_priority_tier(df):
     def tier(x: float) -> str:
         if x >= 90:
             return "S (Build ASAP)"
