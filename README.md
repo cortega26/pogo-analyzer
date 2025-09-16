@@ -1,6 +1,6 @@
 # PoGo Analyzer
 
-[![CI](https://github.com/pogo-analyzer/pogo-analyzer/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/pogo-analyzer/pogo-analyzer/actions/workflows/ci.yml)
+[![CI](https://github.com/cortega26/pogo-analyzer/actions/workflows/ci.yml/badge.svg)](https://github.com/cortega26/pogo-analyzer/actions/workflows/ci.yml>)
 [![CI – Linux/macOS/Windows](https://img.shields.io/github/actions/workflow/status/pogo-analyzer/pogo-analyzer/ci.yml?branch=main&label=Linux%2FmacOS%2FWindows)](https://github.com/pogo-analyzer/pogo-analyzer/actions/workflows/ci.yml)
 [![CI – Python 3.9–3.12](https://img.shields.io/github/actions/workflow/status/pogo-analyzer/pogo-analyzer/ci.yml?branch=main&label=Python%203.9%E2%80%933.12)](https://github.com/pogo-analyzer/pogo-analyzer/actions/workflows/ci.yml)
 
@@ -8,10 +8,10 @@ PoGo Analyzer is a lightweight toolkit for evaluating Pokémon GO raid investmen
 
 ## Features
 
-- 📊 **Raid value scoreboard** – score your roster by combining baseline species strength, IV quality, lucky cost savings, move requirements, and mega availability.
-- 🧮 **Reusable scoring helpers** – import the library to compute raid scores or transform entries inside your own automation scripts.
-- 🗃️ **Pandas-free tables** – fall back to a minimal in-repo table implementation when pandas is not installed.
-- 🧪 **Tested behavior** – regression tests cover key scoring, formatting, and export scenarios.
+- **Raid value scoreboard** – score your roster by combining baseline species strength, IV quality, lucky cost savings, move requirements, and mega availability.
+- **Reusable scoring helpers** – import the library to compute raid scores or transform entries inside your own automation scripts.
+- **Pandas-free tables** – fall back to a minimal in-repo table implementation when pandas is not installed.
+- **Tested behavior** – regression tests cover key scoring, formatting, and export scenarios.
 
 ## Requirements
 
