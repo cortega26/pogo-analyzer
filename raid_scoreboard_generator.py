@@ -12,34 +12,47 @@ from __future__ import annotations
 import argparse
 from collections.abc import Mapping, Sequence
 from pathlib import Path
+from types import ModuleType
 
 from pogo_analyzer import scoreboard as _scoreboard
 from pogo_analyzer.data import PokemonRaidEntry
 from pogo_analyzer.scoreboard import (
     RAID_ENTRIES,
-    TableLike,
-    Row,
-    SimpleTable,
-    ScoreboardExportConfig,
     ExportResult,
-    add_priority_tier as _scoreboard_add_priority_tier,
-    build_dataframe as _scoreboard_build_dataframe,
-    build_entry_rows as _scoreboard_build_entry_rows,
-    build_export_config as _scoreboard_build_export_config,
-    build_rows as _scoreboard_build_rows,
+    Row,
+    ScoreboardExportConfig,
+    SimpleTable,
+    TableLike,
     calculate_iv_bonus,
     calculate_raid_score,
-    generate_scoreboard as _scoreboard_generate_scoreboard,
     iv_bonus,
     raid_score,
     score,
 )
+from pogo_analyzer.scoreboard import (
+    add_priority_tier as _scoreboard_add_priority_tier,
+)
+from pogo_analyzer.scoreboard import (
+    build_dataframe as _scoreboard_build_dataframe,
+)
+from pogo_analyzer.scoreboard import (
+    build_entry_rows as _scoreboard_build_entry_rows,
+)
+from pogo_analyzer.scoreboard import (
+    build_export_config as _scoreboard_build_export_config,
+)
+from pogo_analyzer.scoreboard import (
+    build_rows as _scoreboard_build_rows,
+)
+from pogo_analyzer.scoreboard import (
+    generate_scoreboard as _scoreboard_generate_scoreboard,
+)
 
+pd: ModuleType | None
 try:  # Pandas provides richer output; fall back to a lightweight table otherwise.
     import pandas as pd
 except ModuleNotFoundError:  # pragma: no cover - exercised when pandas is absent.
     pd = None
-
 
 # Re-export data helpers for compatibility with historical imports.
 build_entry_rows = _scoreboard_build_entry_rows
@@ -158,7 +171,8 @@ def main(argv: Sequence[str] | None = None) -> ExportResult:
 __all__ = [
     "RAID_ENTRIES",
     "PokemonRaidEntry",
-    "TableLike",`n    "Row",
+    "TableLike",
+    "Row",
     "SimpleTable",
     "ScoreboardExportConfig",
     "ExportResult",
@@ -177,6 +191,7 @@ __all__ = [
     "main",
 ]
 
-
 if __name__ == "__main__":
     main()
+
+
