@@ -6,7 +6,9 @@ from collections.abc import Sequence
 from dataclasses import dataclass
 from pathlib import Path
 from types import ModuleType
-from typing import TYPE_CHECKING, Any, TypeAlias
+from typing import TYPE_CHECKING, Any
+
+from typing_extensions import TypeAlias
 
 from pogo_analyzer.data import DEFAULT_RAID_ENTRIES, PokemonRaidEntry, build_entry_rows
 from pogo_analyzer.export_config import ScoreboardExportConfig, build_export_config
@@ -145,3 +147,4 @@ __all__ = [
     "raid_score",
     "score",
 ]
+
