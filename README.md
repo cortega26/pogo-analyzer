@@ -5,7 +5,7 @@
 [![Python Versions](https://img.shields.io/badge/Python-3.9%E2%80%933.13-blue)](pyproject.toml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-PoGo Analyzer is a lightweight toolkit for evaluating Pokémon GO raid investments. It ships with a ready-to-run scoreboard generator that grades your Pokémon on a 1–100 scale and exports the results as CSV (and Excel when pandas is available). All functionality is implemented in pure Python so you can run the scripts anywhere, with optional pandas support for richer tabular output.
+PoGo Analyzer is a lightweight toolkit for evaluating Pokémon GO raid investments. It ships with a ready-to-run scoreboard generator that grades your Pokémon on a 1–100 scale and exports the results as CSV (and Excel when pandas is available). All functionality is implemented in pure Python so you can run the scripts anywhere, with optional pandas support for richer tabular output. The CLI also offers a single-Pokémon quick check that infers the level from Combat Power, highlights missing moves, and can surface PvE/PvP value metrics without creating export files—see the [CLI quick-check guide](docs/cli.md) for end-to-end examples.
 
 ## Table of contents
 
@@ -29,6 +29,7 @@ PoGo Analyzer is a lightweight toolkit for evaluating Pokémon GO raid investmen
 ## Features
 
 - **Raid value scoreboard** – score your roster by combining baseline species strength, IV quality, lucky cost savings, move requirements, and mega availability.
+- **CP→Level inference** – feed base stats, IVs, and Combat Power into the quick check to recover the underlying level and CPM alongside effective raid stats.
 - **Reusable scoring helpers** – import the library to compute raid scores or transform entries inside your own automation scripts.
 - **Pandas-free tables** – fall back to a minimal in-repo table implementation when pandas is not installed.
 - **Repeatable workflows** – the CLI works with configuration flags and environment variables so it is easy to wire into cron jobs or CI pipelines.
@@ -132,6 +133,8 @@ pogo-raid-scoreboard \
 The CLI prints an on-the-spot summary including the computed raid score and priority tier without generating files.
 If you already have the exclusive move unlocked, add `--has-special-move` to suppress the reminder.
 Use `--target-cp` to tell the CLI what raid-ready CP you're aiming for; it only flags builds as underpowered when a target is provided.
+
+Refer to the [CLI quick-check guide](docs/cli.md) for an expanded walkthrough that covers the available flags, expected output sections, and combined PvE/PvP scoring scenarios.
 
 ### Level inference and PvE/PvP value scoring
 
