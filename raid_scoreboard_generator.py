@@ -413,6 +413,8 @@ def _parse_fast_move(value: str, *, default_weather: bool) -> _ParsedFastMove:
             turns_value = float(extras["turns"])
         except ValueError as exc:  # pragma: no cover - defensive guard.
             raise ValueError("Fast move turns must be numeric when provided.") from exc
+        if not turns_value.is_integer():
+            raise ValueError("Fast move turns must be an integer when provided.")
         turns = int(turns_value)
         if turns <= 0:
             raise ValueError("Fast move turns must be positive when provided.")

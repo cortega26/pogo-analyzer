@@ -206,6 +206,16 @@ def test_add_priority_tier_assigns_expected_labels() -> None:
     ]
 
 
+def test_parse_fast_move_rejects_fractional_turns() -> None:
+    """Fractional turn values should fail fast to guard against malformed inputs."""
+
+    with pytest.raises(ValueError, match="Fast move turns must be an integer"):
+        rsg._parse_fast_move(
+            "Example Fast,10,5,0.5,turns=1.5",
+            default_weather=False,
+        )
+
+
 def test_canonical_api_aliases() -> None:
     """New naming exports should remain in sync with legacy helpers."""
 
