@@ -203,6 +203,60 @@ def test_canonical_api_aliases() -> None:
     assert canonical_score == legacy_score
 
 
+def test_cli_regular_magnezone_uses_shadow_template_metadata(
+    monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """Non-shadow evaluations should reuse shadow templates with adjusted baselines."""
+
+    created_entries: list[rsg.PokemonRaidEntry] = []
+    real_entry_cls = rsg.PokemonRaidEntry
+
+    def capture_entry(*args: object, **kwargs: object) -> rsg.PokemonRaidEntry:
+        entry = real_entry_cls(*args, **kwargs)
+        created_entries.append(entry)
+        return entry
+
+    monkeypatch.setattr(rsg, "PokemonRaidEntry", capture_entry)
+
+    args = rsg.parse_args(
+        [
+            "--pokemon-name",
+            "Magnemite",
+            "--combat-power",
+            "3200",
+            "--ivs",
+            "15",
+            "15",
+            "15",
+        ]
+    )
+
+    rsg._evaluate_single_pokemon(args)
+    out = capsys.readouterr().out
+
+    assert created_entries, "expected evaluation to instantiate a raid entry"
+    entry = created_entries[-1]
+
+    lookup = rsg._template_entry(
+        "Magnemite", shadow=False, purified=False, best_buddy=False
+    )
+    template = lookup.entry
+    assert template is not None
+    assert lookup.variant_mismatch and template.shadow
+
+    expected_base = max(rsg.SCORE_MIN, template.base - rsg._SHADOW_BASELINE_BONUS)
+    assert entry.base == expected_base
+    assert entry.final_form == template.final_form
+    assert entry.role == template.role
+    assert template.notes in entry.notes
+    assert "Adjusted shadow template baseline" in entry.notes
+
+    row = entry.to_row()
+    expected_score = rsg.raid_score(expected_base, rsg.iv_bonus(*entry.ivs))
+    assert row["Raid Score (1-100)"] == expected_score
+    assert f"Raid Score: {expected_score}/100" in out
+
+
 def _single_eval(argv: list[str], capsys: pytest.CaptureFixture[str]) -> tuple[float, str]:
     """Invoke the CLI for a single Pokémon and return the score with raw output."""
 
@@ -355,7 +409,7 @@ def test_pokemon_entry_validation_rejects_bad_inputs() -> None:
 def test_single_pokemon_shadow_template_only(
     capsys: pytest.CaptureFixture[str],
 ) -> None:
-    """When only a shadow template exists, normal forms should fall back to CP heuristics."""
+    """When only a shadow template exists, normal forms should reuse it with an adjusted baseline."""
 
     rsg.main(
         argv=[
@@ -394,7 +448,8 @@ def test_single_pokemon_shadow_template_only(
     shadow_score = float(shadow_match.group(1))
 
     assert shadow_score > normal_score
-    assert normal_score < 90
+    assert shadow_score - normal_score == pytest.approx(rsg._SHADOW_BASELINE_BONUS)
+    assert "Adjusted shadow template baseline" in normal_out
 
 
 def test_single_pokemon_shadow_vs_normal_diff(
