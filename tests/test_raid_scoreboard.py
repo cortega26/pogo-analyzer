@@ -5,12 +5,43 @@ from __future__ import annotations
 import copy
 import json
 import re
+import math
 from pathlib import Path
 
 import pytest
 
 import pogo_analyzer as pa
 import raid_scoreboard_generator as rsg
+from pogo_analyzer.cpm_table import get_cpm
+from pogo_analyzer.formulas import effective_stats, infer_level_from_cp
+from pogo_analyzer.pve import ChargeMove, FastMove, compute_pve_score
+from pogo_analyzer.pvp import (
+    DEFAULT_LEAGUE_CONFIGS,
+    PvpChargeMove,
+    PvpFastMove,
+    compute_pvp_score,
+)
+
+
+def _compute_cp(
+    base_attack: int,
+    base_defense: int,
+    base_stamina: int,
+    iv_attack: int,
+    iv_defense: int,
+    iv_stamina: int,
+    level: float,
+    *,
+    is_shadow: bool = False,
+    is_best_buddy: bool = False,
+) -> int:
+    """Compute CP using the specification from :mod:`pogo_analyzer.formulas`."""
+
+    attack = (base_attack + iv_attack) * (1.2 if is_shadow else 1.0)
+    defense = (base_defense + iv_defense) * (0.83 if is_shadow else 1.0)
+    stamina = base_stamina + iv_stamina
+    cpm = get_cpm(level + (1.0 if is_best_buddy else 0.0))
+    return math.floor(attack * math.sqrt(defense) * math.sqrt(stamina) * cpm**2 / 10)
 
 
 @pytest.fixture(autouse=True)
@@ -313,6 +344,77 @@ def test_shadow_bonus_applied_when_template_variant_missing(
     assert "Applied shadow damage bonus" in shadow_output
 
 
+
+def test_single_pokemon_inference_and_scoring_outputs(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    """Single Pokémon evaluation should emit inferred stats and PvE/PvP scores."""
+
+    base_stats = (256, 188, 216)
+    ivs = (15, 15, 15)
+    level = 35.0
+    cp = _compute_cp(*base_stats, *ivs, level)
+
+    argv = [
+        "--pokemon-name",
+        "Hydreigon",
+        "--species",
+        "Hydreigon",
+        "--base-stats",
+        *map(str, base_stats),
+        "--cp",
+        str(cp),
+        "--ivs",
+        *map(str, ivs),
+        "--fast",
+        "Snarl,12,13,1.0,turns=4,stab=true",
+        "--charge",
+        "Brutal Swing,65,40,1.9,stab=true",
+        "--target-defense",
+        "180",
+        "--incoming-dps",
+        "35",
+        "--alpha",
+        "0.6",
+        "--league-cap",
+        "1500",
+        "--beta",
+        "0.52",
+    ]
+
+    capsys.readouterr()
+    rsg.main(argv)
+    out = capsys.readouterr().out
+
+    level_estimate, cpm_estimate = infer_level_from_cp(*base_stats, *ivs, cp)
+    attack, defense, hp = effective_stats(*base_stats, *ivs, level_estimate)
+    pve_expected = compute_pve_score(
+        attack,
+        defense,
+        hp,
+        FastMove("Snarl", 12.0, 13.0, 1.0, stab=True),
+        [ChargeMove("Brutal Swing", 65.0, 40.0, 1.9, stab=True)],
+        target_defense=180.0,
+        incoming_dps=35.0,
+        alpha=0.6,
+    )
+    pvp_expected = compute_pvp_score(
+        attack,
+        defense,
+        hp,
+        PvpFastMove("Snarl", damage=12.0, energy_gain=13.0, turns=4),
+        [PvpChargeMove("Brutal Swing", damage=65.0, energy_cost=40.0)],
+        league="great",
+        beta=0.52,
+        league_configs=DEFAULT_LEAGUE_CONFIGS,
+    )
+
+    assert f"Level: {level_estimate:.1f}" in out
+    assert f"CPM: {cpm_estimate:.6f}" in out
+    assert f"Effective Attack: {attack:.2f}" in out
+    assert f"Rotation DPS: {pve_expected['dps']:.2f}" in out
+    assert f"PvE Value (alpha=0.60): {pve_expected['value']:.2f}" in out
+    assert f"PvP Score (beta=0.52): {pvp_expected['score']:.4f}" in out
 
 
 def test_name_normalisation_handles_forms() -> None:

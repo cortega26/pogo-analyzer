@@ -133,6 +133,28 @@ The CLI prints an on-the-spot summary including the computed raid score and prio
 If you already have the exclusive move unlocked, add `--has-special-move` to suppress the reminder.
 Use `--target-cp` to tell the CLI what raid-ready CP you're aiming for; it only flags builds as underpowered when a target is provided.
 
+### Level inference and PvE/PvP value scoring
+
+Provide species base stats together with your observed Combat Power to infer the underlying level and Combat Power Multiplier (CPM) for a build. Adding move descriptors unlocks PvE rotation evaluation and PvP value scoring, printing the effective stats and score components alongside the raid score summary:
+
+```bash
+pogo-raid-scoreboard \
+  --pokemon-name Hydreigon \
+  --species Hydreigon \
+  --base-stats 256 188 216 \
+  --cp 3200 \
+  --ivs 15 15 15 \
+  --fast 'Snarl,12,13,1.0,turns=4,stab=true' \
+  --charge 'Brutal Swing,65,40,1.9,stab=true' \
+  --target-defense 180 \
+  --incoming-dps 35 \
+  --alpha 0.6 \
+  --league-cap 1500 \
+  --beta 0.52
+```
+
+Move descriptors follow the format `name,power,energy_gain,duration` for fast moves and `name,power,energy_cost,duration` for charge moves. Append `stab=true`, `weather=true`, `type=1.6`, or `turns=4`/`reliability=0.8` as `key=value` pairs to model bonuses and PvP timing; pass `--weather` to apply a weather boost to all moves unless overridden per move. Use `--incoming-dps` and `--target-defense` to configure the PvE durability assumptions, and `--league-cap`/`--beta`/`--sp-ref`/`--mp-ref`/`--bait-prob` to override PvP scoring defaults. The CLI reuses `--combat-power` via the shorter `--cp` alias, recognises `--bb` as shorthand for `--best-buddy`, and accepts `--observed-hp` to disambiguate ambiguous CP values during level inference.
+
 ## Library examples
 
 Import the package if you want to automate scoring in another script or notebook:
