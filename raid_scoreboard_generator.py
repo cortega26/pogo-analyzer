@@ -10,6 +10,7 @@ own scripts for more control over data filtering and presentation.
 from __future__ import annotations
 
 import argparse
+from collections import Counter
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from pathlib import Path
@@ -18,6 +19,14 @@ from types import ModuleType
 from pogo_analyzer import scoreboard as _scoreboard
 from pogo_analyzer.data import PokemonRaidEntry
 from pogo_analyzer.data.move_guidance import get_move_guidance, normalise_name
+from pogo_analyzer.formulas import effective_stats, infer_level_from_cp
+from pogo_analyzer.pve import ChargeMove, FastMove, compute_pve_score
+from pogo_analyzer.pvp import (
+    DEFAULT_LEAGUE_CONFIGS,
+    PvpChargeMove,
+    PvpFastMove,
+    compute_pvp_score,
+)
 from pogo_analyzer.scoreboard import (
     RAID_ENTRIES,
     ExportResult,
@@ -102,7 +111,11 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         help="Evaluate a single Pokémon and print a recommendation instead of exporting files.",
     )
     parser.add_argument(
-        "--combat-power", type=int, help="Combat Power displayed in-game."
+        "--combat-power",
+        "--cp",
+        dest="combat_power",
+        type=int,
+        help="Combat Power displayed in-game (alias: --cp).",
     )
     parser.add_argument(
         "--target-cp",
@@ -126,7 +139,11 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         "--lucky", action="store_true", help="Apply the lucky trade bonus."
     )
     parser.add_argument(
-        "--best-buddy", action="store_true", help="Apply the best buddy bonus."
+        "--best-buddy",
+        "--bb",
+        dest="best_buddy",
+        action="store_true",
+        help="Apply the best buddy bonus (alias: --bb).",
     )
     parser.add_argument(
         "--needs-tm",
@@ -145,6 +162,102 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--notes", help="Additional context to display in the recommendation."
     )
+
+    inference_group = parser.add_argument_group("Level inference")
+    inference_group.add_argument(
+        "--species",
+        help="Species name used for level/stat inference (defaults to --pokemon-name).",
+    )
+    inference_group.add_argument(
+        "--base-stats",
+        type=int,
+        nargs=3,
+        metavar=("BASE_ATK", "BASE_DEF", "BASE_STA"),
+        help="Base stats for the species in Attack/Defence/Stamina order.",
+    )
+    inference_group.add_argument(
+        "--observed-hp",
+        type=int,
+        help="Observed HP to disambiguate CP collisions when inferring level.",
+    )
+
+    pve_group = parser.add_argument_group("PvE scoring")
+    pve_group.add_argument(
+        "--fast",
+        dest="fast_move",
+        metavar="MOVE",
+        help=(
+            "Fast move descriptor: name,power,energy_gain,duration"
+            "[,stab=...][,weather=...][,type=...][,turns=...]"
+        ),
+    )
+    pve_group.add_argument(
+        "--charge",
+        dest="charge_moves",
+        action="append",
+        metavar="MOVE",
+        help=(
+            "Charge move descriptor: name,power,energy_cost,duration"
+            "[,stab=...][,weather=...][,type=...][,reliability=...][,buff=...]"
+        ),
+    )
+    pve_group.add_argument(
+        "--weather",
+        dest="weather_boost",
+        action="store_true",
+        help="Apply weather boost to all moves unless overridden per move.",
+    )
+    pve_group.add_argument(
+        "--target-defense",
+        dest="target_defense",
+        type=float,
+        help="Target defence value used for PvE EHP estimation.",
+    )
+    pve_group.add_argument(
+        "--incoming-dps",
+        dest="incoming_dps",
+        type=float,
+        help="Incoming DPS from the raid boss used for PvE TDO calculations.",
+    )
+    pve_group.add_argument(
+        "--alpha",
+        dest="alpha",
+        type=float,
+        help="Blend factor between DPS and TDO in the PvE value formula (default: 0.6).",
+    )
+
+    pvp_group = parser.add_argument_group("PvP scoring")
+    pvp_group.add_argument(
+        "--league-cap",
+        dest="league_cap",
+        type=int,
+        help="CP cap for the PvP league (1500, 2500, or omit for default Great League).",
+    )
+    pvp_group.add_argument(
+        "--beta",
+        dest="beta",
+        type=float,
+        help="Blend factor between stat product and move pressure (default: 0.52).",
+    )
+    pvp_group.add_argument(
+        "--sp-ref",
+        dest="stat_product_reference",
+        type=float,
+        help="Reference stat product used for PvP normalisation.",
+    )
+    pvp_group.add_argument(
+        "--mp-ref",
+        dest="move_pressure_reference",
+        type=float,
+        help="Reference move pressure used for PvP normalisation.",
+    )
+    pvp_group.add_argument(
+        "--bait-prob",
+        dest="bait_probability",
+        type=float,
+        help="Probability of landing the high-energy charge move during bait scenarios.",
+    )
+
     return parser.parse_args(argv)
 
 
@@ -216,6 +329,174 @@ class TemplateLookup:
     variant_mismatch: bool
 
 
+@dataclass(frozen=True)
+class _ParsedFastMove:
+    """Bundle PvE and PvP fast move definitions derived from CLI input."""
+
+    pve: FastMove
+    pvp: PvpFastMove | None
+
+
+@dataclass(frozen=True)
+class _ParsedChargeMove:
+    """Bundle PvE and PvP charge move definitions derived from CLI input."""
+
+    pve: ChargeMove
+    pvp: PvpChargeMove
+
+
+def _parse_bool(value: str) -> bool:
+    """Return ``True`` or ``False`` for typical CLI boolean tokens."""
+
+    lowered = value.strip().lower()
+    if lowered in {"1", "true", "t", "yes", "y", "on"}:
+        return True
+    if lowered in {"0", "false", "f", "no", "n", "off"}:
+        return False
+    raise ValueError(f"Unrecognised boolean value: {value!r}")
+
+
+def _parse_extra_tokens(tokens: Sequence[str]) -> dict[str, str]:
+    """Return a mapping of extra ``key=value`` tokens."""
+
+    extras: dict[str, str] = {}
+    for token in tokens:
+        if not token:
+            continue
+        key, sep, raw_value = token.partition("=")
+        key = key.strip().lower()
+        if not key:
+            raise ValueError("Move descriptor contains an empty extra key.")
+        extras[key] = raw_value.strip() if sep else "true"
+    return extras
+
+
+def _parse_fast_move(value: str, *, default_weather: bool) -> _ParsedFastMove:
+    """Parse a PvE/PvP fast move descriptor from the CLI."""
+
+    parts = [part.strip() for part in value.split(",")]
+    if len(parts) < 4:
+        raise ValueError(
+            "Fast move descriptor must include name,power,energy_gain,duration."
+        )
+
+    name = parts[0]
+    try:
+        power = float(parts[1])
+        energy_gain = float(parts[2])
+        duration = float(parts[3])
+    except ValueError as exc:  # pragma: no cover - defensive guard.
+        raise ValueError("Fast move power, energy gain, and duration must be numeric.") from exc
+
+    extras = _parse_extra_tokens(parts[4:])
+    stab = _parse_bool(extras.get("stab", "false"))
+    weather = (
+        default_weather
+        if "weather" not in extras
+        else _parse_bool(extras["weather"])
+    )
+    type_effectiveness = float(extras.get("type", extras.get("effectiveness", "1.0")))
+
+    fast_move = FastMove(
+        name=name,
+        power=power,
+        energy_gain=energy_gain,
+        duration=duration,
+        stab=stab,
+        weather_boosted=weather,
+        type_effectiveness=type_effectiveness,
+    )
+
+    pvp_fast: PvpFastMove | None = None
+    if "turns" in extras:
+        try:
+            turns_value = float(extras["turns"])
+        except ValueError as exc:  # pragma: no cover - defensive guard.
+            raise ValueError("Fast move turns must be numeric when provided.") from exc
+        turns = int(turns_value)
+        if turns <= 0:
+            raise ValueError("Fast move turns must be positive when provided.")
+        pvp_fast = PvpFastMove(
+            name=name,
+            damage=power,
+            energy_gain=energy_gain,
+            turns=turns,
+        )
+
+    return _ParsedFastMove(pve=fast_move, pvp=pvp_fast)
+
+
+def _parse_charge_move(value: str, *, default_weather: bool) -> _ParsedChargeMove:
+    """Parse a PvE/PvP charge move descriptor from the CLI."""
+
+    parts = [part.strip() for part in value.split(",")]
+    if len(parts) < 4:
+        raise ValueError(
+            "Charge move descriptor must include name,power,energy_cost,duration."
+        )
+
+    name = parts[0]
+    try:
+        power = float(parts[1])
+        energy_cost = float(parts[2])
+        duration = float(parts[3])
+    except ValueError as exc:  # pragma: no cover - defensive guard.
+        raise ValueError(
+            "Charge move power, energy cost, and duration must be numeric."
+        ) from exc
+
+    extras = _parse_extra_tokens(parts[4:])
+    stab = _parse_bool(extras.get("stab", "false"))
+    weather = (
+        default_weather
+        if "weather" not in extras
+        else _parse_bool(extras["weather"])
+    )
+    type_effectiveness = float(extras.get("type", extras.get("effectiveness", "1.0")))
+
+    charge_move = ChargeMove(
+        name=name,
+        power=power,
+        energy_cost=energy_cost,
+        duration=duration,
+        stab=stab,
+        weather_boosted=weather,
+        type_effectiveness=type_effectiveness,
+    )
+
+    reliability = extras.get("reliability")
+    reliability_value = float(reliability) if reliability is not None else None
+    has_buff = _parse_bool(extras.get("buff", extras.get("has_buff", "false")))
+
+    pvp_charge = PvpChargeMove(
+        name=name,
+        damage=power,
+        energy_cost=energy_cost,
+        reliability=reliability_value,
+        has_buff=has_buff,
+    )
+
+    return _ParsedChargeMove(pve=charge_move, pvp=pvp_charge)
+
+
+def _resolve_league_key(league_cap: int | None) -> str:
+    """Return the canonical league key for the supplied CP cap."""
+
+    if league_cap is None:
+        return "great"
+    if league_cap == 1500:
+        return "great"
+    if league_cap == 2500:
+        return "ultra"
+    if league_cap <= 0:
+        return "master"
+    if league_cap not in {cap for cap in (config.cp_cap for config in DEFAULT_LEAGUE_CONFIGS.values()) if cap is not None}:
+        raise ValueError(
+            "Unsupported league cap; valid values are 1500, 2500, or <=0 for Master League."
+        )
+    return "master"
+
+
 def _template_entry(
     name: str,
     *,
@@ -261,6 +542,27 @@ def _evaluate_single_pokemon(args: argparse.Namespace) -> None:
         )
 
     ivs = tuple(args.ivs)
+    base_stats = tuple(args.base_stats) if args.base_stats is not None else None
+    wants_pve = bool(
+        args.fast_move
+        or args.charge_moves
+        or args.target_defense is not None
+        or args.incoming_dps is not None
+        or args.alpha is not None
+        or args.weather_boost
+    )
+    wants_pvp = bool(
+        args.league_cap is not None
+        or args.beta is not None
+        or args.stat_product_reference is not None
+        or args.move_pressure_reference is not None
+        or args.bait_probability is not None
+    )
+    requires_stats = base_stats is not None or wants_pve or wants_pvp or args.observed_hp is not None
+    if requires_stats and base_stats is None:
+        raise SystemExit(
+            "--base-stats must be provided to infer level, compute PvE, or compute PvP metrics."
+        )
     lookup = _template_entry(
         args.pokemon_name,
         shadow=args.shadow,
@@ -419,6 +721,171 @@ def _evaluate_single_pokemon(args: argparse.Namespace) -> None:
     note = row.get("Why it scores like this")
     if note:
         print("Notes: " + note)
+
+    inferred_stats: dict[str, float | int] | None = None
+    inference_error: str | None = None
+    species_name = args.species or args.pokemon_name
+    if base_stats is not None:
+        base_attack, base_defense, base_stamina = base_stats
+        iv_attack, iv_defense, iv_stamina = ivs
+        try:
+            level, cpm = infer_level_from_cp(
+                base_attack,
+                base_defense,
+                base_stamina,
+                iv_attack,
+                iv_defense,
+                iv_stamina,
+                args.combat_power,
+                is_shadow=args.shadow,
+                is_best_buddy=args.best_buddy,
+                observed_hp=args.observed_hp,
+            )
+            attack_stat, defense_stat, hp_stat = effective_stats(
+                base_attack,
+                base_defense,
+                base_stamina,
+                iv_attack,
+                iv_defense,
+                iv_stamina,
+                level,
+                is_shadow=args.shadow,
+                is_best_buddy=args.best_buddy,
+            )
+        except ValueError as exc:
+            inference_error = str(exc)
+        else:
+            inferred_stats = {
+                "level": level,
+                "cpm": cpm,
+                "attack": attack_stat,
+                "defense": defense_stat,
+                "hp": hp_stat,
+            }
+
+    parsed_fast: _ParsedFastMove | None = None
+    parsed_charges: list[_ParsedChargeMove] = []
+    if args.fast_move:
+        try:
+            parsed_fast = _parse_fast_move(args.fast_move, default_weather=args.weather_boost)
+        except ValueError as exc:
+            raise SystemExit(f"Failed to parse --fast: {exc}") from exc
+    if args.charge_moves:
+        try:
+            parsed_charges = [
+                _parse_charge_move(move, default_weather=args.weather_boost)
+                for move in args.charge_moves
+            ]
+        except ValueError as exc:
+            raise SystemExit(f"Failed to parse --charge: {exc}") from exc
+
+    if wants_pve and inferred_stats is None:
+        raise SystemExit(
+            "PvE scoring requires base stats and CP/IVs to infer effective stats."
+        )
+    if wants_pvp and inferred_stats is None:
+        raise SystemExit(
+            "PvP scoring requires base stats and CP/IVs to infer effective stats."
+        )
+
+    if inferred_stats:
+        print()
+        print("Inferred build stats")
+        print("--------------------")
+        print(f"Species: {species_name}")
+        print(f"Level: {inferred_stats['level']:.1f}")
+        print(f"CPM: {inferred_stats['cpm']:.6f}")
+        print(f"Effective Attack: {inferred_stats['attack']:.2f}")
+        print(f"Effective Defense: {inferred_stats['defense']:.2f}")
+        print(f"Effective HP: {int(inferred_stats['hp'])}")
+    elif inference_error:
+        print()
+        print(f"Level inference failed: {inference_error}")
+
+    pve_output: dict[str, float | Counter[str]] | None = None
+    if wants_pve:
+        if parsed_fast is None:
+            raise SystemExit("PvE scoring requires a fast move descriptor via --fast.")
+        if not parsed_charges:
+            raise SystemExit("PvE scoring requires at least one --charge descriptor.")
+        if args.target_defense is None:
+            raise SystemExit("PvE scoring requires --target-defense.")
+        if args.incoming_dps is None:
+            raise SystemExit("PvE scoring requires --incoming-dps.")
+        alpha_value = args.alpha if args.alpha is not None else 0.6
+        pve_output = compute_pve_score(
+            inferred_stats["attack"],
+            inferred_stats["defense"],
+            int(inferred_stats["hp"]),
+            parsed_fast.pve,
+            [move.pve for move in parsed_charges],
+            target_defense=args.target_defense,
+            incoming_dps=args.incoming_dps,
+            alpha=alpha_value,
+        )
+
+    pvp_output: dict[str, float] | None = None
+    pvp_league = "great"
+    if wants_pvp:
+        if parsed_fast is None:
+            raise SystemExit("PvP scoring requires a fast move descriptor via --fast.")
+        if parsed_fast.pvp is None:
+            raise SystemExit("PvP scoring requires --fast to include turns=... for PvP timing.")
+        if not parsed_charges:
+            raise SystemExit("PvP scoring requires at least one --charge descriptor.")
+        try:
+            pvp_league = _resolve_league_key(args.league_cap)
+        except ValueError as exc:
+            raise SystemExit(str(exc)) from exc
+        pvp_output = compute_pvp_score(
+            inferred_stats["attack"],
+            inferred_stats["defense"],
+            int(inferred_stats["hp"]),
+            parsed_fast.pvp,
+            [move.pvp for move in parsed_charges],
+            league=pvp_league,
+            beta=args.beta,
+            stat_product_reference=args.stat_product_reference,
+            move_pressure_reference=args.move_pressure_reference,
+            bait_probability=args.bait_probability,
+            league_configs=DEFAULT_LEAGUE_CONFIGS,
+        )
+
+    if pve_output:
+        alpha_value = pve_output.get("alpha", args.alpha if args.alpha is not None else 0.6)
+        charge_usage = pve_output["charge_usage_per_cycle"]
+        charge_summary = ", ".join(
+            f"{name}: {count:.2f}" for name, count in sorted(charge_usage.items())
+        )
+        if not charge_summary:
+            charge_summary = "None"
+        print()
+        print("PvE value")
+        print("---------")
+        print(f"Rotation DPS: {pve_output['dps']:.2f}")
+        print(f"Cycle Damage: {pve_output['cycle_damage']:.2f}")
+        print(f"Cycle Time: {pve_output['cycle_time']:.2f}s")
+        print(f"Fast Moves / Cycle: {pve_output['fast_moves_per_cycle']:.2f}")
+        print(f"Charge Use / Cycle: {charge_summary}")
+        print(f"EHP: {pve_output['ehp']:.2f}")
+        print(f"TDO: {pve_output['tdo']:.2f}")
+        print(f"PvE Value (alpha={alpha_value:.2f}): {pve_output['value']:.2f}")
+
+    if pvp_output:
+        league_label = pvp_league.capitalize()
+        beta_value = args.beta if args.beta is not None else 0.52
+        print()
+        print(f"PvP value ({league_label} League)")
+        print("---------------------------")
+        print(f"Stat Product: {pvp_output['stat_product']:.2f}")
+        print(
+            f"Normalised Stat Product: {pvp_output['stat_product_normalised']:.4f}"
+        )
+        print(f"Move Pressure: {pvp_output['move_pressure']:.2f}")
+        print(
+            f"Normalised Move Pressure: {pvp_output['move_pressure_normalised']:.4f}"
+        )
+        print(f"PvP Score (beta={beta_value:.2f}): {pvp_output['score']:.4f}")
 
 
 def generate_scoreboard(
