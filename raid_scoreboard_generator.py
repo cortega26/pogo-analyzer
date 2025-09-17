@@ -273,8 +273,12 @@ def _evaluate_single_pokemon(args: argparse.Namespace) -> None:
     template_requires_move = template.requires_special_move if template else False
     template_missing_move = template.needs_tm if template else False
     guidance_requires_move = guidance.needs_tm if guidance else False
+
     requires_special_move = bool(
-        template_requires_move or guidance_requires_move or args.needs_tm
+        template_requires_move
+        or guidance_requires_move
+        or template_missing_move
+        or args.needs_tm
     )
 
     if args.has_special_move:
@@ -283,10 +287,13 @@ def _evaluate_single_pokemon(args: argparse.Namespace) -> None:
         needs_tm = True
     elif template_missing_move:
         needs_tm = True
-    elif requires_special_move:
-        needs_tm = True
     else:
         needs_tm = False
+
+    guidance_note = guidance.note if guidance else None
+    template_guidance_note = None
+    if template_requires_move and template and template.notes:
+        template_guidance_note = f"Guidance: {template.notes}"
 
     note_parts: list[str] = []
     if args.notes:
@@ -294,8 +301,8 @@ def _evaluate_single_pokemon(args: argparse.Namespace) -> None:
     if template and template.notes:
         if not (args.has_special_move and template_requires_move):
             note_parts.append(template.notes)
-    if guidance and guidance.note and not args.has_special_move:
-        note_parts.append(guidance.note)
+    if guidance_note and not args.has_special_move:
+        note_parts.append(guidance_note)
 
     notes = " ".join(dict.fromkeys(part for part in note_parts if part)).strip()
     if penalty > 0:
@@ -343,14 +350,19 @@ def _evaluate_single_pokemon(args: argparse.Namespace) -> None:
     print(f"IVs: {ivs[0]}/{ivs[1]}/{ivs[2]}")
     if guidance and guidance.required_move:
         print(f"Recommended Charged Move: {guidance.required_move}")
-    if needs_tm:
+    should_prompt_action = (
+        needs_tm or (requires_special_move and not args.has_special_move)
+    )
+    if should_prompt_action:
         action_note = None
-        if guidance and guidance.note and not args.has_special_move:
-            action_note = guidance.note
-        elif template and template.notes and not args.has_special_move:
-            action_note = template.notes
+        if guidance_note and not args.has_special_move:
+            action_note = guidance_note
+        elif template_guidance_note and not args.has_special_move:
+            action_note = template_guidance_note
         elif args.notes:
             action_note = args.notes
+        elif requires_special_move and not args.has_special_move:
+            action_note = "Unlock this Pokémon's exclusive move to reach the listed score."
         if action_note:
             print(f"Action: {action_note}")
     if args.has_special_move and (guidance or template) and needs_tm is False:

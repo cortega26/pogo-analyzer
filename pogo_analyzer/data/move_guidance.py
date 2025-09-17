@@ -111,6 +111,11 @@ _GUIDANCE: dict[str, MoveGuidance] = {
         needs_tm=True,
         note="Legacy fast moves (Lick/Shadow Claw) boost Gengar; plan for Elite TM.",
     ),
+    "haunter": MoveGuidance(
+        required_move="Shadow Claw / Lick",
+        needs_tm=True,
+        note="Legacy fast moves (Lick/Shadow Claw) boost Gengar; plan for Elite TM.",
+    ),
     "gengar": MoveGuidance(
         required_move="Shadow Claw / Lick",
         needs_tm=True,

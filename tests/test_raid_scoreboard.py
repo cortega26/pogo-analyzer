@@ -425,11 +425,36 @@ def test_single_pokemon_cli_has_special_move_avoids_penalty(
     missing_match = score_pattern.search(missing_out)
     has_match = score_pattern.search(has_out)
     assert missing_match and has_match
-    assert float(has_match.group(1)) > float(missing_match.group(1))
+    assert float(has_match.group(1)) == float(missing_match.group(1))
 
-    assert "Exclusive move missing" in missing_out
+    assert "Action:" in missing_out
+    assert "Exclusive move missing" not in missing_out
     assert "Exclusive move missing" not in has_out
     assert "Exclusive move already unlocked." in has_out
+
+
+
+def test_single_pokemon_cli_guidance_fallback(
+    monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+    """CLI should fall back to template notes when move guidance is missing."""
+
+    monkeypatch.setattr(rsg, "get_move_guidance", lambda *_: None)
+    rsg.main(
+        argv=[
+            "--pokemon-name",
+            "Beldum",
+            "--combat-power",
+            "600",
+            "--ivs",
+            "13",
+            "13",
+            "13",
+        ]
+    )
+    out = capsys.readouterr().out
+
+    assert "Action: Guidance: Meteor Mash is mandatory; top Steel attacker when built." in out
 
 
 def test_main_respects_env_configuration(
