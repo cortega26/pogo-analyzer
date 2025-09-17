@@ -14,6 +14,7 @@ from .data.raid_entries import (
     build_entry_rows,
     load_raid_entries,
 )
+from .formulas import damage_per_hit, effective_stats, infer_level_from_cp
 from .raid_entries import RAID_ENTRIES, build_rows
 from .scoreboard import (
     ExportResult,
@@ -25,6 +26,8 @@ from .scoreboard import (
     generate_scoreboard,
 )
 from .scoring import calculate_iv_bonus, calculate_raid_score, iv_bonus, raid_score
+from .pve import compute_pve_score
+from .pvp import compute_pvp_score
 from .simple_table import Row, SimpleSeries, SimpleTable
 
 
@@ -69,5 +72,10 @@ __all__ = [
     "calculate_raid_score",
     "iv_bonus",
     "raid_score",
+    "infer_level_from_cp",
+    "effective_stats",
+    "damage_per_hit",
+    "compute_pve_score",
+    "compute_pvp_score",
     "__version__",
 ]
