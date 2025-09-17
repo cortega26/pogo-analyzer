@@ -457,6 +457,20 @@ def test_special_move_entries_have_guidance_or_notes() -> None:
         assert has_guidance or entry.notes, f"Missing guidance for {entry.name}"
 
 
+def test_special_move_entries_call_out_acquisition_path() -> None:
+    """Special-move notes must explain how to obtain the exclusive move."""
+
+    keywords = ("elite tm", "community day", "legacy", "event-limited", "exclusive")
+
+    for entry in pa.DEFAULT_RAID_ENTRIES:
+        if not entry.requires_special_move:
+            continue
+        note = (entry.notes or "").lower()
+        assert any(keyword in note for keyword in keywords), (
+            f"Special-move note for {entry.name} must mention acquisition guidance"
+        )
+
+
 def test_load_raid_entries_matches_default_dataset() -> None:
     """The JSON-backed loader should reproduce the packaged dataset."""
 
@@ -755,7 +769,10 @@ def test_single_pokemon_cli_guidance_fallback(
     )
     out = capsys.readouterr().out
 
-    assert "Action: Guidance: Meteor Mash is mandatory; top Steel attacker when built." in out
+    assert (
+        "Action: Guidance: Meteor Mash is mandatory and Community Day-exclusive; use an Elite TM if you missed it."
+        in out
+    )
 
 
 def test_main_respects_env_configuration(
