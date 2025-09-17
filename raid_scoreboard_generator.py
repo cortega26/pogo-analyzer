@@ -186,6 +186,9 @@ def _priority_label(score: float) -> str:
     return "D (Doesn't belong on a Raids list)"
 
 
+_SHADOW_BASELINE_BONUS = 6.0
+
+
 def _score_from_combat_power(combat_power: int) -> float:
     """Normalise combat power into the 1–100 raid score baseline."""
 
@@ -269,14 +272,21 @@ def _evaluate_single_pokemon(args: argparse.Namespace) -> None:
     else:
         guidance = None
 
+    shadow_bonus_applied = False
     if template:
         base_score = template.base
         role = args.role or template.role
         final_form = args.final_form or template.final_form
+        if args.shadow and lookup.variant_mismatch and not template.shadow:
+            base_score += _SHADOW_BASELINE_BONUS
+            shadow_bonus_applied = True
     else:
         base_score = _score_from_combat_power(args.combat_power)
         role = args.role or ""
         final_form = args.final_form or ""
+        if args.shadow:
+            base_score += _SHADOW_BASELINE_BONUS
+            shadow_bonus_applied = True
 
     base_score = max(SCORE_MIN, min(SCORE_MAX, base_score))
     template_target_cp = template.target_cp if template else None
@@ -320,6 +330,10 @@ def _evaluate_single_pokemon(args: argparse.Namespace) -> None:
             note_parts.append(template.notes)
     if guidance_note and not args.has_special_move:
         note_parts.append(guidance_note)
+    if shadow_bonus_applied:
+        note_parts.append(
+            "Applied shadow damage bonus to baseline score due to missing dedicated template."
+        )
 
     notes = " ".join(dict.fromkeys(part for part in note_parts if part)).strip()
     if penalty > 0:

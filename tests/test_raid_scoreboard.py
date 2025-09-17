@@ -203,6 +203,62 @@ def test_canonical_api_aliases() -> None:
     assert canonical_score == legacy_score
 
 
+def _single_eval(argv: list[str], capsys: pytest.CaptureFixture[str]) -> tuple[float, str]:
+    """Invoke the CLI for a single Pokémon and return the score with raw output."""
+
+    capsys.readouterr()
+    rsg.main(argv)
+    captured = capsys.readouterr().out
+    match = re.search(r"Raid Score: ([0-9]+\.[0-9])", captured)
+    assert match, f"Raid score not found in output:\n{captured}"
+    return float(match.group(1)), captured
+
+
+def test_shadow_bonus_applied_for_template_fallback(capsys: pytest.CaptureFixture[str]) -> None:
+    """Shadow evaluations without templates should receive the baseline bonus."""
+
+    base_args = [
+        "--pokemon-name",
+        "Charmander",
+        "--combat-power",
+        "203",
+        "--ivs",
+        "12",
+        "7",
+        "9",
+    ]
+    regular_score, regular_output = _single_eval(base_args, capsys)
+    shadow_score, shadow_output = _single_eval(base_args + ["--shadow"], capsys)
+
+    assert pytest.approx(regular_score, rel=0, abs=0.01) == 54.1
+    assert pytest.approx(shadow_score, rel=0, abs=0.01) == 60.1
+    assert shadow_score - regular_score == pytest.approx(6.0, rel=0, abs=0.01)
+    assert "Applied shadow damage bonus" in shadow_output
+    assert "Applied shadow damage bonus" not in regular_output
+
+
+def test_shadow_bonus_applied_when_template_variant_missing(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    """When only the regular template exists, add the same baseline shadow bonus."""
+
+    base_args = [
+        "--pokemon-name",
+        "Snover",
+        "--combat-power",
+        "1234",
+        "--ivs",
+        "15",
+        "13",
+        "12",
+    ]
+    regular_score, _ = _single_eval(base_args, capsys)
+    shadow_score, shadow_output = _single_eval(base_args + ["--shadow"], capsys)
+
+    assert shadow_score - regular_score == pytest.approx(6.0, rel=0, abs=0.01)
+    assert "Applied shadow damage bonus" in shadow_output
+
+
 
 
 def test_name_normalisation_handles_forms() -> None:
