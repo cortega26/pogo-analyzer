@@ -131,6 +131,7 @@ pogo-raid-scoreboard \
 
 The CLI prints an on-the-spot summary including the computed raid score and priority tier without generating files.
 If you already have the exclusive move unlocked, add `--has-special-move` to suppress the reminder.
+Use `--target-cp` to tell the CLI what raid-ready CP you're aiming for; it only flags builds as underpowered when a target is provided.
 
 ## Library examples
 
@@ -153,6 +154,7 @@ entries = [
         role="Dark DPS",
         base=88,
         requires_special_move=True,
+        target_cp=3700,
         notes="Top-tier Dark attacker with its Community Day move.",
     )
 ]

@@ -215,6 +215,16 @@ def test_dataset_requires_special_move_not_penalized() -> None:
     assert row["Move Needs (CD/ETM?)"] == "Yes"
 
 
+def test_special_move_entries_have_guidance_or_notes() -> None:
+    """Every special-move template should provide actionable guidance."""
+
+    for entry in pa.DEFAULT_RAID_ENTRIES:
+        if not entry.requires_special_move:
+            continue
+        has_guidance = rsg.get_move_guidance(entry.name) is not None
+        assert has_guidance or entry.notes, f"Missing guidance for {entry.name}"
+
+
 def test_load_raid_entries_matches_default_dataset() -> None:
     """The JSON-backed loader should reproduce the packaged dataset."""
 
@@ -428,10 +438,68 @@ def test_single_pokemon_cli_has_special_move_avoids_penalty(
     assert float(has_match.group(1)) == float(missing_match.group(1))
 
     assert "Action:" in missing_out
+    assert "Underpowered" not in missing_out
     assert "Exclusive move missing" not in missing_out
     assert "Exclusive move missing" not in has_out
     assert "Exclusive move already unlocked." in has_out
 
+
+
+def test_single_pokemon_cli_target_cp_penalty(capsys: pytest.CaptureFixture[str]) -> None:
+    """Target CP should drive underpowered messaging when supplied."""
+
+    rsg.main(
+        argv=[
+            "--pokemon-name",
+            "Crawdaunt",
+            "--combat-power",
+            "1200",
+            "--ivs",
+            "10",
+            "10",
+            "10",
+        ]
+    )
+    out_without_target = capsys.readouterr().out
+
+    rsg.main(
+        argv=[
+            "--pokemon-name",
+            "Crawdaunt",
+            "--combat-power",
+            "1200",
+            "--ivs",
+            "10",
+            "10",
+            "10",
+            "--target-cp",
+            "3000",
+        ]
+    )
+    out_with_target = capsys.readouterr().out
+
+    assert "Underpowered" not in out_without_target
+    assert "Underpowered" in out_with_target
+
+
+def test_single_pokemon_cli_dataset_target_cp(capsys: pytest.CaptureFixture[str]) -> None:
+    """Templates can define target CP values for automatic underpowered checks."""
+
+    rsg.main(
+        argv=[
+            "--pokemon-name",
+            "Beldum",
+            "--combat-power",
+            "1500",
+            "--ivs",
+            "10",
+            "10",
+            "10",
+        ]
+    )
+    out = capsys.readouterr().out
+
+    assert "Underpowered" in out
 
 
 def test_single_pokemon_cli_guidance_fallback(

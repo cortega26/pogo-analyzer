@@ -78,6 +78,7 @@ Immutable dataclass representing one row on the raid scoreboard.
 | `shadow` | `bool` | Indicates the Pokémon is a Shadow variant. Used for labelling only—the damage boost is baked into the baseline score you provide. |
 | `requires_special_move` | `bool` | Marks builds that rely on an exclusive or limited move; shown in the scoreboard’s “Move Needs” column. |
 | `needs_tm` | `bool` | Subtracts 2 points when the exclusive move is still locked on the evaluated Pokémon. |
+| `target_cp` | `int \| None` | Optional target combat power for a raid-ready build; powers the underpowered warning. |
 | `mega_now` | `bool` | Adds +4 points when a relevant mega evolution is currently available. |
 | `mega_soon` | `bool` | Adds +1 point when a mega evolution is confirmed but not yet released. |
 | `notes` | `str` | Free-form explanation shown in the scoreboard. |
@@ -92,6 +93,7 @@ Convenience methods:
 - `iv_text()` – Render the IV tuple as `"15/14/13"`.
 - `mega_text()` – Display `"Yes"`, `"Soon"`, or `"No"` for mega availability.
 - `move_text()` – Return `"Yes"` when `requires_special_move` is set.
+- `target_cp` – Optional attribute you can set directly when instantiating the dataclass.
 - `to_row()` – Produce a `dict[str, Any]` matching the scoreboard column schema.
 - `as_row()` – Backwards-compatible alias for `to_row()`.
 

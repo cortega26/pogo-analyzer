@@ -30,6 +30,7 @@ class PokemonRaidEntry:
     shadow: bool = False
     requires_special_move: bool = False
     needs_tm: bool = False
+    target_cp: int | None = None
     mega_now: bool = False
     mega_soon: bool = False
     notes: str = ""
@@ -58,6 +59,10 @@ class PokemonRaidEntry:
                 f"range [{SCORE_MIN}, {SCORE_MAX}]."
             )
             raise ValueError(msg)
+
+        if self.target_cp is not None:
+            if not isinstance(self.target_cp, int) or self.target_cp <= 0:
+                raise ValueError("PokemonRaidEntry.target_cp must be a positive integer when provided.")
 
     def formatted_name(self) -> str:
         """Return the display name with ``(lucky)``/``(shadow)`` suffixes."""
@@ -299,6 +304,19 @@ def _coerce_entry(
                     f"Raid entry '{entry_name}' field '{field_name}' must be a boolean."
                 )
             kwargs[field_name] = value
+        elif field_name == "target_cp":
+            if value is None:
+                kwargs[field_name] = None
+            elif isinstance(value, bool) or not isinstance(value, (int, float)):
+                raise TypeError(
+                    f"Raid entry '{entry_name}' field 'target_cp' must be a positive integer."
+                )
+            elif int(value) <= 0:
+                raise ValueError(
+                    f"Raid entry '{entry_name}' field 'target_cp' must be a positive integer."
+                )
+            else:
+                kwargs[field_name] = int(value)
         else:
             kwargs[field_name] = value
     try:

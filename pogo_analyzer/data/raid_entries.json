@@ -364,7 +364,8 @@
       "purified": false,
       "role": "Steel DPS (top)",
       "shadow": false,
-      "requires_special_move": true
+      "requires_special_move": true,
+      "target_cp": 3600
     },
     {
       "base": 82,
@@ -1114,6 +1115,11 @@
         "description": "Marks best buddy bonuses applied in the table output.",
         "required": false,
         "type": "boolean"
+      },
+      "target_cp": {
+        "description": "Target combat power for a fully powered build.",
+        "required": false,
+        "type": "number"
       }
     },
     "schema_version": 1

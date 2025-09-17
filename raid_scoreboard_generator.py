@@ -105,6 +105,11 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         "--combat-power", type=int, help="Combat Power displayed in-game."
     )
     parser.add_argument(
+        "--target-cp",
+        type=int,
+        help="Target combat power for a fully powered build (use to evaluate underpowered status).",
+    )
+    parser.add_argument(
         "--ivs",
         type=int,
         nargs=3,
@@ -188,15 +193,14 @@ def _score_from_combat_power(combat_power: int) -> float:
     return max(SCORE_MIN, min(SCORE_MAX, round(scaled, 1)))
 
 
-def _cp_penalty(combat_power: int | None) -> float:
-    """Return a penalty for underpowered Pokémon based on combat power."""
+def _cp_penalty(combat_power: int | None, *, target_cp: int | None) -> float:
+    """Return a penalty for underpowered Pokémon when a target CP is defined."""
 
-    if combat_power is None:
+    if combat_power is None or target_cp is None:
         return 0.0
-    target = 3100
-    if combat_power >= target:
+    if combat_power >= target_cp:
         return 0.0
-    penalty = (target - combat_power) / 350
+    penalty = (target_cp - combat_power) / max(target_cp * 0.1, 1)
     return max(0.0, min(20.0, round(penalty, 1)))
 
 
@@ -268,7 +272,11 @@ def _evaluate_single_pokemon(args: argparse.Namespace) -> None:
         final_form = args.final_form or ""
 
     base_score = max(SCORE_MIN, min(SCORE_MAX, base_score))
-    penalty = _cp_penalty(args.combat_power if template else None)
+    template_target_cp = template.target_cp if template else None
+    if args.target_cp is not None and args.target_cp <= 0:
+        raise SystemExit("--target-cp must be a positive integer when provided.")
+    target_cp = args.target_cp or template_target_cp
+    penalty = _cp_penalty(args.combat_power, target_cp=target_cp)
 
     template_requires_move = template.requires_special_move if template else False
     template_missing_move = template.needs_tm if template else False
@@ -320,6 +328,7 @@ def _evaluate_single_pokemon(args: argparse.Namespace) -> None:
         shadow=args.shadow,
         requires_special_move=requires_special_move,
         needs_tm=needs_tm,
+        target_cp=target_cp,
         notes=notes,
         purified=args.purified,
         best_buddy=args.best_buddy,
