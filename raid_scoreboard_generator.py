@@ -1,4 +1,4 @@
-"""
+﻿"""
 Generate a ranked raid scoreboard from curated Pokémon entries.
 
 The script mirrors the heuristics used in the original spreadsheet-based
@@ -210,6 +210,7 @@ class TemplateLookup:
 
     entry: PokemonRaidEntry | None
     name_matches: bool
+    variant_mismatch: bool
 
 
 def _template_entry(
@@ -224,13 +225,18 @@ def _template_entry(
     key = normalise_name(name)
     matches = [entry for entry in RAID_ENTRIES if normalise_name(entry.name) == key]
     if not matches:
-        return TemplateLookup(entry=None, name_matches=False)
+        return TemplateLookup(entry=None, name_matches=False, variant_mismatch=False)
 
+    variant_mismatch = False
     same_shadow = [entry for entry in matches if entry.shadow == shadow]
-    if not same_shadow:
-        return TemplateLookup(entry=None, name_matches=True)
+    if same_shadow:
+        candidates = same_shadow
+    elif shadow:
+        candidates = matches
+        variant_mismatch = True
+    else:
+        return TemplateLookup(entry=None, name_matches=True, variant_mismatch=False)
 
-    candidates = same_shadow
     same_purified = [entry for entry in candidates if entry.purified == purified]
     if same_purified:
         candidates = same_purified
@@ -238,7 +244,8 @@ def _template_entry(
     if same_best_buddy:
         candidates = same_best_buddy
 
-    return TemplateLookup(entry=max(candidates, key=lambda entry: entry.base), name_matches=True)
+    entry = max(candidates, key=lambda entry: entry.base)
+    return TemplateLookup(entry=entry, name_matches=True, variant_mismatch=variant_mismatch)
 
 
 def _evaluate_single_pokemon(args: argparse.Namespace) -> None:
@@ -277,6 +284,8 @@ def _evaluate_single_pokemon(args: argparse.Namespace) -> None:
         raise SystemExit("--target-cp must be a positive integer when provided.")
     target_cp = args.target_cp or template_target_cp
     penalty = _cp_penalty(args.combat_power, target_cp=target_cp)
+    if penalty > 0:
+        base_score = max(SCORE_MIN, base_score - penalty)
 
     template_requires_move = template.requires_special_move if template else False
     template_missing_move = template.needs_tm if template else False

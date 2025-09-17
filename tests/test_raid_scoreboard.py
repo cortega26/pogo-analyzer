@@ -204,6 +204,16 @@ def test_canonical_api_aliases() -> None:
 
 
 
+
+def test_name_normalisation_handles_forms() -> None:
+    """normalise_name should retain meaningful form descriptors."""
+
+    assert rsg.normalise_name('Giratina (Origin Forme)') == 'giratina-origin'
+    assert rsg.normalise_name('Giratina (Altered)') == 'giratina-altered'
+    assert rsg.normalise_name('Flabebe (lucky)') == 'flabebe'
+    assert rsg.normalise_name('Gengar (hundo)') == 'gengar'
+
+
 def test_dataset_requires_special_move_not_penalized() -> None:
     """Entries that need special moves should retain full scores by default."""
 

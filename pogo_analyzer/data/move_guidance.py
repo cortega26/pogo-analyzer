@@ -145,16 +145,58 @@ _GUIDANCE: dict[str, MoveGuidance] = {
 
 
 def normalise_name(name: str) -> str:
-    """Return a lowercase key suitable for dictionary lookup."""
+    """Normalise a Pokémon label while keeping meaningful form descriptors."""
 
     cleaned = name.lower().strip()
-    for prefix in ("shadow ", "purified ", "mega "):
+    prefix_map = ("shadow ", "purified ", "mega ", "apex shadow ", "apex ")
+    for prefix in prefix_map:
         if cleaned.startswith(prefix):
             cleaned = cleaned[len(prefix) :]
             break
+
+    cleaned = " ".join(cleaned.split())
+    cleaned = cleaned.replace("’", "'")
+
+    ignored_tokens = {
+        "preferred",
+        "form",
+        "forme",
+        "forms",
+        "raid",
+        "build",
+        "team",
+        "lucky",
+        "hundo",
+        "l40",
+        "lvl40",
+        "level40",
+        "xl",
+        "shadow",
+        "mega",
+    }
+
+    import re
+
+    form_tokens: list[str] = []
+    for match in re.findall(r"\(([^)]+)\)", cleaned):
+        tokens = [token for token in re.split(r"[\s/]+", match) if token]
+        meaningful = [token for token in tokens if token not in ignored_tokens]
+        if meaningful:
+            form_tokens.extend(meaningful)
+    cleaned = re.sub(r"\([^)]*\)", "", cleaned)
+
     cleaned = cleaned.split("#", 1)[0]
-    cleaned = cleaned.split("(", 1)[0]
-    return cleaned.strip()
+    cleaned = cleaned.replace("'", "")
+
+    base_tokens = [token for token in re.split(r"[^a-z0-9]+", cleaned) if token]
+    slug_parts = base_tokens
+    if form_tokens:
+        slug_parts = base_tokens + [token for token in form_tokens if token]
+
+    if not slug_parts:
+        return ""
+
+    return "-".join(slug_parts)
 
 
 def get_move_guidance(name: str) -> MoveGuidance | None:
