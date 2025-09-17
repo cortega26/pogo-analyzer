@@ -8,7 +8,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- Nothing yet.
+- Modules for CP-to-level inference and PvE/PvP value calculations to support upcoming analysis workflows.
+- CLI flags enabling level inference from Combat Power as well as PvE and PvP value output in the command-line tools.
+- Documentation updates covering how to use the CP-to-level inference and value calculators in both CLI and API contexts.
 
 ## [0.1.0] - 2024-05-09
 
