@@ -3,12 +3,12 @@
 from __future__ import annotations
 
 import json
-from collections.abc import Sequence
+from collections.abc import Iterable, Mapping, Sequence
 from dataclasses import dataclass, fields
 from functools import cache
 from importlib import resources
 from pathlib import Path
-from typing import Any, Iterable, Mapping
+from typing import Any
 
 from pogo_analyzer.scoring import calculate_iv_bonus, calculate_raid_score
 from pogo_analyzer.scoring.metrics import SCORE_MAX, SCORE_MIN
@@ -28,6 +28,7 @@ class PokemonRaidEntry:
     base: float = 70.0
     lucky: bool = False
     shadow: bool = False
+    requires_special_move: bool = False
     needs_tm: bool = False
     mega_now: bool = False
     mega_soon: bool = False
@@ -90,7 +91,7 @@ class PokemonRaidEntry:
     def move_text(self) -> str:
         """Return ``Yes`` when the Pokémon relies on a special move."""
 
-        return "Yes" if self.needs_tm else "No"
+        return "Yes" if self.requires_special_move else "No"
 
     def to_row(self) -> Row:
         """Convert the dataclass into the row structure consumed by tables."""
@@ -140,6 +141,7 @@ _STRING_FIELDS = {"name", "final_form", "role", "notes"}
 _BOOLEAN_FIELDS = {
     "lucky",
     "shadow",
+    "requires_special_move",
     "needs_tm",
     "mega_now",
     "mega_soon",
@@ -166,7 +168,6 @@ def build_rows(entries: Sequence[PokemonRaidEntry]) -> list[Row]:
     """Backward-compatible alias for :func:`build_entry_rows`."""
 
     return build_entry_rows(entries)
-
 
 
 def _read_payload(path: Path | str | None) -> tuple[Mapping[str, Any], list[Any]]:
@@ -197,7 +198,9 @@ def _parse_metadata(metadata: Mapping[str, Any]) -> set[str]:
 
     schema_version = metadata.get("schema_version")
     if not isinstance(schema_version, int):
-        raise ValueError("Raid entry metadata must include an integer 'schema_version'.")
+        raise ValueError(
+            "Raid entry metadata must include an integer 'schema_version'."
+        )
     fields_metadata = metadata.get("fields")
     if not isinstance(fields_metadata, Mapping):
         raise ValueError("Raid entry metadata must include a 'fields' mapping.")
@@ -212,8 +215,7 @@ def _parse_metadata(metadata: Mapping[str, Any]) -> set[str]:
     if unsupported:
         unsupported_list = ", ".join(sorted(unsupported))
         raise ValueError(
-            "Raid entry metadata declares unsupported fields: "
-            f"{unsupported_list}."
+            "Raid entry metadata declares unsupported fields: " f"{unsupported_list}."
         )
     required_fields: set[str] = set()
     for field_name, descriptor in fields_metadata.items():
@@ -231,7 +233,9 @@ def _parse_metadata(metadata: Mapping[str, Any]) -> set[str]:
             required_fields.add(field_name)
     columns = metadata.get("columns")
     if columns is not None and not isinstance(columns, Mapping):
-        raise ValueError("Raid entry metadata 'columns' must be an object when provided.")
+        raise ValueError(
+            "Raid entry metadata 'columns' must be an object when provided."
+        )
     return required_fields
 
 
@@ -269,7 +273,9 @@ def _coerce_entry(
                 raise ValueError(
                     f"Raid entry '{entry_name}' field 'ivs' must contain exactly three values."
                 )
-            if not all(isinstance(iv, int) and not isinstance(iv, bool) for iv in value):
+            if not all(
+                isinstance(iv, int) and not isinstance(iv, bool) for iv in value
+            ):
                 raise TypeError(
                     f"Raid entry '{entry_name}' field 'ivs' must contain integer values."
                 )

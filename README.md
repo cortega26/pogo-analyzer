@@ -152,7 +152,7 @@ entries = [
         final_form="Hydreigon (Brutal Swing)",
         role="Dark DPS",
         base=88,
-        needs_tm=True,
+        requires_special_move=True,
         notes="Top-tier Dark attacker with its Community Day move.",
     )
 ]

@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import copy
 import json
+import re
 from pathlib import Path
 
 import pytest
@@ -109,6 +110,7 @@ def test_pokemon_entry_row_generation() -> None:
         base=81,
         lucky=True,
         shadow=True,
+        requires_special_move=True,
         needs_tm=True,
         mega_soon=True,
         notes="Example entry for unit tests.",
@@ -201,6 +203,18 @@ def test_canonical_api_aliases() -> None:
     assert canonical_score == legacy_score
 
 
+
+def test_dataset_requires_special_move_not_penalized() -> None:
+    """Entries that need special moves should retain full scores by default."""
+
+    entry = next(e for e in pa.DEFAULT_RAID_ENTRIES if e.requires_special_move)
+    row = entry.to_row()
+
+    assert entry.requires_special_move
+    assert entry.needs_tm is False
+    assert row["Move Needs (CD/ETM?)"] == "Yes"
+
+
 def test_load_raid_entries_matches_default_dataset() -> None:
     """The JSON-backed loader should reproduce the packaged dataset."""
 
@@ -243,7 +257,9 @@ def test_load_raid_entries_rejects_out_of_range_score(tmp_path: Path) -> None:
     target = tmp_path / "invalid_score.json"
     target.write_text(json.dumps(payload), encoding="utf-8")
 
-    with pytest.raises(ValueError, match=r"Raid entry 'Broken' is invalid: .*base must fall within"):
+    with pytest.raises(
+        ValueError, match=r"Raid entry 'Broken' is invalid: .*base must fall within"
+    ):
         pa.load_raid_entries(target)
 
 
@@ -260,9 +276,102 @@ def test_pokemon_entry_validation_rejects_bad_inputs() -> None:
         rsg.PokemonRaidEntry("Float IV", (15, 15, 15.0))  # type: ignore[arg-type]
 
 
+def test_single_pokemon_shadow_template_only(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    """When only a shadow template exists, normal forms should fall back to CP heuristics."""
+
+    rsg.main(
+        argv=[
+            "--pokemon-name",
+            "Giratina",
+            "--combat-power",
+            "3000",
+            "--ivs",
+            "15",
+            "15",
+            "15",
+        ]
+    )
+    normal_out = capsys.readouterr().out
+
+    rsg.main(
+        argv=[
+            "--pokemon-name",
+            "Giratina",
+            "--combat-power",
+            "3000",
+            "--ivs",
+            "15",
+            "15",
+            "15",
+            "--shadow",
+        ]
+    )
+    shadow_out = capsys.readouterr().out
+
+    score_pattern = re.compile(r"Raid Score: ([0-9]+\.?[0-9]*)/100")
+    normal_match = score_pattern.search(normal_out)
+    shadow_match = score_pattern.search(shadow_out)
+    assert normal_match and shadow_match
+    normal_score = float(normal_match.group(1))
+    shadow_score = float(shadow_match.group(1))
+
+    assert shadow_score > normal_score
+    assert normal_score < 90
 
 
-def test_single_pokemon_cli_output(monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]) -> None:
+def test_single_pokemon_shadow_vs_normal_diff(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    """Shadow variants should receive a higher baseline than regular forms."""
+
+    rsg.main(
+        argv=[
+            "--pokemon-name",
+            "Larvitar",
+            "--combat-power",
+            "371",
+            "--ivs",
+            "11",
+            "14",
+            "14",
+        ]
+    )
+    normal_out = capsys.readouterr().out
+
+    rsg.main(
+        argv=[
+            "--pokemon-name",
+            "Larvitar",
+            "--combat-power",
+            "371",
+            "--ivs",
+            "11",
+            "14",
+            "14",
+            "--shadow",
+        ]
+    )
+    shadow_out = capsys.readouterr().out
+
+    score_pattern = re.compile(r"Raid Score: ([0-9]+\.?[0-9]*)/100")
+    normal_match = score_pattern.search(normal_out)
+    shadow_match = score_pattern.search(shadow_out)
+    assert normal_match and shadow_match
+    normal_score = float(normal_match.group(1))
+    shadow_score = float(shadow_match.group(1))
+
+    assert shadow_score > normal_score
+    assert "Shadow" in shadow_out
+    assert "Shadow" not in normal_out
+
+
+def test_single_pokemon_cli_output(
+    monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
+) -> None:
+
+
     """The CLI should print a recommendation when a single Pokémon is supplied."""
 
     result = rsg.main(
@@ -289,6 +398,39 @@ def test_single_pokemon_cli_output(monkeypatch: pytest.MonkeyPatch, capsys: pyte
     assert "Priority Tier" in out
     assert "Recommended Charged Move" in out
     assert "Exclusive move missing" in out
+
+
+def test_single_pokemon_cli_has_special_move_avoids_penalty(
+    capsys: pytest.CaptureFixture[str],
+) -> None:
+    """Users confirming the special move should avoid the default penalty."""
+
+    args = [
+        "--pokemon-name",
+        "Hydreigon",
+        "--combat-power",
+        "3200",
+        "--ivs",
+        "15",
+        "14",
+        "15",
+    ]
+    rsg.main(argv=args)
+    missing_out = capsys.readouterr().out
+
+    rsg.main(argv=args + ["--has-special-move"])
+    has_out = capsys.readouterr().out
+
+    score_pattern = re.compile(r"Raid Score: ([0-9]+\.?[0-9]*)/100")
+    missing_match = score_pattern.search(missing_out)
+    has_match = score_pattern.search(has_out)
+    assert missing_match and has_match
+    assert float(has_match.group(1)) > float(missing_match.group(1))
+
+    assert "Exclusive move missing" in missing_out
+    assert "Exclusive move missing" not in has_out
+    assert "Exclusive move already unlocked." in has_out
+
 
 def test_main_respects_env_configuration(
     tmp_workdir: Path,

@@ -27,3 +27,4 @@ instance/
 .pytest_cache/
 celerybeat-schedule
 celerybeat.pid
+.pytest_tmp/

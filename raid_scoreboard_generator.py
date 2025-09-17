@@ -11,12 +11,13 @@ from __future__ import annotations
 
 import argparse
 from collections.abc import Mapping, Sequence
+from dataclasses import dataclass
 from pathlib import Path
 from types import ModuleType
 
 from pogo_analyzer import scoreboard as _scoreboard
 from pogo_analyzer.data import PokemonRaidEntry
-from pogo_analyzer.data.move_guidance import get_move_guidance
+from pogo_analyzer.data.move_guidance import get_move_guidance, normalise_name
 from pogo_analyzer.scoreboard import (
     RAID_ENTRIES,
     ExportResult,
@@ -187,6 +188,55 @@ def _score_from_combat_power(combat_power: int) -> float:
     return max(SCORE_MIN, min(SCORE_MAX, round(scaled, 1)))
 
 
+def _cp_penalty(combat_power: int | None) -> float:
+    """Return a penalty for underpowered Pokémon based on combat power."""
+
+    if combat_power is None:
+        return 0.0
+    target = 3100
+    if combat_power >= target:
+        return 0.0
+    penalty = (target - combat_power) / 350
+    return max(0.0, min(20.0, round(penalty, 1)))
+
+
+@dataclass(frozen=True)
+class TemplateLookup:
+    """Describe how a template lookup resolved for a given Pokémon name."""
+
+    entry: PokemonRaidEntry | None
+    name_matches: bool
+
+
+def _template_entry(
+    name: str,
+    *,
+    shadow: bool,
+    purified: bool,
+    best_buddy: bool,
+) -> TemplateLookup:
+    """Return the best matching entry or metadata about why it is missing."""
+
+    key = normalise_name(name)
+    matches = [entry for entry in RAID_ENTRIES if normalise_name(entry.name) == key]
+    if not matches:
+        return TemplateLookup(entry=None, name_matches=False)
+
+    same_shadow = [entry for entry in matches if entry.shadow == shadow]
+    if not same_shadow:
+        return TemplateLookup(entry=None, name_matches=True)
+
+    candidates = same_shadow
+    same_purified = [entry for entry in candidates if entry.purified == purified]
+    if same_purified:
+        candidates = same_purified
+    same_best_buddy = [entry for entry in candidates if entry.best_buddy == best_buddy]
+    if same_best_buddy:
+        candidates = same_best_buddy
+
+    return TemplateLookup(entry=max(candidates, key=lambda entry: entry.base), name_matches=True)
+
+
 def _evaluate_single_pokemon(args: argparse.Namespace) -> None:
     """Print a recommendation for a single Pokémon supplied via CLI."""
 
@@ -196,30 +246,72 @@ def _evaluate_single_pokemon(args: argparse.Namespace) -> None:
         )
 
     ivs = tuple(args.ivs)
-    guidance = get_move_guidance(args.pokemon_name) if args.pokemon_name else None
-
-    if guidance and not args.needs_tm and not args.has_special_move:
-        needs_tm = guidance.needs_tm
+    lookup = _template_entry(
+        args.pokemon_name,
+        shadow=args.shadow,
+        purified=args.purified,
+        best_buddy=args.best_buddy,
+    )
+    template = lookup.entry
+    if args.pokemon_name and (template or not lookup.name_matches):
+        guidance = get_move_guidance(args.pokemon_name)
     else:
-        needs_tm = bool(args.needs_tm)
+        guidance = None
+
+    if template:
+        base_score = template.base
+        role = args.role or template.role
+        final_form = args.final_form or template.final_form
+    else:
+        base_score = _score_from_combat_power(args.combat_power)
+        role = args.role or ""
+        final_form = args.final_form or ""
+
+    base_score = max(SCORE_MIN, min(SCORE_MAX, base_score))
+    penalty = _cp_penalty(args.combat_power if template else None)
+
+    template_requires_move = template.requires_special_move if template else False
+    template_missing_move = template.needs_tm if template else False
+    guidance_requires_move = guidance.needs_tm if guidance else False
+    requires_special_move = bool(
+        template_requires_move or guidance_requires_move or args.needs_tm
+    )
+
     if args.has_special_move:
         needs_tm = False
+    elif args.needs_tm:
+        needs_tm = True
+    elif template_missing_move:
+        needs_tm = True
+    elif requires_special_move:
+        needs_tm = True
+    else:
+        needs_tm = False
 
-    notes = args.notes or ""
-    if guidance and guidance.note:
-        if not notes:
-            notes = guidance.note
-        elif guidance.note not in notes:
-            notes = f"{notes} {guidance.note}".strip()
+    note_parts: list[str] = []
+    if args.notes:
+        note_parts.append(args.notes)
+    if template and template.notes:
+        if not (args.has_special_move and template_requires_move):
+            note_parts.append(template.notes)
+    if guidance and guidance.note and not args.has_special_move:
+        note_parts.append(guidance.note)
+
+    notes = " ".join(dict.fromkeys(part for part in note_parts if part)).strip()
+    if penalty > 0:
+        cp_note = "Power up this Pokémon; current CP is below raid-ready levels."
+        if cp_note not in notes:
+            notes = f"{notes} {cp_note}".strip()
 
     entry = PokemonRaidEntry(
         args.pokemon_name,
         ivs,
-        final_form=args.final_form or "",
-        role=args.role or "",
-        base=_score_from_combat_power(args.combat_power),
+        final_form=final_form,
+        role=role,
+        base=base_score,
         lucky=args.lucky,
         shadow=args.shadow,
+        requires_special_move=requires_special_move,
         needs_tm=needs_tm,
         notes=notes,
         purified=args.purified,
@@ -239,6 +331,8 @@ def _evaluate_single_pokemon(args: argparse.Namespace) -> None:
         status_bits.append("Lucky")
     if args.best_buddy:
         status_bits.append("Best Buddy")
+    if penalty > 0:
+        status_bits.append("Underpowered")
     if needs_tm:
         status_bits.append("Exclusive move missing")
 
@@ -249,10 +343,22 @@ def _evaluate_single_pokemon(args: argparse.Namespace) -> None:
     print(f"IVs: {ivs[0]}/{ivs[1]}/{ivs[2]}")
     if guidance and guidance.required_move:
         print(f"Recommended Charged Move: {guidance.required_move}")
-    if guidance and guidance.needs_tm and not args.has_special_move:
-        print(f"Action: {guidance.note}")
-    if args.has_special_move and guidance and guidance.needs_tm:
+    if needs_tm:
+        action_note = None
+        if guidance and guidance.note and not args.has_special_move:
+            action_note = guidance.note
+        elif template and template.notes and not args.has_special_move:
+            action_note = template.notes
+        elif args.notes:
+            action_note = args.notes
+        if action_note:
+            print(f"Action: {action_note}")
+    if args.has_special_move and (guidance or template) and needs_tm is False:
         print("Exclusive move already unlocked.")
+    if penalty > 0:
+        print(
+            "Power Recommendation: Power up this Pokémon; current CP is below raid-ready levels."
+        )
     if status_bits:
         print("Status: " + ", ".join(status_bits))
     print(f"Raid Score: {score}/100")

@@ -1,98 +1,1034 @@
 {
-  "metadata": {
-    "schema_version": 1,
-    "description": "Curated Pokémon raid entries backing the default raid scoreboard. The metadata documents supported fields so additional columns can be added without breaking the loader.",
-    "fields": {
-      "name": {
-        "type": "string",
-        "required": true,
-        "description": "Display label for the Pokémon entry (may include annotations)."
-      },
-      "ivs": {
-        "type": "array[int,int,int]",
-        "required": true,
-        "description": "Attack, Defence, and Stamina IV values in that order."
-      },
-      "final_form": {
-        "type": "string",
-        "required": false,
-        "description": "Final evolution or mega form text shown in the report."
-      },
-      "role": {
-        "type": "string",
-        "required": false,
-        "description": "Short label describing the Pokémon's raid role."
-      },
-      "base": {
-        "type": "number",
-        "required": true,
-        "description": "Base raid score before IV/bonus adjustments (1-100)."
-      },
-      "lucky": {
-        "type": "boolean",
-        "required": false,
-        "description": "Whether the entry assumes the Lucky trade bonus."
-      },
-      "shadow": {
-        "type": "boolean",
-        "required": false,
-        "description": "Whether the Pokémon is treated as its Shadow variant."
-      },
-      "needs_tm": {
-        "type": "boolean",
-        "required": false,
-        "description": "Set when an Elite TM or event move is required."
-      },
-      "mega_now": {
-        "type": "boolean",
-        "required": false,
-        "description": "True when the Pokémon currently has an available mega form."
-      },
-      "mega_soon": {
-        "type": "boolean",
-        "required": false,
-        "description": "True when a mega form is expected soon and relevant to the entry."
-      },
-      "notes": {
-        "type": "string",
-        "required": false,
-        "description": "Free-form commentary explaining the score and context."
-      },
-      "purified": {
-        "type": "boolean",
-        "required": false,
-        "description": "Marks purified bonuses applied in the table output."
-      },
-      "best_buddy": {
-        "type": "boolean",
-        "required": false,
-        "description": "Marks best buddy bonuses applied in the table output."
-      }
+  "entries": [
+    {
+      "base": 80,
+      "best_buddy": false,
+      "final_form": "Abomasnow / Mega Abomasnow",
+      "ivs": [
+        14,
+        12,
+        14
+      ],
+      "lucky": false,
+      "mega_now": true,
+      "mega_soon": false,
+      "name": "Snover",
+      "needs_tm": false,
+      "notes": "Mega Abomasnow is a strong Ice/Grass team booster; regular Abomasnow is serviceable but not top DPS.",
+      "purified": false,
+      "role": "Ice (mega support)",
+      "shadow": false
     },
+    {
+      "base": 89,
+      "best_buddy": false,
+      "final_form": "Lucario",
+      "ivs": [
+        14,
+        12,
+        13
+      ],
+      "lucky": false,
+      "mega_now": false,
+      "mega_soon": false,
+      "name": "Riolu #1",
+      "needs_tm": false,
+      "notes": "Lucario with Aura Sphere is top-tier Fighting; may require event/Elite TM for optimal moves.",
+      "purified": false,
+      "role": "Fighting DPS",
+      "shadow": false,
+      "requires_special_move": true
+    },
+    {
+      "base": 89,
+      "best_buddy": false,
+      "final_form": "Lucario",
+      "ivs": [
+        13,
+        15,
+        12
+      ],
+      "lucky": false,
+      "mega_now": false,
+      "mega_soon": false,
+      "name": "Riolu #2",
+      "needs_tm": false,
+      "notes": "Same as above — excellent attacker with the right moves.",
+      "purified": false,
+      "role": "Fighting DPS",
+      "shadow": false,
+      "requires_special_move": true
+    },
+    {
+      "base": 76,
+      "best_buddy": false,
+      "final_form": "Camerupt / Mega Camerupt",
+      "ivs": [
+        15,
+        13,
+        11
+      ],
+      "lucky": false,
+      "mega_now": false,
+      "mega_soon": true,
+      "name": "Numel",
+      "needs_tm": false,
+      "notes": "Regular Camerupt is weak; Mega Camerupt debut is imminent and mainly useful as a lobby booster.",
+      "purified": false,
+      "role": "Fire/Ground (mega support)",
+      "shadow": false
+    },
+    {
+      "base": 70,
+      "best_buddy": false,
+      "final_form": "Exeggutor",
+      "ivs": [
+        15,
+        13,
+        13
+      ],
+      "lucky": true,
+      "mega_now": false,
+      "mega_soon": false,
+      "name": "Exeggutor",
+      "needs_tm": false,
+      "notes": "Outclassed by modern Grass/Psychic attackers; Lucky makes it cheap if you need filler.",
+      "purified": false,
+      "role": "Grass/Psychic (budget)",
+      "shadow": false
+    },
+    {
+      "base": 78,
+      "best_buddy": false,
+      "final_form": "Mega Lopunny",
+      "ivs": [
+        15,
+        13,
+        14
+      ],
+      "lucky": false,
+      "mega_now": true,
+      "mega_soon": false,
+      "name": "Lopunny",
+      "needs_tm": false,
+      "notes": "Personal DPS is middling, but Mega boosts Fighting/Normal teams.",
+      "purified": false,
+      "role": "Fighting mega support",
+      "shadow": false
+    },
+    {
+      "base": 77,
+      "best_buddy": false,
+      "final_form": "Staraptor (Gust)",
+      "ivs": [
+        14,
+        12,
+        15
+      ],
+      "lucky": true,
+      "mega_now": false,
+      "mega_soon": false,
+      "name": "Starly",
+      "needs_tm": false,
+      "notes": "Gust is CD-only; with Gust it's a solid budget flier.",
+      "purified": false,
+      "role": "Flying DPS (budget)",
+      "shadow": false,
+      "requires_special_move": true
+    },
+    {
+      "base": 58,
+      "best_buddy": false,
+      "final_form": "Florges",
+      "ivs": [
+        14,
+        13,
+        15
+      ],
+      "lucky": true,
+      "mega_now": false,
+      "mega_soon": false,
+      "name": "Flabebe (lucky)",
+      "needs_tm": false,
+      "notes": "Florges has low raid DPS; mainly collection/PvP.",
+      "purified": false,
+      "role": "Fairy (low DPS)",
+      "shadow": false
+    },
+    {
+      "base": 58,
+      "best_buddy": false,
+      "final_form": "Florges",
+      "ivs": [
+        15,
+        11,
+        11
+      ],
+      "lucky": false,
+      "mega_now": false,
+      "mega_soon": false,
+      "name": "Flabebe #2",
+      "needs_tm": false,
+      "notes": "Same as above.",
+      "purified": false,
+      "role": "Fairy (low DPS)",
+      "shadow": false
+    },
+    {
+      "base": 58,
+      "best_buddy": false,
+      "final_form": "Florges",
+      "ivs": [
+        15,
+        13,
+        15
+      ],
+      "lucky": false,
+      "mega_now": false,
+      "mega_soon": false,
+      "name": "Flabebe #3",
+      "needs_tm": false,
+      "notes": "Same as above.",
+      "purified": false,
+      "role": "Fairy (low DPS)",
+      "shadow": false
+    },
+    {
+      "base": 58,
+      "best_buddy": false,
+      "final_form": "Florges",
+      "ivs": [
+        15,
+        13,
+        15
+      ],
+      "lucky": false,
+      "mega_now": false,
+      "mega_soon": false,
+      "name": "Flabebe #4",
+      "needs_tm": false,
+      "notes": "Same as above.",
+      "purified": false,
+      "role": "Fairy (low DPS)",
+      "shadow": false
+    },
+    {
+      "base": 78,
+      "best_buddy": false,
+      "final_form": "Incineroar (Blast Burn)",
+      "ivs": [
+        15,
+        10,
+        15
+      ],
+      "lucky": false,
+      "mega_now": false,
+      "mega_soon": false,
+      "name": "Litten",
+      "needs_tm": false,
+      "notes": "CD move Blast Burn needed; still behind top Fire like Reshiram/Blaziken/Chandelure.",
+      "purified": false,
+      "role": "Fire DPS (mid)",
+      "shadow": false,
+      "requires_special_move": true
+    },
+    {
+      "base": 90,
+      "best_buddy": false,
+      "final_form": "Mega Heracross",
+      "ivs": [
+        13,
+        11,
+        5
+      ],
+      "lucky": false,
+      "mega_now": true,
+      "mega_soon": false,
+      "name": "Heracross #1",
+      "needs_tm": false,
+      "notes": "Mega Heracross is one of the strongest Bug attackers and solid Fighting mega.",
+      "purified": false,
+      "role": "Bug/Fighting (mega & DPS)",
+      "shadow": false
+    },
+    {
+      "base": 90,
+      "best_buddy": false,
+      "final_form": "Mega Heracross",
+      "ivs": [
+        14,
+        0,
+        10
+      ],
+      "lucky": false,
+      "mega_now": true,
+      "mega_soon": false,
+      "name": "Heracross #2",
+      "needs_tm": false,
+      "notes": "Mega Heracross is one of the strongest Bug attackers and solid Fighting mega.",
+      "purified": false,
+      "role": "Bug/Fighting (mega & DPS)",
+      "shadow": false
+    },
+    {
+      "base": 90,
+      "best_buddy": false,
+      "final_form": "Mega Heracross",
+      "ivs": [
+        10,
+        9,
+        5
+      ],
+      "lucky": false,
+      "mega_now": true,
+      "mega_soon": false,
+      "name": "Heracross #3",
+      "needs_tm": false,
+      "notes": "Mega Heracross is one of the strongest Bug attackers and solid Fighting mega.",
+      "purified": false,
+      "role": "Bug/Fighting (mega & DPS)",
+      "shadow": false
+    },
+    {
+      "base": 90,
+      "best_buddy": false,
+      "final_form": "Mega Heracross",
+      "ivs": [
+        12,
+        8,
+        11
+      ],
+      "lucky": false,
+      "mega_now": true,
+      "mega_soon": false,
+      "name": "Heracross #4",
+      "needs_tm": false,
+      "notes": "Mega Heracross is one of the strongest Bug attackers and solid Fighting mega.",
+      "purified": false,
+      "role": "Bug/Fighting (mega & DPS)",
+      "shadow": false
+    },
+    {
+      "base": 90,
+      "best_buddy": false,
+      "final_form": "Mega Heracross",
+      "ivs": [
+        13,
+        8,
+        14
+      ],
+      "lucky": false,
+      "mega_now": true,
+      "mega_soon": false,
+      "name": "Heracross #5",
+      "needs_tm": false,
+      "notes": "Mega Heracross is one of the strongest Bug attackers and solid Fighting mega.",
+      "purified": false,
+      "role": "Bug/Fighting (mega & DPS)",
+      "shadow": false
+    },
+    {
+      "base": 80,
+      "best_buddy": false,
+      "final_form": "Shadow Tyrantrum",
+      "ivs": [
+        14,
+        15,
+        5
+      ],
+      "lucky": false,
+      "mega_now": false,
+      "mega_soon": false,
+      "name": "Shadow Tyrunt",
+      "needs_tm": false,
+      "notes": "Fun and strong on paper, but still behind top Rock/Dragon specialists in most raids.",
+      "purified": false,
+      "role": "Rock/Dragon DPS (niche)",
+      "shadow": true
+    },
+    {
+      "base": 90,
+      "best_buddy": false,
+      "final_form": "Metagross (Meteor Mash)",
+      "ivs": [
+        15,
+        9,
+        4
+      ],
+      "lucky": false,
+      "mega_now": false,
+      "mega_soon": false,
+      "name": "Beldum",
+      "needs_tm": false,
+      "notes": "Meteor Mash is mandatory; top Steel attacker when built.",
+      "purified": false,
+      "role": "Steel DPS (top)",
+      "shadow": false,
+      "requires_special_move": true
+    },
+    {
+      "base": 82,
+      "best_buddy": false,
+      "final_form": "Electivire",
+      "ivs": [
+        15,
+        10,
+        3
+      ],
+      "lucky": false,
+      "mega_now": false,
+      "mega_soon": false,
+      "name": "Electabuzz",
+      "needs_tm": false,
+      "notes": "Strong budget Electric; behind Legendaries and Shadows but still very usable.",
+      "purified": false,
+      "role": "Electric DPS (good)",
+      "shadow": false
+    },
+    {
+      "base": 86,
+      "best_buddy": false,
+      "final_form": "Conkeldurr",
+      "ivs": [
+        12,
+        6,
+        14
+      ],
+      "lucky": false,
+      "mega_now": false,
+      "mega_soon": false,
+      "name": "Gurdurr",
+      "needs_tm": false,
+      "notes": "Conkeldurr is a top non-mega Fighting attacker.",
+      "purified": false,
+      "role": "Fighting DPS (top non-mega)",
+      "shadow": false
+    },
+    {
+      "base": 60,
+      "best_buddy": false,
+      "final_form": "Crawdaunt",
+      "ivs": [
+        15,
+        13,
+        15
+      ],
+      "lucky": true,
+      "mega_now": false,
+      "mega_soon": false,
+      "name": "Crawdaunt",
+      "needs_tm": false,
+      "notes": "Glass cannon, outclassed by most Water/Dark specialists.",
+      "purified": false,
+      "role": "Water/Dark (spice)",
+      "shadow": false
+    },
+    {
+      "base": 88,
+      "best_buddy": false,
+      "final_form": "Shadow Magnezone",
+      "ivs": [
+        11,
+        6,
+        10
+      ],
+      "lucky": false,
+      "mega_now": false,
+      "mega_soon": false,
+      "name": "Shadow Magnemite",
+      "needs_tm": false,
+      "notes": "Shadow Magnezone is among the best non-legend Electric attackers.",
+      "purified": false,
+      "role": "Electric DPS (top non-legend)",
+      "shadow": true
+    },
+    {
+      "base": 93,
+      "best_buddy": false,
+      "final_form": "Shadow Gengar",
+      "ivs": [
+        9,
+        11,
+        15
+      ],
+      "lucky": false,
+      "mega_now": false,
+      "mega_soon": false,
+      "name": "Shadow Gastly",
+      "needs_tm": false,
+      "notes": "Shadow Gengar has elite DPS; benefits from legacy Lick/Shadow Ball.",
+      "purified": false,
+      "role": "Ghost DPS (apex glass cannon)",
+      "shadow": true,
+      "requires_special_move": true
+    },
+    {
+      "base": 88,
+      "best_buddy": false,
+      "final_form": "Sceptile (Frenzy Plant) / Mega Sceptile",
+      "ivs": [
+        14,
+        13,
+        10
+      ],
+      "lucky": false,
+      "mega_now": true,
+      "mega_soon": false,
+      "name": "Treecko",
+      "needs_tm": false,
+      "notes": "Frenzy Plant Sceptile is excellent; Mega Sceptile is the best Grass mega.",
+      "purified": false,
+      "role": "Grass DPS (top w/ Mega)",
+      "shadow": false,
+      "requires_special_move": true
+    },
+    {
+      "base": 72,
+      "best_buddy": false,
+      "final_form": "Arcanine",
+      "ivs": [
+        15,
+        12,
+        10
+      ],
+      "lucky": false,
+      "mega_now": false,
+      "mega_soon": false,
+      "name": "Arcanine",
+      "needs_tm": false,
+      "notes": "Usable but far behind top Fire options.",
+      "purified": false,
+      "role": "Fire DPS (mid)",
+      "shadow": false
+    },
+    {
+      "base": 88,
+      "best_buddy": false,
+      "final_form": "Shadow Gardevoir",
+      "ivs": [
+        11,
+        11,
+        11
+      ],
+      "lucky": false,
+      "mega_now": false,
+      "mega_soon": false,
+      "name": "Shadow Kirlia",
+      "needs_tm": false,
+      "notes": "Shadow Gardevoir is a top non-mega Fairy attacker; consider Gardevoir over Gallade for raids.",
+      "purified": false,
+      "role": "Fairy DPS (top non-mega)",
+      "shadow": true
+    },
+    {
+      "base": 86,
+      "best_buddy": false,
+      "final_form": "Excadrill",
+      "ivs": [
+        14,
+        15,
+        14
+      ],
+      "lucky": true,
+      "mega_now": false,
+      "mega_soon": false,
+      "name": "Drilbur",
+      "needs_tm": false,
+      "notes": "Excadrill has great DPS and resistances; lucky makes it cheap.",
+      "purified": false,
+      "role": "Ground DPS (top non-legend)",
+      "shadow": false
+    },
+    {
+      "base": 88,
+      "best_buddy": false,
+      "final_form": "Sceptile (Frenzy Plant) / Mega Sceptile",
+      "ivs": [
+        15,
+        12,
+        13
+      ],
+      "lucky": false,
+      "mega_now": true,
+      "mega_soon": false,
+      "name": "Grovyle",
+      "needs_tm": false,
+      "notes": "Same as Treecko — pick your better IV to evolve.",
+      "purified": false,
+      "role": "Grass DPS",
+      "shadow": false,
+      "requires_special_move": true
+    },
+    {
+      "base": 80,
+      "best_buddy": false,
+      "final_form": "Alakazam / Mega Alakazam",
+      "ivs": [
+        14,
+        13,
+        15
+      ],
+      "lucky": false,
+      "mega_now": true,
+      "mega_soon": false,
+      "name": "Alakazam",
+      "needs_tm": false,
+      "notes": "As a non-mega it's okay; Mega Alakazam is a strong Psychic mega booster.",
+      "purified": false,
+      "role": "Psychic DPS",
+      "shadow": false
+    },
+    {
+      "base": 55,
+      "best_buddy": false,
+      "final_form": "Hypno",
+      "ivs": [
+        14,
+        15,
+        13
+      ],
+      "lucky": true,
+      "mega_now": false,
+      "mega_soon": false,
+      "name": "Drowzee",
+      "needs_tm": false,
+      "notes": "Not raid-relevant; mostly PvP/collection.",
+      "purified": false,
+      "role": "Psychic (low DPS)",
+      "shadow": false
+    },
+    {
+      "base": 82,
+      "best_buddy": false,
+      "final_form": "Scizor / Mega Scizor",
+      "ivs": [
+        12,
+        15,
+        14
+      ],
+      "lucky": false,
+      "mega_now": true,
+      "mega_soon": false,
+      "name": "Scyther",
+      "needs_tm": false,
+      "notes": "Scizor is mid for raids; Mega Scizor is a handy Bug/Steel booster.",
+      "purified": false,
+      "role": "Bug/Steel (mega support)",
+      "shadow": false
+    },
+    {
+      "base": 80,
+      "best_buddy": false,
+      "final_form": "Hariyama",
+      "ivs": [
+        14,
+        15,
+        12
+      ],
+      "lucky": false,
+      "mega_now": false,
+      "mega_soon": false,
+      "name": "Hariyama",
+      "needs_tm": false,
+      "notes": "Solid budget Fighter; outclassed by Machamp/Conkeldurr/Lucario.",
+      "purified": false,
+      "role": "Fighting DPS (budget)",
+      "shadow": false
+    },
+    {
+      "base": 82,
+      "best_buddy": false,
+      "final_form": "Blastoise / Mega Blastoise",
+      "ivs": [
+        15,
+        14,
+        14
+      ],
+      "lucky": true,
+      "mega_now": true,
+      "mega_soon": false,
+      "name": "Blastoise",
+      "needs_tm": false,
+      "notes": "Hydro Cannon needed for non-mega; Mega Blastoise is a strong Water mega.",
+      "purified": false,
+      "role": "Water (mega support)",
+      "shadow": false,
+      "requires_special_move": true
+    },
+    {
+      "base": 84,
+      "best_buddy": false,
+      "final_form": "Machamp",
+      "ivs": [
+        15,
+        13,
+        14
+      ],
+      "lucky": true,
+      "mega_now": false,
+      "mega_soon": false,
+      "name": "Machamp",
+      "needs_tm": false,
+      "notes": "Still a top non-legend Fighter with Counter/Dynamic Punch.",
+      "purified": false,
+      "role": "Fighting DPS (top non-shadow)",
+      "shadow": false
+    },
+    {
+      "base": 92,
+      "best_buddy": false,
+      "final_form": "Shadow Excadrill",
+      "ivs": [
+        14,
+        4,
+        15
+      ],
+      "lucky": false,
+      "mega_now": false,
+      "mega_soon": false,
+      "name": "Shadow Drilbur",
+      "needs_tm": false,
+      "notes": "Shadow Excadrill is among the best Ground DPS options; frailer but hits very hard.",
+      "purified": false,
+      "role": "Ground DPS (apex)",
+      "shadow": true
+    },
+    {
+      "base": 82,
+      "best_buddy": false,
+      "final_form": "Gengar / Mega Gengar",
+      "ivs": [
+        15,
+        13,
+        12
+      ],
+      "lucky": true,
+      "mega_now": true,
+      "mega_soon": false,
+      "name": "Gengar (lucky)",
+      "needs_tm": false,
+      "notes": "Great non-shadow DPS; can Mega for top-tier boosts.",
+      "purified": false,
+      "role": "Ghost DPS (high)",
+      "shadow": false,
+      "requires_special_move": true
+    },
+    {
+      "base": 85,
+      "best_buddy": false,
+      "final_form": "Gengar / Mega Gengar",
+      "ivs": [
+        15,
+        15,
+        15
+      ],
+      "lucky": false,
+      "mega_now": true,
+      "mega_soon": false,
+      "name": "Gengar (hundo)",
+      "needs_tm": false,
+      "notes": "Perfect IVs; outstanding Mega candidate.",
+      "purified": false,
+      "role": "Ghost DPS (high)",
+      "shadow": false,
+      "requires_special_move": true
+    },
+    {
+      "base": 83,
+      "best_buddy": false,
+      "final_form": "Venusaur / Mega Venusaur",
+      "ivs": [
+        15,
+        14,
+        15
+      ],
+      "lucky": false,
+      "mega_now": true,
+      "mega_soon": false,
+      "name": "Venusaur",
+      "needs_tm": false,
+      "notes": "Frenzy Plant Venusaur is solid; Mega Venusaur offers bulky Grass mega support.",
+      "purified": false,
+      "role": "Grass DPS (good)",
+      "shadow": false,
+      "requires_special_move": true
+    },
+    {
+      "base": 88,
+      "best_buddy": false,
+      "final_form": "Rhyperior (Rock Wrecker)",
+      "ivs": [
+        13,
+        13,
+        15
+      ],
+      "lucky": false,
+      "mega_now": false,
+      "mega_soon": false,
+      "name": "Rhyhorn",
+      "needs_tm": false,
+      "notes": "Rock Wrecker is mandatory; elite TDO and flexible Ground coverage.",
+      "purified": false,
+      "role": "Rock DPS (top TDO)",
+      "shadow": false,
+      "requires_special_move": true
+    },
+    {
+      "base": 82,
+      "best_buddy": false,
+      "final_form": "Gyarados / Mega Gyarados",
+      "ivs": [
+        14,
+        13,
+        15
+      ],
+      "lucky": true,
+      "mega_now": true,
+      "mega_soon": false,
+      "name": "Gyarados",
+      "needs_tm": false,
+      "notes": "As a mega it's a great Dark/Water booster; non-mega is decent but outclassed.",
+      "purified": false,
+      "role": "Water/Dark (mega support)",
+      "shadow": false
+    },
+    {
+      "base": 86,
+      "best_buddy": false,
+      "final_form": "Tyranitar (Brutal Swing) / Mega Tyranitar",
+      "ivs": [
+        15,
+        12,
+        13
+      ],
+      "lucky": false,
+      "mega_now": true,
+      "mega_soon": false,
+      "name": "Larvitar #1",
+      "needs_tm": false,
+      "notes": "Brutal Swing makes Dark TTar great; Smack Down needs ETM for Rock role; Mega Tyranitar is elite.",
+      "purified": false,
+      "role": "Dark/Rock DPS",
+      "shadow": false,
+      "requires_special_move": true
+    },
+    {
+      "base": 86,
+      "best_buddy": false,
+      "final_form": "Tyranitar (Brutal Swing) / Mega Tyranitar",
+      "ivs": [
+        15,
+        15,
+        10
+      ],
+      "lucky": false,
+      "mega_now": true,
+      "mega_soon": false,
+      "name": "Larvitar #2",
+      "needs_tm": false,
+      "notes": "Slightly better bulk; same notes as above.",
+      "purified": false,
+      "role": "Dark/Rock DPS",
+      "shadow": false,
+      "requires_special_move": true
+    },
+    {
+      "base": 90,
+      "best_buddy": false,
+      "final_form": "Shadow Machamp",
+      "ivs": [
+        13,
+        12,
+        7
+      ],
+      "lucky": false,
+      "mega_now": false,
+      "mega_soon": false,
+      "name": "Shadow Machoke",
+      "needs_tm": false,
+      "notes": "Shadow Machamp is one of the best Fighters; very high DPS.",
+      "purified": false,
+      "role": "Fighting DPS (apex non-mega)",
+      "shadow": true
+    },
+    {
+      "base": 84,
+      "best_buddy": false,
+      "final_form": "Gengar / Mega Gengar",
+      "ivs": [
+        14,
+        14,
+        15
+      ],
+      "lucky": false,
+      "mega_now": true,
+      "mega_soon": false,
+      "name": "Haunter",
+      "needs_tm": false,
+      "notes": "Great IVs; evolve for another strong Gengar or Mega candidate.",
+      "purified": false,
+      "role": "Ghost DPS (high)",
+      "shadow": false,
+      "requires_special_move": true
+    },
+    {
+      "base": 87,
+      "best_buddy": false,
+      "final_form": "Shadow Typhlosion (Blast Burn)",
+      "ivs": [
+        13,
+        0,
+        12
+      ],
+      "lucky": false,
+      "mega_now": false,
+      "mega_soon": false,
+      "name": "Shadow Cyndaquil",
+      "needs_tm": false,
+      "notes": "With Blast Burn it's a strong Fire attacker; very glassy as a Shadow.",
+      "purified": false,
+      "role": "Fire DPS (high)",
+      "shadow": true,
+      "requires_special_move": true
+    },
+    {
+      "base": 52,
+      "best_buddy": false,
+      "final_form": "Throh",
+      "ivs": [
+        15,
+        6,
+        5
+      ],
+      "lucky": false,
+      "mega_now": false,
+      "mega_soon": false,
+      "name": "Throh",
+      "needs_tm": false,
+      "notes": "No raid relevance; belongs in PvP/collection, not raids.",
+      "purified": false,
+      "role": "Fighting (very low DPS)",
+      "shadow": false
+    },
+    {
+      "base": 85,
+      "best_buddy": false,
+      "final_form": "Moltres",
+      "ivs": [
+        11,
+        13,
+        14
+      ],
+      "lucky": false,
+      "mega_now": false,
+      "mega_soon": false,
+      "name": "Moltres",
+      "needs_tm": false,
+      "notes": "Strong Fire or Flying attacker; still relevant in many raids.",
+      "purified": false,
+      "role": "Fire/Flying DPS (legend)",
+      "shadow": false
+    },
+    {
+      "base": 95,
+      "best_buddy": false,
+      "final_form": "Shadow Giratina (Origin preferred)",
+      "ivs": [
+        11,
+        9,
+        14
+      ],
+      "lucky": false,
+      "mega_now": false,
+      "mega_soon": false,
+      "name": "Shadow Giratina",
+      "needs_tm": false,
+      "notes": "Shadow Giratina debuted recently; Origin Forme is an elite Ghost raider.",
+      "purified": false,
+      "role": "Ghost/Dragon DPS (apex)",
+      "shadow": true
+    },
+    {
+      "base": 83,
+      "best_buddy": false,
+      "final_form": "Shadow Gigalith (Meteor Beam)",
+      "ivs": [
+        10,
+        12,
+        5
+      ],
+      "lucky": false,
+      "mega_now": false,
+      "mega_soon": false,
+      "name": "Shadow Roggenrola",
+      "needs_tm": false,
+      "notes": "Meteor Beam is key; shadow gives it serious punch.",
+      "purified": false,
+      "role": "Rock DPS (strong)",
+      "shadow": true,
+      "requires_special_move": true
+    },
+    {
+      "base": 86,
+      "best_buddy": false,
+      "final_form": "Excadrill",
+      "ivs": [
+        14,
+        14,
+        10
+      ],
+      "lucky": false,
+      "mega_now": false,
+      "mega_soon": false,
+      "name": "Excadrill (Dynamax)",
+      "needs_tm": false,
+      "notes": "Dynamax tag doesn't change its standard raid role; very good Ground attacker.",
+      "purified": false,
+      "role": "Ground DPS (top non-legend)",
+      "shadow": false
+    },
+    {
+      "base": 92,
+      "best_buddy": false,
+      "final_form": "Shadow Tyranitar (Brutal Swing)",
+      "ivs": [
+        15,
+        12,
+        13
+      ],
+      "lucky": false,
+      "mega_now": false,
+      "mega_soon": false,
+      "name": "Shadow Larvitar",
+      "needs_tm": false,
+      "notes": "Shadow Tyranitar hits harder than non-shadow; Brutal Swing is still mandatory.",
+      "purified": false,
+      "role": "Shadow Dark DPS",
+      "shadow": true,
+      "requires_special_move": true
+    }
+  ],
+  "metadata": {
     "columns": {
-      "Your Pokémon": {
-        "description": "Formatted Pokémon name plus variant suffixes.",
-        "source": "PokemonRaidEntry.formatted_name"
+      "Final Raid Form": {
+        "description": "Final evolution or mega text displayed in the scoreboard.",
+        "source": "PokemonRaidEntry.final_form"
       },
       "IV (Atk/Def/Sta)": {
         "description": "String representation of the IV tuple.",
         "source": "PokemonRaidEntry.iv_text"
       },
-      "Final Raid Form": {
-        "description": "Final evolution or mega text displayed in the scoreboard.",
-        "source": "PokemonRaidEntry.final_form"
-      },
-      "Primary Role": {
-        "description": "Short role descriptor for quick scanning.",
-        "source": "PokemonRaidEntry.role"
+      "Mega Available": {
+        "description": "Highlights if a mega form is usable now or soon.",
+        "source": "PokemonRaidEntry.mega_text"
       },
       "Move Needs (CD/ETM?)": {
         "description": "Indicates whether a special move is required.",
         "source": "PokemonRaidEntry.move_text"
       },
-      "Mega Available": {
-        "description": "Highlights if a mega form is usable now or soon.",
-        "source": "PokemonRaidEntry.mega_text"
+      "Primary Role": {
+        "description": "Short role descriptor for quick scanning.",
+        "source": "PokemonRaidEntry.role"
       },
       "Raid Score (1-100)": {
         "description": "Calculated raid score including IV/lucky bonuses.",
@@ -101,978 +1037,85 @@
       "Why it scores like this": {
         "description": "Explanatory notes shown to the player.",
         "source": "PokemonRaidEntry.notes"
+      },
+      "Your Pokémon": {
+        "description": "Formatted Pokémon name plus variant suffixes.",
+        "source": "PokemonRaidEntry.formatted_name"
       }
-    }
-  },
-  "entries": [
-    {
-      "name": "Snover",
-      "ivs": [
-        14,
-        12,
-        14
-      ],
-      "final_form": "Abomasnow / Mega Abomasnow",
-      "role": "Ice (mega support)",
-      "base": 80,
-      "lucky": false,
-      "shadow": false,
-      "needs_tm": false,
-      "mega_now": true,
-      "mega_soon": false,
-      "notes": "Mega Abomasnow is a strong Ice/Grass team booster; regular Abomasnow is serviceable but not top DPS.",
-      "purified": false,
-      "best_buddy": false
     },
-    {
-      "name": "Riolu #1",
-      "ivs": [
-        14,
-        12,
-        13
-      ],
-      "final_form": "Lucario",
-      "role": "Fighting DPS",
-      "base": 89,
-      "lucky": false,
-      "shadow": false,
-      "needs_tm": true,
-      "mega_now": false,
-      "mega_soon": false,
-      "notes": "Lucario with Aura Sphere is top-tier Fighting; may require event/Elite TM for optimal moves.",
-      "purified": false,
-      "best_buddy": false
+    "description": "Curated Pokémon raid entries backing the default raid scoreboard. The metadata documents supported fields so additional columns can be added without breaking the loader.",
+    "fields": {
+      "name": {
+        "description": "Display label for the Pokémon entry (may include annotations).",
+        "required": true,
+        "type": "string"
+      },
+      "ivs": {
+        "description": "Attack, Defence, and Stamina IV values in that order.",
+        "required": true,
+        "type": "array[int,int,int]"
+      },
+      "final_form": {
+        "description": "Final evolution or mega form text shown in the report.",
+        "required": false,
+        "type": "string"
+      },
+      "role": {
+        "description": "Short label describing the Pokémon's raid role.",
+        "required": false,
+        "type": "string"
+      },
+      "base": {
+        "description": "Base raid score before IV/bonus adjustments (1-100).",
+        "required": true,
+        "type": "number"
+      },
+      "lucky": {
+        "description": "Whether the entry assumes the Lucky trade bonus.",
+        "required": false,
+        "type": "boolean"
+      },
+      "shadow": {
+        "description": "Whether the Pokémon is treated as its Shadow variant.",
+        "required": false,
+        "type": "boolean"
+      },
+      "requires_special_move": {
+        "type": "boolean",
+        "required": false,
+        "description": "True when the raid build relies on an exclusive or limited move."
+      },
+      "needs_tm": {
+        "type": "boolean",
+        "required": false,
+        "description": "True when the exclusive move is currently missing from the build."
+      },
+      "mega_now": {
+        "description": "True when the Pokémon currently has an available mega form.",
+        "required": false,
+        "type": "boolean"
+      },
+      "mega_soon": {
+        "description": "True when a mega form is expected soon and relevant to the entry.",
+        "required": false,
+        "type": "boolean"
+      },
+      "notes": {
+        "description": "Free-form commentary explaining the score and context.",
+        "required": false,
+        "type": "string"
+      },
+      "purified": {
+        "description": "Marks purified bonuses applied in the table output.",
+        "required": false,
+        "type": "boolean"
+      },
+      "best_buddy": {
+        "description": "Marks best buddy bonuses applied in the table output.",
+        "required": false,
+        "type": "boolean"
+      }
     },
-    {
-      "name": "Riolu #2",
-      "ivs": [
-        13,
-        15,
-        12
-      ],
-      "final_form": "Lucario",
-      "role": "Fighting DPS",
-      "base": 89,
-      "lucky": false,
-      "shadow": false,
-      "needs_tm": true,
-      "mega_now": false,
-      "mega_soon": false,
-      "notes": "Same as above — excellent attacker with the right moves.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Numel",
-      "ivs": [
-        15,
-        13,
-        11
-      ],
-      "final_form": "Camerupt / Mega Camerupt",
-      "role": "Fire/Ground (mega support)",
-      "base": 76,
-      "lucky": false,
-      "shadow": false,
-      "needs_tm": false,
-      "mega_now": false,
-      "mega_soon": true,
-      "notes": "Regular Camerupt is weak; Mega Camerupt debut is imminent and mainly useful as a lobby booster.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Exeggutor",
-      "ivs": [
-        15,
-        13,
-        13
-      ],
-      "final_form": "Exeggutor",
-      "role": "Grass/Psychic (budget)",
-      "base": 70,
-      "lucky": true,
-      "shadow": false,
-      "needs_tm": false,
-      "mega_now": false,
-      "mega_soon": false,
-      "notes": "Outclassed by modern Grass/Psychic attackers; Lucky makes it cheap if you need filler.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Lopunny",
-      "ivs": [
-        15,
-        13,
-        14
-      ],
-      "final_form": "Mega Lopunny",
-      "role": "Fighting mega support",
-      "base": 78,
-      "lucky": false,
-      "shadow": false,
-      "needs_tm": false,
-      "mega_now": true,
-      "mega_soon": false,
-      "notes": "Personal DPS is middling, but Mega boosts Fighting/Normal teams.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Starly",
-      "ivs": [
-        14,
-        12,
-        15
-      ],
-      "final_form": "Staraptor (Gust)",
-      "role": "Flying DPS (budget)",
-      "base": 77,
-      "lucky": true,
-      "shadow": false,
-      "needs_tm": true,
-      "mega_now": false,
-      "mega_soon": false,
-      "notes": "Gust is CD-only; with Gust it's a solid budget flier.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Flabebe (lucky)",
-      "ivs": [
-        14,
-        13,
-        15
-      ],
-      "final_form": "Florges",
-      "role": "Fairy (low DPS)",
-      "base": 58,
-      "lucky": true,
-      "shadow": false,
-      "needs_tm": false,
-      "mega_now": false,
-      "mega_soon": false,
-      "notes": "Florges has low raid DPS; mainly collection/PvP.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Flabebe #2",
-      "ivs": [
-        15,
-        11,
-        11
-      ],
-      "final_form": "Florges",
-      "role": "Fairy (low DPS)",
-      "base": 58,
-      "lucky": false,
-      "shadow": false,
-      "needs_tm": false,
-      "mega_now": false,
-      "mega_soon": false,
-      "notes": "Same as above.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Flabebe #3",
-      "ivs": [
-        15,
-        13,
-        15
-      ],
-      "final_form": "Florges",
-      "role": "Fairy (low DPS)",
-      "base": 58,
-      "lucky": false,
-      "shadow": false,
-      "needs_tm": false,
-      "mega_now": false,
-      "mega_soon": false,
-      "notes": "Same as above.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Flabebe #4",
-      "ivs": [
-        15,
-        13,
-        15
-      ],
-      "final_form": "Florges",
-      "role": "Fairy (low DPS)",
-      "base": 58,
-      "lucky": false,
-      "shadow": false,
-      "needs_tm": false,
-      "mega_now": false,
-      "mega_soon": false,
-      "notes": "Same as above.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Litten",
-      "ivs": [
-        15,
-        10,
-        15
-      ],
-      "final_form": "Incineroar (Blast Burn)",
-      "role": "Fire DPS (mid)",
-      "base": 78,
-      "lucky": false,
-      "shadow": false,
-      "needs_tm": true,
-      "mega_now": false,
-      "mega_soon": false,
-      "notes": "CD move Blast Burn needed; still behind top Fire like Reshiram/Blaziken/Chandelure.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Heracross #1",
-      "ivs": [
-        13,
-        11,
-        5
-      ],
-      "final_form": "Mega Heracross",
-      "role": "Bug/Fighting (mega & DPS)",
-      "base": 90,
-      "lucky": false,
-      "shadow": false,
-      "needs_tm": false,
-      "mega_now": true,
-      "mega_soon": false,
-      "notes": "Mega Heracross is one of the strongest Bug attackers and solid Fighting mega.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Heracross #2",
-      "ivs": [
-        14,
-        0,
-        10
-      ],
-      "final_form": "Mega Heracross",
-      "role": "Bug/Fighting (mega & DPS)",
-      "base": 90,
-      "lucky": false,
-      "shadow": false,
-      "needs_tm": false,
-      "mega_now": true,
-      "mega_soon": false,
-      "notes": "Mega Heracross is one of the strongest Bug attackers and solid Fighting mega.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Heracross #3",
-      "ivs": [
-        10,
-        9,
-        5
-      ],
-      "final_form": "Mega Heracross",
-      "role": "Bug/Fighting (mega & DPS)",
-      "base": 90,
-      "lucky": false,
-      "shadow": false,
-      "needs_tm": false,
-      "mega_now": true,
-      "mega_soon": false,
-      "notes": "Mega Heracross is one of the strongest Bug attackers and solid Fighting mega.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Heracross #4",
-      "ivs": [
-        12,
-        8,
-        11
-      ],
-      "final_form": "Mega Heracross",
-      "role": "Bug/Fighting (mega & DPS)",
-      "base": 90,
-      "lucky": false,
-      "shadow": false,
-      "needs_tm": false,
-      "mega_now": true,
-      "mega_soon": false,
-      "notes": "Mega Heracross is one of the strongest Bug attackers and solid Fighting mega.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Heracross #5",
-      "ivs": [
-        13,
-        8,
-        14
-      ],
-      "final_form": "Mega Heracross",
-      "role": "Bug/Fighting (mega & DPS)",
-      "base": 90,
-      "lucky": false,
-      "shadow": false,
-      "needs_tm": false,
-      "mega_now": true,
-      "mega_soon": false,
-      "notes": "Mega Heracross is one of the strongest Bug attackers and solid Fighting mega.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Shadow Tyrunt",
-      "ivs": [
-        14,
-        15,
-        5
-      ],
-      "final_form": "Shadow Tyrantrum",
-      "role": "Rock/Dragon DPS (niche)",
-      "base": 80,
-      "lucky": false,
-      "shadow": true,
-      "needs_tm": false,
-      "mega_now": false,
-      "mega_soon": false,
-      "notes": "Fun and strong on paper, but still behind top Rock/Dragon specialists in most raids.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Beldum",
-      "ivs": [
-        15,
-        9,
-        4
-      ],
-      "final_form": "Metagross (Meteor Mash)",
-      "role": "Steel DPS (top)",
-      "base": 90,
-      "lucky": false,
-      "shadow": false,
-      "needs_tm": true,
-      "mega_now": false,
-      "mega_soon": false,
-      "notes": "Meteor Mash is mandatory; top Steel attacker when built.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Electabuzz",
-      "ivs": [
-        15,
-        10,
-        3
-      ],
-      "final_form": "Electivire",
-      "role": "Electric DPS (good)",
-      "base": 82,
-      "lucky": false,
-      "shadow": false,
-      "needs_tm": false,
-      "mega_now": false,
-      "mega_soon": false,
-      "notes": "Strong budget Electric; behind Legendaries and Shadows but still very usable.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Gurdurr",
-      "ivs": [
-        12,
-        6,
-        14
-      ],
-      "final_form": "Conkeldurr",
-      "role": "Fighting DPS (top non-mega)",
-      "base": 86,
-      "lucky": false,
-      "shadow": false,
-      "needs_tm": false,
-      "mega_now": false,
-      "mega_soon": false,
-      "notes": "Conkeldurr is a top non-mega Fighting attacker.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Crawdaunt",
-      "ivs": [
-        15,
-        13,
-        15
-      ],
-      "final_form": "Crawdaunt",
-      "role": "Water/Dark (spice)",
-      "base": 60,
-      "lucky": true,
-      "shadow": false,
-      "needs_tm": false,
-      "mega_now": false,
-      "mega_soon": false,
-      "notes": "Glass cannon, outclassed by most Water/Dark specialists.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Shadow Magnemite",
-      "ivs": [
-        11,
-        6,
-        10
-      ],
-      "final_form": "Shadow Magnezone",
-      "role": "Electric DPS (top non-legend)",
-      "base": 88,
-      "lucky": false,
-      "shadow": true,
-      "needs_tm": false,
-      "mega_now": false,
-      "mega_soon": false,
-      "notes": "Shadow Magnezone is among the best non-legend Electric attackers.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Shadow Gastly",
-      "ivs": [
-        9,
-        11,
-        15
-      ],
-      "final_form": "Shadow Gengar",
-      "role": "Ghost DPS (apex glass cannon)",
-      "base": 93,
-      "lucky": false,
-      "shadow": true,
-      "needs_tm": true,
-      "mega_now": false,
-      "mega_soon": false,
-      "notes": "Shadow Gengar has elite DPS; benefits from legacy Lick/Shadow Ball.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Treecko",
-      "ivs": [
-        14,
-        13,
-        10
-      ],
-      "final_form": "Sceptile (Frenzy Plant) / Mega Sceptile",
-      "role": "Grass DPS (top w/ Mega)",
-      "base": 88,
-      "lucky": false,
-      "shadow": false,
-      "needs_tm": true,
-      "mega_now": true,
-      "mega_soon": false,
-      "notes": "Frenzy Plant Sceptile is excellent; Mega Sceptile is the best Grass mega.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Arcanine",
-      "ivs": [
-        15,
-        12,
-        10
-      ],
-      "final_form": "Arcanine",
-      "role": "Fire DPS (mid)",
-      "base": 72,
-      "lucky": false,
-      "shadow": false,
-      "needs_tm": false,
-      "mega_now": false,
-      "mega_soon": false,
-      "notes": "Usable but far behind top Fire options.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Shadow Kirlia",
-      "ivs": [
-        11,
-        11,
-        11
-      ],
-      "final_form": "Shadow Gardevoir",
-      "role": "Fairy DPS (top non-mega)",
-      "base": 88,
-      "lucky": false,
-      "shadow": true,
-      "needs_tm": false,
-      "mega_now": false,
-      "mega_soon": false,
-      "notes": "Shadow Gardevoir is a top non-mega Fairy attacker; consider Gardevoir over Gallade for raids.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Drilbur",
-      "ivs": [
-        14,
-        15,
-        14
-      ],
-      "final_form": "Excadrill",
-      "role": "Ground DPS (top non-legend)",
-      "base": 86,
-      "lucky": true,
-      "shadow": false,
-      "needs_tm": false,
-      "mega_now": false,
-      "mega_soon": false,
-      "notes": "Excadrill has great DPS and resistances; lucky makes it cheap.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Grovyle",
-      "ivs": [
-        15,
-        12,
-        13
-      ],
-      "final_form": "Sceptile (Frenzy Plant) / Mega Sceptile",
-      "role": "Grass DPS",
-      "base": 88,
-      "lucky": false,
-      "shadow": false,
-      "needs_tm": true,
-      "mega_now": true,
-      "mega_soon": false,
-      "notes": "Same as Treecko — pick your better IV to evolve.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Alakazam",
-      "ivs": [
-        14,
-        13,
-        15
-      ],
-      "final_form": "Alakazam / Mega Alakazam",
-      "role": "Psychic DPS",
-      "base": 80,
-      "lucky": false,
-      "shadow": false,
-      "needs_tm": false,
-      "mega_now": true,
-      "mega_soon": false,
-      "notes": "As a non-mega it's okay; Mega Alakazam is a strong Psychic mega booster.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Drowzee",
-      "ivs": [
-        14,
-        15,
-        13
-      ],
-      "final_form": "Hypno",
-      "role": "Psychic (low DPS)",
-      "base": 55,
-      "lucky": true,
-      "shadow": false,
-      "needs_tm": false,
-      "mega_now": false,
-      "mega_soon": false,
-      "notes": "Not raid-relevant; mostly PvP/collection.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Scyther",
-      "ivs": [
-        12,
-        15,
-        14
-      ],
-      "final_form": "Scizor / Mega Scizor",
-      "role": "Bug/Steel (mega support)",
-      "base": 82,
-      "lucky": false,
-      "shadow": false,
-      "needs_tm": false,
-      "mega_now": true,
-      "mega_soon": false,
-      "notes": "Scizor is mid for raids; Mega Scizor is a handy Bug/Steel booster.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Hariyama",
-      "ivs": [
-        14,
-        15,
-        12
-      ],
-      "final_form": "Hariyama",
-      "role": "Fighting DPS (budget)",
-      "base": 80,
-      "lucky": false,
-      "shadow": false,
-      "needs_tm": false,
-      "mega_now": false,
-      "mega_soon": false,
-      "notes": "Solid budget Fighter; outclassed by Machamp/Conkeldurr/Lucario.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Blastoise",
-      "ivs": [
-        15,
-        14,
-        14
-      ],
-      "final_form": "Blastoise / Mega Blastoise",
-      "role": "Water (mega support)",
-      "base": 82,
-      "lucky": true,
-      "shadow": false,
-      "needs_tm": true,
-      "mega_now": true,
-      "mega_soon": false,
-      "notes": "Hydro Cannon needed for non-mega; Mega Blastoise is a strong Water mega.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Machamp",
-      "ivs": [
-        15,
-        13,
-        14
-      ],
-      "final_form": "Machamp",
-      "role": "Fighting DPS (top non-shadow)",
-      "base": 84,
-      "lucky": true,
-      "shadow": false,
-      "needs_tm": false,
-      "mega_now": false,
-      "mega_soon": false,
-      "notes": "Still a top non-legend Fighter with Counter/Dynamic Punch.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Shadow Drilbur",
-      "ivs": [
-        14,
-        4,
-        15
-      ],
-      "final_form": "Shadow Excadrill",
-      "role": "Ground DPS (apex)",
-      "base": 92,
-      "lucky": false,
-      "shadow": true,
-      "needs_tm": false,
-      "mega_now": false,
-      "mega_soon": false,
-      "notes": "Shadow Excadrill is among the best Ground DPS options; frailer but hits very hard.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Gengar (lucky)",
-      "ivs": [
-        15,
-        13,
-        12
-      ],
-      "final_form": "Gengar / Mega Gengar",
-      "role": "Ghost DPS (high)",
-      "base": 82,
-      "lucky": true,
-      "shadow": false,
-      "needs_tm": true,
-      "mega_now": true,
-      "mega_soon": false,
-      "notes": "Great non-shadow DPS; can Mega for top-tier boosts.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Gengar (hundo)",
-      "ivs": [
-        15,
-        15,
-        15
-      ],
-      "final_form": "Gengar / Mega Gengar",
-      "role": "Ghost DPS (high)",
-      "base": 85,
-      "lucky": false,
-      "shadow": false,
-      "needs_tm": true,
-      "mega_now": true,
-      "mega_soon": false,
-      "notes": "Perfect IVs; outstanding Mega candidate.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Venusaur",
-      "ivs": [
-        15,
-        14,
-        15
-      ],
-      "final_form": "Venusaur / Mega Venusaur",
-      "role": "Grass DPS (good)",
-      "base": 83,
-      "lucky": false,
-      "shadow": false,
-      "needs_tm": true,
-      "mega_now": true,
-      "mega_soon": false,
-      "notes": "Frenzy Plant Venusaur is solid; Mega Venusaur offers bulky Grass mega support.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Rhyhorn",
-      "ivs": [
-        13,
-        13,
-        15
-      ],
-      "final_form": "Rhyperior (Rock Wrecker)",
-      "role": "Rock DPS (top TDO)",
-      "base": 88,
-      "lucky": false,
-      "shadow": false,
-      "needs_tm": true,
-      "mega_now": false,
-      "mega_soon": false,
-      "notes": "Rock Wrecker is mandatory; elite TDO and flexible Ground coverage.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Gyarados",
-      "ivs": [
-        14,
-        13,
-        15
-      ],
-      "final_form": "Gyarados / Mega Gyarados",
-      "role": "Water/Dark (mega support)",
-      "base": 82,
-      "lucky": true,
-      "shadow": false,
-      "needs_tm": false,
-      "mega_now": true,
-      "mega_soon": false,
-      "notes": "As a mega it's a great Dark/Water booster; non-mega is decent but outclassed.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Larvitar #1",
-      "ivs": [
-        15,
-        12,
-        13
-      ],
-      "final_form": "Tyranitar (Brutal Swing) / Mega Tyranitar",
-      "role": "Dark/Rock DPS",
-      "base": 86,
-      "lucky": false,
-      "shadow": false,
-      "needs_tm": true,
-      "mega_now": true,
-      "mega_soon": false,
-      "notes": "Brutal Swing makes Dark TTar great; Smack Down needs ETM for Rock role; Mega Tyranitar is elite.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Larvitar #2",
-      "ivs": [
-        15,
-        15,
-        10
-      ],
-      "final_form": "Tyranitar (Brutal Swing) / Mega Tyranitar",
-      "role": "Dark/Rock DPS",
-      "base": 86,
-      "lucky": false,
-      "shadow": false,
-      "needs_tm": true,
-      "mega_now": true,
-      "mega_soon": false,
-      "notes": "Slightly better bulk; same notes as above.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Shadow Machoke",
-      "ivs": [
-        13,
-        12,
-        7
-      ],
-      "final_form": "Shadow Machamp",
-      "role": "Fighting DPS (apex non-mega)",
-      "base": 90,
-      "lucky": false,
-      "shadow": true,
-      "needs_tm": false,
-      "mega_now": false,
-      "mega_soon": false,
-      "notes": "Shadow Machamp is one of the best Fighters; very high DPS.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Haunter",
-      "ivs": [
-        14,
-        14,
-        15
-      ],
-      "final_form": "Gengar / Mega Gengar",
-      "role": "Ghost DPS (high)",
-      "base": 84,
-      "lucky": false,
-      "shadow": false,
-      "needs_tm": true,
-      "mega_now": true,
-      "mega_soon": false,
-      "notes": "Great IVs; evolve for another strong Gengar or Mega candidate.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Shadow Cyndaquil",
-      "ivs": [
-        13,
-        0,
-        12
-      ],
-      "final_form": "Shadow Typhlosion (Blast Burn)",
-      "role": "Fire DPS (high)",
-      "base": 87,
-      "lucky": false,
-      "shadow": true,
-      "needs_tm": true,
-      "mega_now": false,
-      "mega_soon": false,
-      "notes": "With Blast Burn it's a strong Fire attacker; very glassy as a Shadow.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Throh",
-      "ivs": [
-        15,
-        6,
-        5
-      ],
-      "final_form": "Throh",
-      "role": "Fighting (very low DPS)",
-      "base": 52,
-      "lucky": false,
-      "shadow": false,
-      "needs_tm": false,
-      "mega_now": false,
-      "mega_soon": false,
-      "notes": "No raid relevance; belongs in PvP/collection, not raids.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Moltres",
-      "ivs": [
-        11,
-        13,
-        14
-      ],
-      "final_form": "Moltres",
-      "role": "Fire/Flying DPS (legend)",
-      "base": 85,
-      "lucky": false,
-      "shadow": false,
-      "needs_tm": false,
-      "mega_now": false,
-      "mega_soon": false,
-      "notes": "Strong Fire or Flying attacker; still relevant in many raids.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Shadow Giratina",
-      "ivs": [
-        11,
-        9,
-        14
-      ],
-      "final_form": "Shadow Giratina (Origin preferred)",
-      "role": "Ghost/Dragon DPS (apex)",
-      "base": 95,
-      "lucky": false,
-      "shadow": true,
-      "needs_tm": false,
-      "mega_now": false,
-      "mega_soon": false,
-      "notes": "Shadow Giratina debuted recently; Origin Forme is an elite Ghost raider.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Shadow Roggenrola",
-      "ivs": [
-        10,
-        12,
-        5
-      ],
-      "final_form": "Shadow Gigalith (Meteor Beam)",
-      "role": "Rock DPS (strong)",
-      "base": 83,
-      "lucky": false,
-      "shadow": true,
-      "needs_tm": true,
-      "mega_now": false,
-      "mega_soon": false,
-      "notes": "Meteor Beam is key; shadow gives it serious punch.",
-      "purified": false,
-      "best_buddy": false
-    },
-    {
-      "name": "Excadrill (Dynamax)",
-      "ivs": [
-        14,
-        14,
-        10
-      ],
-      "final_form": "Excadrill",
-      "role": "Ground DPS (top non-legend)",
-      "base": 86,
-      "lucky": false,
-      "shadow": false,
-      "needs_tm": false,
-      "mega_now": false,
-      "mega_soon": false,
-      "notes": "Dynamax tag doesn't change its standard raid role; very good Ground attacker.",
-      "purified": false,
-      "best_buddy": false
-    }
-  ]
+    "schema_version": 1
+  }
 }

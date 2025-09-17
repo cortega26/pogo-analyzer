@@ -158,4 +158,4 @@ def get_move_guidance(name: str) -> MoveGuidance | None:
     return _GUIDANCE.get(normalise_name(name))
 
 
-__all__: Final = ["MoveGuidance", "get_move_guidance"]
+__all__: Final = ["MoveGuidance", "get_move_guidance", "normalise_name"]

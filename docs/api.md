@@ -76,7 +76,8 @@ Immutable dataclass representing one row on the raid scoreboard.
 | `base` | `float` | Baseline score for the species before modifiers. Typical values range from 55–95. |
 | `lucky` | `bool` | Adds +3 to the raid score to reflect reduced dust costs. |
 | `shadow` | `bool` | Indicates the Pokémon is a Shadow variant. Used for labelling only—the damage boost is baked into the baseline score you provide. |
-| `needs_tm` | `bool` | Subtracts 2 points when a Community Day or Elite TM move is required. |
+| `requires_special_move` | `bool` | Marks builds that rely on an exclusive or limited move; shown in the scoreboard’s “Move Needs” column. |
+| `needs_tm` | `bool` | Subtracts 2 points when the exclusive move is still locked on the evaluated Pokémon. |
 | `mega_now` | `bool` | Adds +4 points when a relevant mega evolution is currently available. |
 | `mega_soon` | `bool` | Adds +1 point when a mega evolution is confirmed but not yet released. |
 | `notes` | `str` | Free-form explanation shown in the scoreboard. |
@@ -90,7 +91,7 @@ Convenience methods:
 - `formatted_name()` – Append `(lucky)` and `(shadow)` labels when relevant.
 - `iv_text()` – Render the IV tuple as `"15/14/13"`.
 - `mega_text()` – Display `"Yes"`, `"Soon"`, or `"No"` for mega availability.
-- `move_text()` – Return `"Yes"` when special moves are needed.
+- `move_text()` – Return `"Yes"` when `requires_special_move` is set.
 - `to_row()` – Produce a `dict[str, Any]` matching the scoreboard column schema.
 - `as_row()` – Backwards-compatible alias for `to_row()`.
 
