@@ -8,9 +8,11 @@ from pathlib import Path
 
 from .data.raid_entries import (
     DEFAULT_RAID_ENTRIES,
+    DEFAULT_RAID_ENTRY_METADATA,
     IVSpread,
     PokemonRaidEntry,
     build_entry_rows,
+    load_raid_entries,
 )
 from .raid_entries import RAID_ENTRIES, build_rows
 from .scoreboard import (
@@ -46,6 +48,7 @@ except _metadata.PackageNotFoundError:
 
 __all__ = [
     "DEFAULT_RAID_ENTRIES",
+    "DEFAULT_RAID_ENTRY_METADATA",
     "IVSpread",
     "PokemonRaidEntry",
     "RAID_ENTRIES",
@@ -53,6 +56,7 @@ __all__ = [
     "SimpleSeries",
     "SimpleTable",
     "build_entry_rows",
+    "load_raid_entries",
     "build_rows",
     "TableLike",
     "ScoreboardExportConfig",

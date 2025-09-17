@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import copy
+import json
 from pathlib import Path
 
 import pytest
@@ -197,6 +199,52 @@ def test_canonical_api_aliases() -> None:
         mega_bonus_soon=entry.mega_soon,
     )
     assert canonical_score == legacy_score
+
+
+def test_load_raid_entries_matches_default_dataset() -> None:
+    """The JSON-backed loader should reproduce the packaged dataset."""
+
+    loaded = pa.load_raid_entries()
+    assert loaded == pa.DEFAULT_RAID_ENTRIES
+
+
+def test_load_raid_entries_missing_required_field(tmp_path: Path) -> None:
+    """Entries lacking required columns should raise a validation error."""
+
+    payload = {
+        "metadata": copy.deepcopy(pa.DEFAULT_RAID_ENTRY_METADATA),
+        "entries": [
+            {
+                "ivs": [15, 15, 15],
+                "base": 80,
+            }
+        ],
+    }
+    target = tmp_path / "invalid_missing_field.json"
+    target.write_text(json.dumps(payload), encoding="utf-8")
+
+    with pytest.raises(ValueError, match=r"missing required field\(s\): name"):
+        pa.load_raid_entries(target)
+
+
+def test_load_raid_entries_rejects_out_of_range_score(tmp_path: Path) -> None:
+    """Base scores outside the allowed range should be rejected."""
+
+    payload = {
+        "metadata": copy.deepcopy(pa.DEFAULT_RAID_ENTRY_METADATA),
+        "entries": [
+            {
+                "name": "Broken",
+                "ivs": [15, 15, 15],
+                "base": 150,
+            }
+        ],
+    }
+    target = tmp_path / "invalid_score.json"
+    target.write_text(json.dumps(payload), encoding="utf-8")
+
+    with pytest.raises(ValueError, match=r"Raid entry 'Broken' is invalid: .*base must fall within"):
+        pa.load_raid_entries(target)
 
 
 def test_pokemon_entry_validation_rejects_bad_inputs() -> None:
