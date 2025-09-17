@@ -238,7 +238,8 @@ def _template_entry(
         candidates = matches
         variant_mismatch = True
     else:
-        return TemplateLookup(entry=None, name_matches=True, variant_mismatch=False)
+        candidates = matches
+        variant_mismatch = True
 
     same_purified = [entry for entry in candidates if entry.purified == purified]
     if same_purified:
@@ -273,6 +274,7 @@ def _evaluate_single_pokemon(args: argparse.Namespace) -> None:
         guidance = None
 
     shadow_bonus_applied = False
+    shadow_baseline_adjusted = False
     if template:
         base_score = template.base
         role = args.role or template.role
@@ -280,6 +282,9 @@ def _evaluate_single_pokemon(args: argparse.Namespace) -> None:
         if args.shadow and lookup.variant_mismatch and not template.shadow:
             base_score += _SHADOW_BASELINE_BONUS
             shadow_bonus_applied = True
+        elif not args.shadow and lookup.variant_mismatch and template.shadow:
+            base_score = max(SCORE_MIN, base_score - _SHADOW_BASELINE_BONUS)
+            shadow_baseline_adjusted = True
     else:
         base_score = _score_from_combat_power(args.combat_power)
         role = args.role or ""
@@ -333,6 +338,10 @@ def _evaluate_single_pokemon(args: argparse.Namespace) -> None:
     if shadow_bonus_applied:
         note_parts.append(
             "Applied shadow damage bonus to baseline score due to missing dedicated template."
+        )
+    if shadow_baseline_adjusted:
+        note_parts.append(
+            "Adjusted shadow template baseline to approximate non-shadow performance due to missing dedicated template."
         )
 
     notes = " ".join(dict.fromkeys(part for part in note_parts if part)).strip()
