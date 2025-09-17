@@ -38,6 +38,9 @@ py-modules = [
 [tool.setuptools.packages.find]
 include = ["pogo_analyzer*"]
 
+[tool.setuptools.package-data]
+"pogo_analyzer.data" = ["*.json"]
+
 [tool.black]
 line-length = 88
 target-version = ["py39"]
