@@ -51,7 +51,7 @@ def main(argv: Sequence[str] | None = None) -> None:  # pragma: no cover - UI on
     st.caption("Quick checks (PvE/PvP) and scoreboards with clear, guided controls.")
     st.markdown("</div>", unsafe_allow_html=True)
 
-    tabs = st.tabs(["Quick Check", "Raid Scoreboard", "PvP Scoreboard", "About"])
+    tabs = st.tabs(["Quick Check", "Raid Scoreboard", "PvP Scoreboard", "Glossary", "About"])
 
     with tabs[0]:
         _tab_single_pokemon(st)
@@ -63,6 +63,9 @@ def main(argv: Sequence[str] | None = None) -> None:  # pragma: no cover - UI on
         _tab_pvp_scoreboard(st)
 
     with tabs[3]:
+        _tab_glossary(st)
+
+    with tabs[4]:
         st.markdown(
             """
             - This GUI wraps the same library used by the CLI.
@@ -618,6 +621,61 @@ def _tab_raid_scoreboard(st: "object") -> None:  # pragma: no cover - UI only
         with open(result.excel_path, "rb") as f:
             st.download_button("Download Excel", data=f, file_name=result.excel_path.name, mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
 
+
+def _tab_glossary(st: "object") -> None:  # pragma: no cover - UI only
+    st.header("Glossary")
+    st.caption("Common terms and abbreviations used across the app.")
+
+    entries: list[tuple[str, str]] = [
+        ("CP", "Combat Power — an in‑game summary number, not used directly in our math beyond level inference."),
+        ("CPM", "Combat Power Multiplier — scales base+IV stats by level (and +1 level for Best Buddy)."),
+        ("IV", "Individual Values — per‑Pokémon stat bonus (0–15) for Attack, Defense, Stamina."),
+        ("PvE", "Player‑versus‑Environment — raids/gyms. We score rotation DPS and TDO, then blend into a PvE value."),
+        ("PvP", "Player‑versus‑Player — trainer battles. We score Stat Product (bulk) and Move Pressure (offense)."),
+        ("DPS", "Damage per second — average output over a rotation (higher is better)."),
+        ("TDO", "Total Damage Output — DPS × time‑to‑faint; how much total damage a build deals before fainting."),
+        ("EHP", "Effective HP — HP scaled by defense and a target defense; proxy for survivability in PvE."),
+        ("TTF", "Time to Faint — EHP divided by incoming DPS from the boss."),
+        ("STAB", "Same‑Type Attack Bonus — 1.2× multiplier if the move matches the Pokémon’s type."),
+        ("Type effectiveness", "Multiplier vs a target’s type(s): 1.6× super‑effective; 0.625× resisted."),
+        ("Turns (PvP)", "Each turn is 0.5s. PvP fast moves act in discrete turns."),
+        ("DPT/EPT (PvP)", "Damage/Energy per turn — describes a fast move’s per‑turn pressure and energy gain."),
+        ("SP (PvP)", "Stat Product — A×D×H after level; a proxy for bulk/survivability in leagues."),
+        ("MP (PvP)", "Move Pressure — fast pressure + best (or baited pair) charge pressure, normalised per league."),
+        ("α (alpha)", "PvE blend weight between DPS and TDO in the PvE value (default 0.6)."),
+        ("β (beta)", "PvP blend weight between SP and MP in the PvP score (default 0.52)."),
+        ("CMP (PvP)", "Charge‑Move Priority (initiative) — higher current Attack acts first on tie; we apply a small bonus."),
+        ("Bait (PvP)", "Using a cheaper charge move to draw shields so a heavy move can land later."),
+        ("Shields (PvP)", "0/1/2 shields — scenarios we can blend to reflect typical play."),
+        ("Best Buddy (BB)", "+1 CPM level — effectively raises stats by using the Best Buddy mechanic."),
+        ("SE / Resisted", "Shorthand for super‑effective (1.6×) and resisted (0.625×)."),
+        ("Energy‑from‑damage (PvE)", "Optional energy gained by taking damage; simple ratio model in Quick Check."),
+        ("Relobby penalty (PvE)", "Optional dampener to account for downtime on faints/switches (exp(−φ·TDO))."),
+        ("Tier (S/A/B/C/D/E/F)", "Coarse PvE letter tier with top‑line recommendation: Build (S/A/B), Consider (C/D), Skip (E/F)."),
+        ("Gamemaster", "The PvPoke dataset we import to know species, moves, and learnsets."),
+        ("Learnset", "The set of legal fast/charge moves for a species used to pick best moves automatically."),
+        ("SP‑max (PvP)", "The maximum Stat Product reachable under a league CP cap for a species (optimising IVs and level)."),
+        ("IV optimisation (PvP)", "Search over IVs 0–15 to maximise SP under cap; our frontier search is exact and fast."),
+        ("GL/UL/ML", "Great/Ultra/Master Leagues — 1500 / 2500 / no CP cap respectively."),
+        ("Best moves (auto)", "When enabled, the app picks strong PvE/PvP moves from the imported dataset so you don’t have to type them."),
+    ]
+    # Alphabetise by term for easier scanning
+    entries = sorted(entries, key=lambda e: e[0].lower())
+
+    q = st.text_input("Filter terms", placeholder="Type to filter (e.g., DPS, STAB, SP)…")
+    ql = (q or "").strip().lower()
+    filtered = [e for e in entries if ql in e[0].lower() or ql in e[1].lower()]
+    filtered.sort(key=lambda e: e[0].lower())
+    if not filtered:
+        st.info("No matching terms. Try a different keyword.")
+        return
+
+    # Render in two columns for scanability
+    left, right = st.columns(2)
+    for i, (term, desc) in enumerate(filtered):
+        col = left if i % 2 == 0 else right
+        with col:
+            st.markdown(f"**{term}** — {desc}")
 
 if __name__ == "__main__":  # pragma: no cover
     main([])
