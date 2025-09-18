@@ -25,18 +25,21 @@ def main(argv: Sequence[str] | None = None) -> None:  # pragma: no cover - UI on
         ) from exc
 
     st.set_page_config(page_title="PoGo Analyzer", layout="wide")
-    st.title("PoGo Analyzer — GUI")
-    st.caption("Quick checks for PvE/PvP with explainers, plus a PvP scoreboard helper.")
+    st.title("PoGo Analyzer")
+    st.caption("Quick checks (PvE/PvP) and scoreboards with clear, guided controls.")
 
-    tabs = st.tabs(["Single Pokémon", "PvP Scoreboard", "About"])
+    tabs = st.tabs(["Quick Check", "Raid Scoreboard", "PvP Scoreboard", "About"])
 
     with tabs[0]:
         _tab_single_pokemon(st)
 
     with tabs[1]:
-        _tab_pvp_scoreboard(st)
+        _tab_raid_scoreboard(st)
 
     with tabs[2]:
+        _tab_pvp_scoreboard(st)
+
+    with tabs[3]:
         st.markdown(
             """
             - This GUI wraps the same library used by the CLI.
@@ -54,7 +57,7 @@ def _tab_single_pokemon(st: "object") -> None:  # pragma: no cover - UI only
 
     st.header("Single Pokémon Quick Check")
 
-    with st.form("quick_form"):
+    with st.form("quick_form", clear_on_submit=False):
         st.subheader("Basics")
         col1, col2 = st.columns(2)
         with col1:
@@ -76,7 +79,7 @@ def _tab_single_pokemon(st: "object") -> None:  # pragma: no cover - UI only
                 options=options,
                 index=None,
                 placeholder="Start typing to search…",
-                help="Type letters to narrow down the list; press Enter to pick.",
+                help="Type to filter; press Enter to pick.",
             )
             name = display_to_query.get(name_display or "", "")
             cp = st.number_input("Combat Power (CP)", min_value=0, value=0, step=1)
@@ -116,7 +119,7 @@ def _tab_single_pokemon(st: "object") -> None:  # pragma: no cover - UI only
 
         st.divider()
         st.subheader("PvE (optional)")
-        pve_enabled = st.checkbox("Include PvE value")
+        pve_enabled = st.checkbox("Include PvE value", help="Compute rotation DPS/TDO and a combined PvE value.")
         if pve_enabled:
             pve_c1, pve_c2, pve_c3 = st.columns(3)
             with pve_c1:
@@ -144,16 +147,22 @@ def _tab_single_pokemon(st: "object") -> None:  # pragma: no cover - UI only
                 target_def = st.number_input("Target Defense (boss)", min_value=1.0, value=180.0)
                 incoming_dps = st.number_input("Incoming DPS (boss)", min_value=1.0, value=35.0)
                 alpha = st.number_input("Alpha (DPS↔TDO blend)", min_value=0.01, max_value=0.99, value=0.6)
-                e_from_dmg = st.number_input("Energy from damage ratio", min_value=0.0, value=0.0)
-                relobby_phi = st.number_input("Relobby penalty (phi)", min_value=0.0, value=0.0)
+                e_from_dmg = st.number_input("Energy from damage ratio", min_value=0.0, value=0.0, help="Approx. 0.5 ≈ 1 energy per 2 HP lost.")
+                relobby_phi = st.number_input("Relobby penalty (phi)", min_value=0.0, value=0.0, help="Use >0 to dampen builds that faint often.")
 
         st.divider()
         st.subheader("PvP (optional)")
-        pvp_enabled = st.checkbox("Include PvP value")
+        pvp_enabled = st.checkbox("Include PvP value", help="Compute Stat Product, Move Pressure, and a blended PvP score.")
         if pvp_enabled:
             pvp_c1, pvp_c2 = st.columns(2)
             with pvp_c1:
-                league_cap = st.selectbox("League", options=[1500, 2500, 0], format_func=lambda v: "Great (1500)" if v==1500 else ("Ultra (2500)" if v==2500 else "Master (no cap)"), index=0)
+                league_cap = st.radio(
+                    "League",
+                    options=[1500, 2500, 0],
+                    format_func=lambda v: "Great (1500)" if v==1500 else ("Ultra (2500)" if v==2500 else "Master (no cap)"),
+                    index=0,
+                    horizontal=True,
+                )
                 beta = st.number_input("Beta (SP↔MP blend)", min_value=0.01, max_value=0.99, value=0.52)
                 shield_weights = st.text_input("Shield weights (w0,w1,w2)", value="")
             with pvp_c2:
@@ -162,7 +171,7 @@ def _tab_single_pokemon(st: "object") -> None:  # pragma: no cover - UI only
                 sp_ref = st.number_input("SP reference (optional)", min_value=0.0, value=0.0)
                 mp_ref = st.number_input("MP reference (optional)", min_value=0.0, value=0.0)
 
-        submitted = st.form_submit_button("Evaluate")
+        submitted = st.form_submit_button("Run Quick Check")
 
     if not submitted:
         return
@@ -187,68 +196,75 @@ def _tab_single_pokemon(st: "object") -> None:  # pragma: no cover - UI only
     obs_hp = int(observed_hp) if observed_hp > 0 else None
 
     # Inference
-    try:
-        level, cpm = infer_level_from_cp(ba, bd, bs, *IVs, int(cp), is_shadow=shadow, is_best_buddy=best_buddy, observed_hp=obs_hp)
-        A, D, H = effective_stats(ba, bd, bs, *IVs, level, is_shadow=shadow, is_best_buddy=best_buddy)
-    except Exception as exc:  # noqa: BLE001
-        st.error(f"Level inference failed: {exc}")
-        return
+    with st.spinner("Inferring level and computing stats…"):
+        try:
+            level, cpm = infer_level_from_cp(ba, bd, bs, *IVs, int(cp), is_shadow=shadow, is_best_buddy=best_buddy, observed_hp=obs_hp)
+            A, D, H = effective_stats(ba, bd, bs, *IVs, level, is_shadow=shadow, is_best_buddy=best_buddy)
+        except Exception as exc:  # noqa: BLE001
+            st.error(f"Level inference failed: {exc}")
+            return
 
     st.success(f"Level {level:.1f} (CPM {cpm:.6f}) — A={A:.2f}, D={D:.2f}, H={H}")
 
     # PvE
     if pve_enabled:
-        try:
-            fast = FastMove(fast_name, power=float(fast_power), energy_gain=float(fast_energy), duration=float(fast_dur), stab=bool(fast_stab))
-            charges = [
-                ChargeMove(ch1_name, power=float(ch1_power), energy_cost=float(ch1_cost), duration=float(ch1_dur), stab=bool(ch1_stab))
-            ]
-            if ch2_toggle and ch2_name:
-                charges.append(ChargeMove(ch2_name, power=float(ch2_power), energy_cost=float(ch2_cost), duration=float(ch2_dur), stab=bool(ch2_stab)))
+        with st.spinner("Scoring PvE…"):
+            try:
+                fast = FastMove(fast_name, power=float(fast_power), energy_gain=float(fast_energy), duration=float(fast_dur), stab=bool(fast_stab))
+                charges = [
+                    ChargeMove(ch1_name, power=float(ch1_power), energy_cost=float(ch1_cost), duration=float(ch1_dur), stab=bool(ch1_stab))
+                ]
+                if ch2_toggle and ch2_name:
+                    charges.append(ChargeMove(ch2_name, power=float(ch2_power), energy_cost=float(ch2_cost), duration=float(ch2_dur), stab=bool(ch2_stab)))
 
-            pve = compute_pve_score(
-                A, D, int(H), fast, charges,
-                target_defense=float(target_def), incoming_dps=float(incoming_dps), alpha=float(alpha),
-                energy_from_damage_ratio=float(e_from_dmg), relobby_penalty=(float(relobby_phi) if relobby_phi>0 else None),
-            )
-            st.subheader("PvE value")
-            st.write({k: v for k, v in pve.items() if k in {"dps","ehp","tdo","value","alpha"}})
-        except Exception as exc:  # noqa: BLE001
-            st.error(f"PvE evaluation failed: {exc}")
+                pve = compute_pve_score(
+                    A, D, int(H), fast, charges,
+                    target_defense=float(target_def), incoming_dps=float(incoming_dps), alpha=float(alpha),
+                    energy_from_damage_ratio=float(e_from_dmg), relobby_penalty=(float(relobby_phi) if relobby_phi>0 else None),
+                )
+                st.subheader("PvE value")
+                st.metric("Rotation DPS", f"{pve['dps']:.2f}")
+                st.metric("TDO", f"{pve['tdo']:.2f}")
+                st.metric("PvE Value", f"{pve['value']:.2f}")
+            except Exception as exc:  # noqa: BLE001
+                st.error(f"PvE evaluation failed: {exc}")
 
     # PvP
     if pvp_enabled:
-        try:
-            sw = None
-            if shield_weights.strip():
-                parts = [float(x.strip()) for x in shield_weights.split(',') if x.strip()]
-                if len(parts) == 3:
-                    sw = parts
-            bait_model = None
-            bait_prob_val: float | None = None
-            if bait_prob.strip():
-                if '=' in bait_prob:
-                    # Parse a=,b=,c=,d=
-                    bait_model = {}
-                    for kv in bait_prob.split(','):
-                        k, _, v = kv.partition('=')
-                        bait_model[k.strip()] = float(v.strip())
-                else:
-                    bait_prob_val = float(bait_prob)
+        with st.spinner("Scoring PvP…"):
+            try:
+                sw = None
+                if shield_weights.strip():
+                    parts = [float(x.strip()) for x in shield_weights.split(',') if x.strip()]
+                    if len(parts) == 3:
+                        sw = parts
+                bait_model = None
+                bait_prob_val: float | None = None
+                if bait_prob.strip():
+                    if '=' in bait_prob:
+                        # Parse a=,b=,c=,d=
+                        bait_model = {}
+                        for kv in bait_prob.split(','):
+                            k, _, v = kv.partition('=')
+                            bait_model[k.strip()] = float(v.strip())
+                    else:
+                        bait_prob_val = float(bait_prob)
 
-            pvp = compute_pvp_score(
-                A, D, int(H),
-                PvpFastMove(name="fast", damage=float(fast_power), energy_gain=float(fast_energy), turns=int(f_turns)),
-                [PvpChargeMove(name=ch1_name, damage=float(ch1_power), energy_cost=float(ch1_cost))],
-                league="great" if league_cap==1500 else ("ultra" if league_cap==2500 else "master"),
-                beta=float(beta), stat_product_reference=(float(sp_ref) if sp_ref>0 else None),
-                move_pressure_reference=(float(mp_ref) if mp_ref>0 else None),
-                bait_probability=bait_prob_val, shield_weights=sw,
-            )
-            st.subheader("PvP value")
-            st.write({k: v for k, v in pvp.items() if k in {"stat_product","stat_product_normalised","move_pressure","move_pressure_normalised","score"}})
-        except Exception as exc:  # noqa: BLE001
-            st.error(f"PvP evaluation failed: {exc}")
+                pvp = compute_pvp_score(
+                    A, D, int(H),
+                    PvpFastMove(name="fast", damage=float(fast_power), energy_gain=float(fast_energy), turns=int(f_turns)),
+                    [PvpChargeMove(name=ch1_name, damage=float(ch1_power), energy_cost=float(ch1_cost))],
+                    league="great" if league_cap==1500 else ("ultra" if league_cap==2500 else "master"),
+                    beta=float(beta), stat_product_reference=(float(sp_ref) if sp_ref>0 else None),
+                    move_pressure_reference=(float(mp_ref) if mp_ref>0 else None),
+                    bait_probability=bait_prob_val, shield_weights=sw,
+                )
+                st.subheader("PvP value")
+                st.metric("Stat Product (norm)", f"{pvp['stat_product_normalised']:.4f}")
+                st.metric("Move Pressure (norm)", f"{pvp['move_pressure_normalised']:.4f}")
+                st.metric("PvP Score", f"{pvp['score']:.4f}")
+            except Exception as exc:  # noqa: BLE001
+                st.error(f"PvP evaluation failed: {exc}")
 
 
 def _tab_pvp_scoreboard(st: "object") -> None:  # pragma: no cover - UI only
@@ -301,6 +317,41 @@ def _tab_pvp_scoreboard(st: "object") -> None:  # pragma: no cover - UI only
 
     df = pd.read_csv(csv_path)
     st.dataframe(df.head(50))
+    with open(csv_path, "rb") as f:
+        st.download_button("Download CSV", data=f, file_name=csv_path.name, mime="text/csv")
+
+
+def _tab_raid_scoreboard(st: "object") -> None:  # pragma: no cover - UI only
+    import tempfile
+    import pandas as pd
+    import raid_scoreboard_generator as rsg
+
+    st.header("Raid Scoreboard")
+    st.caption("Generate the default raid investment scoreboard (CSV/Excel).")
+    preview_n = st.number_input("Preview rows", min_value=5, max_value=50, value=10, step=1)
+    run = st.button("Generate Raid Scoreboard")
+    if not run:
+        st.info("Adjust preview count and click Generate.")
+        return
+    with st.spinner("Generating raid scoreboard…"):
+        tmpdir = tempfile.mkdtemp(prefix="pogo_gui_raid_")
+        result = rsg.main(["--output-dir", tmpdir, "--preview-limit", str(int(preview_n))])
+    if result is None:
+        st.error("Failed to build scoreboard.")
+        return
+    df = result.table.reset_index() if hasattr(result.table, "reset_index") else result.table
+    try:
+        import pandas as _pd  # noqa:F401
+        if hasattr(df, "to_pandas"):
+            df = df.to_pandas()
+    except Exception:
+        pass
+    st.dataframe(df.head(int(preview_n)))
+    with open(result.csv_path, "rb") as f:
+        st.download_button("Download CSV", data=f, file_name=result.csv_path.name, mime="text/csv")
+    if result.excel_path and result.excel_written and result.excel_path.exists():
+        with open(result.excel_path, "rb") as f:
+            st.download_button("Download Excel", data=f, file_name=result.excel_path.name, mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
 
 
 if __name__ == "__main__":  # pragma: no cover
