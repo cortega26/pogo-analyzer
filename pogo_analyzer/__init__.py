@@ -34,7 +34,7 @@ from .scoreboard import (
 from .scoring import calculate_iv_bonus, calculate_raid_score, iv_bonus, raid_score
 from .pve import compute_pve_score
 from .pvp import compute_pvp_score
-from .ui_helpers import pve_verdict, pvp_verdict
+from .ui_helpers import pve_verdict, pvp_verdict, pve_tier
 from .simple_table import Row, SimpleSeries, SimpleTable
 
 
@@ -90,5 +90,6 @@ __all__ = [
     "compute_pvp_score",
     "pve_verdict",
     "pvp_verdict",
+    "pve_tier",
     "__version__",
 ]

@@ -225,6 +225,14 @@ pogo-data-refresh --species-in path/to/species.json --moves-in path/to/moves.jso
 
 See `docs/data_refresh.md` for input schemas and guardrails.
 
+You can also import the public PvPoke gamemaster directly to generate normalized files and an exclusives map:
+
+```
+pogo-gamemaster-import --out-dir normalized_data
+```
+
+This writes `normalized_species.json`, `normalized_moves.json`, `learnsets.json`, and `exclusive_moves.json` (per-species legacy/elite moves grouped by fast/charge when available in the dataset).
+
 ## PvP scoreboard
 
 Generate a PvP scoreboard from normalized datasets and per-species learnsets:

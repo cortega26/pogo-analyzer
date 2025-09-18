@@ -51,7 +51,7 @@ def main(argv: Sequence[str] | None = None) -> None:  # pragma: no cover - UI on
     st.caption("Quick checks (PvE/PvP) and scoreboards with clear, guided controls.")
     st.markdown("</div>", unsafe_allow_html=True)
 
-    tabs = st.tabs(["Quick Check", "Raid Scoreboard", "PvP Scoreboard", "Glossary", "About"])
+    tabs = st.tabs(["Quick Check", "Raid Scoreboard", "PvP Scoreboard", "Data & Config", "Glossary", "About"])
 
     with tabs[0]:
         _tab_single_pokemon(st)
@@ -63,9 +63,12 @@ def main(argv: Sequence[str] | None = None) -> None:  # pragma: no cover - UI on
         _tab_pvp_scoreboard(st)
 
     with tabs[3]:
-        _tab_glossary(st)
+        _tab_data_and_config(st)
 
     with tabs[4]:
+        _tab_glossary(st)
+
+    with tabs[5]:
         st.markdown(
             """
             - This GUI wraps the same library used by the CLI.
@@ -80,6 +83,8 @@ def _tab_single_pokemon(st: "object") -> None:  # pragma: no cover - UI only
     from pogo_analyzer.formulas import effective_stats, infer_level_from_cp
     from pogo_analyzer.pve import ChargeMove, FastMove, compute_pve_score
     from pogo_analyzer.pvp import PvpChargeMove, PvpFastMove, compute_pvp_score
+    from pogo_analyzer.scoring import calculate_iv_bonus, calculate_raid_score
+    from pogo_analyzer.data.raid_entries import DEFAULT_RAID_ENTRIES as _DEFAULT_RAID_ENTRIES
     try:
         from pogo_analyzer.ui_helpers import pve_verdict, pvp_verdict
     except ModuleNotFoundError:
@@ -116,6 +121,15 @@ def _tab_single_pokemon(st: "object") -> None:  # pragma: no cover - UI only
         return load_default_base_stats()
 
     @_cache()
+    def _base_rating_lookup() -> dict[str, float]:
+        table: dict[str, float] = {}
+        for e in _DEFAULT_RAID_ENTRIES:
+            key = (e.name or "").strip().lower()
+            if key and key not in table:
+                table[key] = float(e.base)
+        return table
+
+    @_cache()
     def _infer(ba: int, bd: int, bs: int, ivs: tuple[int, int, int], cp_val: int, shadow: bool, buddy: bool, obs_hp: int | None):
         level, cpm = infer_level_from_cp(ba, bd, bs, *ivs, int(cp_val), is_shadow=shadow, is_best_buddy=buddy, observed_hp=obs_hp)
         A, D, H = effective_stats(ba, bd, bs, *ivs, level, is_shadow=shadow, is_best_buddy=buddy)
@@ -130,6 +144,19 @@ def _tab_single_pokemon(st: "object") -> None:  # pragma: no cover - UI only
             return {}
         try:
             return json.loads(path.read_text(encoding="utf-8"))
+        except Exception:
+            return {}
+
+    @st.cache_data(show_spinner=False)
+    def _load_exclusives_db() -> dict:
+        import json
+        from pathlib import Path
+        path = Path("normalized_data/exclusive_moves.json")
+        if not path.is_file():
+            return {}
+        try:
+            payload = json.loads(path.read_text(encoding="utf-8"))
+            return payload.get("exclusives", {}) if isinstance(payload, dict) else {}
         except Exception:
             return {}
 
@@ -173,6 +200,7 @@ def _tab_single_pokemon(st: "object") -> None:  # pragma: no cover - UI only
             )
             name = display_to_query.get(name_display or "", "")
             cp = st.number_input("Combat Power (CP)", min_value=0, value=0, step=1)
+            target_cp = st.number_input("Target CP (optional)", min_value=0, value=0, step=1, help="Personal build target to flag underpowered status.")
             iv_a = st.number_input("IV Attack", 0, 15, 15)
             iv_d = st.number_input("IV Defense", 0, 15, 15)
             iv_s = st.number_input("IV Stamina", 0, 15, 15)
@@ -195,6 +223,10 @@ def _tab_single_pokemon(st: "object") -> None:  # pragma: no cover - UI only
             )
             best_buddy = st.checkbox("Best Buddy (+1 CPM level)")
             observed_hp = st.number_input("Observed HP (optional)", min_value=0, value=0, step=1)
+            has_special = st.checkbox("Exclusive move already unlocked?", value=False)
+            mega_now = st.checkbox("Mega available now")
+            mega_soon = st.checkbox("Mega arriving soon")
+            note = st.text_input("Notes (optional)", value="")
 
         st.divider()
         st.subheader("Species / Base Stats")
@@ -406,6 +438,82 @@ def _tab_single_pokemon(st: "object") -> None:  # pragma: no cover - UI only
         {"Shadow": shadow, "Purified": purified, "Best Buddy": best_buddy, "Lucky": lucky},
     )
 
+    # Helper: auto-detect ETM/CD requirement
+    def _auto_needs_tm(species_label: str) -> tuple[bool | None, str]:
+        try:
+            from pogo_analyzer.data.move_guidance import get_move_guidance
+        except Exception:
+            get_move_guidance = None  # type: ignore[assignment]
+        # Primary: curated guidance
+        if get_move_guidance is not None:
+            g = get_move_guidance(species_label)
+            if g and g.needs_tm:
+                return True, g.note
+        # Secondary: exclusives DB (from gamemaster import)
+        ex = _load_exclusives_db()
+        spec_keys = (species_label, species_label.title(), species_label.lower())
+        for k in spec_keys:
+            if k in ex:
+                info = ex[k] or {}
+                # If species has any exclusive fast/charge, mark as maybe
+                if (info.get("fast") or info.get("charge")):
+                    return None, "Species has legacy/elite moves; specific requirement varies."
+        return False, ""
+
+    # Overall Raid Score snapshot with simple tier and action chips
+    try:
+        base_table = _base_rating_lookup()
+        base_rating = base_table.get((name or "").strip().lower(), 70.0)
+        ivb = calculate_iv_bonus(int(iv_a), int(iv_d), int(iv_s))
+        needs_tm_auto, needs_tm_note = _auto_needs_tm(name)
+        _rs = calculate_raid_score(
+            float(base_rating),
+            float(ivb),
+            lucky=bool(lucky),
+            needs_tm=bool(False if needs_tm_auto is None else needs_tm_auto),
+            mega_bonus_now=bool(locals().get("mega_now", False)),
+            mega_bonus_soon=bool(locals().get("mega_soon", False)),
+        )
+        if purified:
+            _rs += 1
+        if best_buddy:
+            _rs += 2
+        _rs = max(1.0, min(100.0, round(float(_rs), 1)))
+        def _tier(x: float) -> str:
+            if x >= 90:
+                return "S"
+            if x >= 85:
+                return "A"
+            if x >= 78:
+                return "B"
+            if x >= 70:
+                return "C"
+            return "D"
+        _tier_letter = _tier(_rs)
+        st.subheader("Raid Score")
+        m1, m2, m3 = st.columns(3)
+        with m1:
+            st.metric("Raid Score (1–100)", f"{_rs:.1f}")
+        with m2:
+            st.metric("Tier", _tier_letter)
+        with m3:
+            chips: list[str] = []
+            _targ = locals().get("target_cp", 0) or 0
+            _cpv = locals().get("cp", 0) or 0
+            # Auto ETM/CD chip
+            if needs_tm_auto is True and not locals().get("has_special", False):
+                chips.append("Needs Elite TM")
+            if _targ and _cpv and _cpv < _targ:
+                chips.append("Under target CP")
+            if _tier_letter in {"S", "A", "B"} and (locals().get("has_special", False) or (needs_tm_auto in (False, None))):
+                chips.append("Worth building now")
+            if chips:
+                st.markdown(" ".join(f"<span class='badge'>{c}</span>" for c in chips), unsafe_allow_html=True)
+        if needs_tm_note:
+            st.caption(needs_tm_note)
+    except Exception as exc:  # noqa: BLE001
+        st.warning(f"Raid score snapshot unavailable: {exc}")
+
     # PvE
     if pve_enabled:
         with st.spinner("Scoring PvE…"):
@@ -584,7 +692,7 @@ def _tab_pvp_scoreboard(st: "object") -> None:  # pragma: no cover - UI only
     ])
 
     df = pd.read_csv(csv_path)
-    st.dataframe(df.head(50))
+    st.dataframe(df.head(50), use_container_width=True)
     with open(csv_path, "rb") as f:
         st.download_button("Download CSV", data=f, file_name=csv_path.name, mime="text/csv")
 
@@ -595,18 +703,31 @@ def _tab_raid_scoreboard(st: "object") -> None:  # pragma: no cover - UI only
     import raid_scoreboard_generator as rsg
 
     st.header("Raid Scoreboard")
-    st.caption("Generate the default raid investment scoreboard (CSV/Excel).")
-    preview_n = st.number_input("Preview rows", min_value=5, max_value=50, value=10, step=1)
+    st.caption("Generate the raid investment scoreboard and filter it inline. Defaults mirror CLI behavior.")
+
+    # Top controls
+    c1, c2, c3, c4 = st.columns([1, 1, 1, 2])
+    with c1:
+        preview_n = st.number_input("Preview rows", min_value=5, max_value=100, value=25, step=1)
+    with c2:
+        density = st.radio("Row density", options=["Cozy", "Compact"], horizontal=True, index=0)
+    with c3:
+        score_min, score_max = st.slider("Score range", min_value=1, max_value=100, value=(70, 100))
+    with c4:
+        needs_tm_filter = st.selectbox("Needs Special Move?", options=["Any", "Yes", "No"], index=0)
+
     run = st.button("Generate Raid Scoreboard")
     if not run:
-        st.info("Adjust preview count and click Generate.")
+        st.info("Adjust filters and click Generate.")
         return
+
     with st.spinner("Generating raid scoreboard…"):
         tmpdir = tempfile.mkdtemp(prefix="pogo_gui_raid_")
         result = rsg.main(["--output-dir", tmpdir, "--preview-limit", str(int(preview_n))])
     if result is None:
         st.error("Failed to build scoreboard.")
         return
+
     df = result.table.reset_index() if hasattr(result.table, "reset_index") else result.table
     try:
         import pandas as _pd  # noqa:F401
@@ -614,12 +735,81 @@ def _tab_raid_scoreboard(st: "object") -> None:  # pragma: no cover - UI only
             df = df.to_pandas()
     except Exception:
         pass
-    st.dataframe(df.head(int(preview_n)))
-    with open(result.csv_path, "rb") as f:
-        st.download_button("Download CSV", data=f, file_name=result.csv_path.name, mime="text/csv")
-    if result.excel_path and result.excel_written and result.excel_path.exists():
-        with open(result.excel_path, "rb") as f:
-            st.download_button("Download Excel", data=f, file_name=result.excel_path.name, mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+
+    # Filters
+    if "Raid Score (1-100)" in df.columns:
+        df = df[(df["Raid Score (1-100)"] >= score_min) & (df["Raid Score (1-100)"] <= score_max)]
+    if needs_tm_filter != "Any" and "Move Needs (CD/ETM?)" in df.columns:
+        df = df[df["Move Needs (CD/ETM?)"] == ("Yes" if needs_tm_filter == "Yes" else "No")]
+
+    # Side filters
+    left, right = st.columns([1, 2])
+    with left:
+        role_vals = sorted(set(df.get("Primary Role", []))) if "Primary Role" in df.columns else []
+        role = st.selectbox("Role", options=["Any"] + role_vals if role_vals else ["Any"], index=0)
+        if role != "Any" and "Primary Role" in df.columns:
+            df = df[df["Primary Role"] == role]
+        search = st.text_input("Search name", value="")
+        if search.strip() and "Your Pokémon" in df.columns:
+            q = search.strip().lower()
+            df = df[df["Your Pokémon"].str.lower().str.contains(q)]
+        st.caption(f"{len(df)} rows after filters")
+
+    with right:
+        cfg = None
+        try:
+            cfg = {
+                "Raid Score (1-100)": st.column_config.ProgressColumn(
+                    "Raid Score", min_value=1, max_value=100, help="Higher is better"
+                )
+            }
+        except Exception:
+            cfg = None
+        height = 520 if density == "Cozy" else 380
+        st.dataframe(df.head(int(preview_n)), use_container_width=True, height=height, column_config=cfg)
+
+        # Selection + export
+        names = list(df["Your Pokémon"]) if "Your Pokémon" in df.columns else []
+        selected = st.multiselect("Select rows to export", options=names)
+        if selected:
+            sel_df = df[df["Your Pokémon"].isin(selected)]
+            csv_bytes = sel_df.to_csv(index=False).encode("utf-8")
+            st.download_button("Download selected (CSV)", data=csv_bytes, file_name="raid_scoreboard_selected.csv", mime="text/csv")
+
+        # Full exports produced by generator
+        with open(result.csv_path, "rb") as f:
+            st.download_button("Download full CSV", data=f, file_name=result.csv_path.name, mime="text/csv")
+        if result.excel_path and result.excel_written and result.excel_path.exists():
+            with open(result.excel_path, "rb") as f:
+                st.download_button(
+                    "Download full Excel",
+                    data=f,
+                    file_name=result.excel_path.name,
+                    mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                )
+
+
+def _tab_data_and_config(st: "object") -> None:  # pragma: no cover - UI only
+    import os
+    st.header("Data Refresh & Config")
+    st.caption("Adjust scoreboard export defaults (session only) and manage normalized datasets.")
+
+    with st.form("cfg_form"):
+        out_dir = st.text_input("RAID_SCOREBOARD_OUTPUT_DIR", os.environ.get("RAID_SCOREBOARD_OUTPUT_DIR", ""))
+        csv_name = st.text_input("RAID_SCOREBOARD_CSV", os.environ.get("RAID_SCOREBOARD_CSV", "raid_scoreboard.csv"))
+        xlsx_name = st.text_input("RAID_SCOREBOARD_EXCEL", os.environ.get("RAID_SCOREBOARD_EXCEL", "raid_scoreboard.xlsx"))
+        preview = st.number_input("RAID_SCOREBOARD_PREVIEW_LIMIT", min_value=5, max_value=100, value=int(os.environ.get("RAID_SCOREBOARD_PREVIEW_LIMIT", 10) or 10))
+        enhanced = st.checkbox("Enhanced defaults (single check only)", value=False, help="Opt-in PvE/PvP defaults; does not change CSV exports.")
+        submitted = st.form_submit_button("Apply")
+    if submitted:
+        if out_dir:
+            os.environ["RAID_SCOREBOARD_OUTPUT_DIR"] = out_dir
+        if csv_name:
+            os.environ["RAID_SCOREBOARD_CSV"] = csv_name
+        if xlsx_name:
+            os.environ["RAID_SCOREBOARD_EXCEL"] = xlsx_name
+        os.environ["RAID_SCOREBOARD_PREVIEW_LIMIT"] = str(int(preview))
+        st.success("Configuration applied for this session.")
 
 
 def _tab_glossary(st: "object") -> None:  # pragma: no cover - UI only
