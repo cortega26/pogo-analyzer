@@ -189,3 +189,44 @@ def test_weighted_pve_scenarios_return_aggregate(
     assert all("modifiers" in scenario for scenario in breakdown)
     assert result["value"] <= max(values) + 1e-9
     assert result["value"] >= min(values) - 1e-9
+
+
+def test_pve_modifiers_apply_breakpoints_coverage_and_availability(
+    sample_stats: tuple[float, float, int],
+    sample_moves: tuple[FastMove, list[ChargeMove]],
+) -> None:
+    attack, defense, hp = sample_stats
+    fast_move, charge_moves = sample_moves
+
+    base = compute_pve_score(
+        attack,
+        defense,
+        hp,
+        fast_move,
+        charge_moves,
+        target_defense=190.0,
+        incoming_dps=35.0,
+        alpha=0.6,
+    )
+
+    boosted = compute_pve_score(
+        attack,
+        defense,
+        hp,
+        fast_move,
+        charge_moves,
+        target_defense=190.0,
+        incoming_dps=35.0,
+        alpha=0.6,
+        breakpoints_hit=2,
+        gamma_breakpoint=0.03,
+        coverage=0.7,
+        theta_coverage=0.05,
+        availability_penalty=0.02,
+    )
+
+    assert boosted["value"] > base["value"] * 0.9  # availability reduces but others boost
+    mods = boosted["modifiers"]
+    assert mods.get("breakpoint_bonus", 1.0) > 1.0
+    assert mods.get("coverage_bonus", 1.0) > 1.0
+    assert mods.get("availability_penalty", 1.0) < 1.0

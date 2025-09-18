@@ -108,6 +108,14 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         help="Number of rows to include in the console preview (default: 10).",
     )
     parser.add_argument(
+        "--enhanced-defaults",
+        action="store_true",
+        help=(
+            "Opt-in to enhanced scoring defaults for PvE/PvP (e.g., energy-from-damage,"
+            " bait model, shield weights). Does not change CSV exports."
+        ),
+    )
+    parser.add_argument(
         "--pokemon-name",
         help="Evaluate a single Pokémon and print a recommendation instead of exporting files.",
     )
@@ -240,6 +248,42 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         type=float,
         help="Blend factor between DPS and TDO in the PvE value formula (default: 0.6).",
     )
+    pve_group.add_argument(
+        "--dodge-factor",
+        dest="pve_dodge_factor",
+        type=float,
+        help="PvE dodge factor in [0,1): reduces incoming DPS and effective DPS symmetrically.",
+    )
+    pve_group.add_argument(
+        "--pve-breakpoints-hit",
+        dest="pve_breakpoints_hit",
+        type=int,
+        help="Number of damage breakpoints hit against a reference set for PvE.",
+    )
+    pve_group.add_argument(
+        "--pve-gamma-breakpoint",
+        dest="pve_gamma_breakpoint",
+        type=float,
+        help="Per-breakpoint bonus multiplier gamma used in PvE value adjustment.",
+    )
+    pve_group.add_argument(
+        "--pve-coverage",
+        dest="pve_coverage",
+        type=float,
+        help="Coverage score in [0,1] for PvE typing effectiveness across a target set.",
+    )
+    pve_group.add_argument(
+        "--pve-theta-coverage",
+        dest="pve_theta_coverage",
+        type=float,
+        help="Coverage scaling theta used to adjust PvE value.",
+    )
+    pve_group.add_argument(
+        "--pve-availability-penalty",
+        dest="pve_availability_penalty",
+        type=float,
+        help="Penalty in [0,0.99] applied to PvE value for hard-to-access movesets.",
+    )
 
     pvp_group = parser.add_argument_group("PvP scoring")
     pvp_group.add_argument(
@@ -278,6 +322,83 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         dest="bait_probability",
         type=float,
         help="Probability of landing the high-energy charge move during bait scenarios.",
+    )
+    pvp_group.add_argument(
+        "--pvp-energy-weight",
+        dest="pvp_energy_weight",
+        type=float,
+        help="Weight kappa for fast move energy contribution in PvP move pressure.",
+    )
+    pvp_group.add_argument(
+        "--pvp-buff-weight",
+        dest="pvp_buff_weight",
+        type=float,
+        help="Weight lambda for charge move buff EV contribution in PvP move pressure.",
+    )
+    pvp_group.add_argument(
+        "--cmp-percentile",
+        dest="cmp_percentile",
+        type=float,
+        help="Attack percentile for CMP bonus (provide the percentile in [0,1]).",
+    )
+    pvp_group.add_argument(
+        "--cmp-threshold",
+        dest="cmp_threshold",
+        type=float,
+        help="Minimum percentile threshold to apply the CMP bonus.",
+    )
+    pvp_group.add_argument(
+        "--cmp-eta",
+        dest="cmp_eta",
+        type=float,
+        help="Magnitude of the CMP bonus applied when above threshold.",
+    )
+    pvp_group.add_argument(
+        "--pvp-coverage",
+        dest="pvp_coverage",
+        type=float,
+        help="Coverage score in [0,1] for PvP typing across a target meta set.",
+    )
+    pvp_group.add_argument(
+        "--pvp-theta-coverage",
+        dest="pvp_theta_coverage",
+        type=float,
+        help="Coverage scaling theta used to adjust PvP score.",
+    )
+    pvp_group.add_argument(
+        "--pvp-availability-penalty",
+        dest="pvp_availability_penalty",
+        type=float,
+        help="Penalty in [0,0.99] applied to PvP score for hard-to-access movesets.",
+    )
+    pvp_group.add_argument(
+        "--anti-meta",
+        dest="anti_meta",
+        type=float,
+        help="Anti-meta rate in [0,1] used to scale PvP score.",
+    )
+    pvp_group.add_argument(
+        "--anti-meta-mu",
+        dest="anti_meta_mu",
+        type=float,
+        help="Scaling factor mu for the anti-meta bonus in PvP score.",
+    )
+    pvp_group.add_argument(
+        "--pvp-breakpoints-hit",
+        dest="pvp_breakpoints_hit",
+        type=int,
+        help="Number of PvP breakpoints hit against a reference meta.",
+    )
+    pvp_group.add_argument(
+        "--pvp-gamma-breakpoint",
+        dest="pvp_gamma_breakpoint",
+        type=float,
+        help="Per-breakpoint bonus multiplier gamma used in PvP score adjustment.",
+    )
+    pvp_group.add_argument(
+        "--bait-model",
+        dest="bait_model",
+        help="Optional bait model coefficients as comma-separated key=value (a=,b=,c=,d=).",
     )
 
     return parser.parse_args(argv)
@@ -442,6 +563,31 @@ def _parse_extra_tokens(tokens: Sequence[str]) -> dict[str, str]:
             raise ValueError("Move descriptor contains an empty extra key.")
         extras[key] = raw_value.strip() if sep else "true"
     return extras
+
+
+def _parse_kv_float_map(expr: str | None) -> dict[str, float] | None:
+    """Parse a simple comma-separated key=value string into a float map.
+
+    Example: "a=0.4,b=-0.1,c=0.35,d=0.0" -> {"a":0.4, ...}
+    Returns None when expr is falsy.
+    """
+
+    if not expr:
+        return None
+    parts = [p.strip() for p in expr.split(',') if p.strip()]
+    result: dict[str, float] = {}
+    for part in parts:
+        key, sep, val = part.partition('=')
+        if not sep:
+            raise ValueError("Expected key=value pairs in --bait-model")
+        key = key.strip()
+        if not key:
+            raise ValueError("Empty key in --bait-model")
+        try:
+            result[key] = float(val.strip())
+        except ValueError as exc:  # pragma: no cover - defensive
+            raise ValueError(f"Non-numeric value in --bait-model for key {key!r}") from exc
+    return result
 
 
 def _parse_fast_move(value: str, *, default_weather: bool) -> _ParsedFastMove:
@@ -909,9 +1055,17 @@ def _evaluate_single_pokemon(args: argparse.Namespace) -> None:
             raise SystemExit("PvE scoring requires --incoming-dps.")
         alpha_value = args.alpha if args.alpha is not None else 0.6
         energy_ratio = (
-            args.energy_from_damage_ratio if args.energy_from_damage_ratio is not None else 0.0
+            args.energy_from_damage_ratio
+            if args.energy_from_damage_ratio is not None
+            else (0.5 if args.enhanced_defaults else 0.0)
         )
-        relobby_penalty = args.relobby_penalty
+        relobby_penalty = (
+            args.relobby_penalty
+            if args.relobby_penalty is not None
+            else (0.08 if args.enhanced_defaults else None)
+        )
+        gamma_bp = args.pve_gamma_breakpoint if args.pve_gamma_breakpoint is not None else (0.03 if args.enhanced_defaults else 0.0)
+        theta_cov = args.pve_theta_coverage if args.pve_theta_coverage is not None else (0.05 if args.enhanced_defaults else 0.0)
         pve_output = compute_pve_score(
             inferred_stats["attack"],
             inferred_stats["defense"],
@@ -923,6 +1077,12 @@ def _evaluate_single_pokemon(args: argparse.Namespace) -> None:
             alpha=alpha_value,
             energy_from_damage_ratio=energy_ratio,
             relobby_penalty=relobby_penalty,
+            dodge_factor=args.pve_dodge_factor,
+            breakpoints_hit=args.pve_breakpoints_hit,
+            gamma_breakpoint=gamma_bp,
+            coverage=args.pve_coverage,
+            theta_coverage=theta_cov,
+            availability_penalty=args.pve_availability_penalty or 0.0,
         )
 
     pvp_output: dict[str, float] | None = None
@@ -938,6 +1098,39 @@ def _evaluate_single_pokemon(args: argparse.Namespace) -> None:
             pvp_league = _resolve_league_key(args.league_cap)
         except ValueError as exc:
             raise SystemExit(str(exc)) from exc
+        # Optionally override per-league bait model via a temporary config mapping
+        try:
+            bait_model = _parse_kv_float_map(args.bait_model)
+        except ValueError as exc:
+            raise SystemExit(f"Failed to parse --bait-model: {exc}") from exc
+        if bait_model is None and args.enhanced_defaults:
+            bait_model = {"a": 0.4, "b": -0.1, "c": 0.35, "d": 0.0}
+        league_configs = DEFAULT_LEAGUE_CONFIGS
+        if bait_model is not None:
+            base = DEFAULT_LEAGUE_CONFIGS[pvp_league]
+            # Re-create the league config with an overridden bait_model while preserving other fields
+            league_configs = dict(DEFAULT_LEAGUE_CONFIGS)
+            league_configs[pvp_league] = type(base)(
+                cp_cap=base.cp_cap,
+                stat_product_reference=base.stat_product_reference,
+                move_pressure_reference=base.move_pressure_reference,
+                bait_probability=base.bait_probability,
+                shield_weights=base.shield_weights,
+                bait_model=bait_model,
+                cmp_threshold=base.cmp_threshold,
+                cmp_eta=base.cmp_eta,
+                coverage_theta=base.coverage_theta,
+                anti_meta_mu=base.anti_meta_mu,
+            )
+        # Resolve enhanced defaults for PvP weights only if not explicitly set
+        energy_weight = (
+            args.pvp_energy_weight if args.pvp_energy_weight is not None else (1.0 if args.enhanced_defaults else 0.35)
+        )
+        buff_weight = (
+            args.pvp_buff_weight if args.pvp_buff_weight is not None else (0.6 if args.enhanced_defaults else 12.0)
+        )
+        shield_weights = args.shield_weights if args.shield_weights is not None else ((0.2, 0.5, 0.3) if args.enhanced_defaults else None)
+
         pvp_output = compute_pvp_score(
             inferred_stats["attack"],
             inferred_stats["defense"],
@@ -949,8 +1142,20 @@ def _evaluate_single_pokemon(args: argparse.Namespace) -> None:
             stat_product_reference=args.stat_product_reference,
             move_pressure_reference=args.move_pressure_reference,
             bait_probability=args.bait_probability,
-            shield_weights=args.shield_weights,
-            league_configs=DEFAULT_LEAGUE_CONFIGS,
+            shield_weights=shield_weights,
+            energy_weight=energy_weight,
+            buff_weight=buff_weight,
+            breakpoints_hit=args.pvp_breakpoints_hit,
+            gamma_breakpoint=args.pvp_gamma_breakpoint,
+            coverage=args.pvp_coverage,
+            theta_coverage=args.pvp_theta_coverage,
+            availability_penalty=args.pvp_availability_penalty,
+            cmp_percentile=args.cmp_percentile,
+            cmp_threshold=args.cmp_threshold,
+            cmp_eta=args.cmp_eta,
+            anti_meta=args.anti_meta,
+            anti_meta_mu=args.anti_meta_mu,
+            league_configs=league_configs,
         )
 
     if pve_output:

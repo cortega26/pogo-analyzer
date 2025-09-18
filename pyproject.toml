@@ -7,7 +7,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pogo-analyzer"
-version = "0.1.0"
+version = "0.2.0"
 description = "Pokémon GO raid scoring utilities and scoreboard generator."
 readme = "README.md"
 requires-python = ">=3.9"
@@ -28,6 +28,9 @@ pandas = [
 
 [project.scripts]
 pogo-raid-scoreboard = "raid_scoreboard_generator:main"
+pogo-data-refresh = "pogo_analyzer.data_refresh:main"
+pogo-pvp-scoreboard = "pvp_scoreboard_generator:main"
+pogo-learnsets-refresh = "pogo_analyzer.learnsets_refresh:main"
 
 [tool.setuptools]
 py-modules = [

@@ -83,6 +83,7 @@ pogo-raid-scoreboard
 # Tests
 pytest
 ```
+
 (Commands mirror the README to keep the agent aligned with real user flows.) citeturn0view0
 
 ---
@@ -100,18 +101,22 @@ pytest
 
 ## 8) Feature roadmap for the agent (suggested epics)
 
-**8.1 Add PvP scoring (feature‑flagged)**  
+### 8.1 Add PvP scoring (feature‑flagged)
+
 - Implement the formulas from `docs/pokemon_value_formulas_playbook.md` (see the separate playbook we generated in this project) to compute: Stat Product (SP), Move Pressure (MP), and `V_PvP`.  
 - Add inputs for league (`--league GL|UL|ML`) and an optional path to pre‑scraped moves/species data (CSV/JSON).  
 - Output a separate `pvp_scoreboard.csv` without changing PvE defaults.
 
-**8.2 PvE refinements (optional toggles)**  
+### 8.2 PvE refinements (optional toggles)
+
 - Energy‑from‑damage, relobby tax, and boss‑cluster weighting; expose via CLI flags and document in `README.md`.
 
-**8.3 Data updater (offline, optional command)**  
+### 8.3 Data updater (offline, optional command)
+
 - New command `pogo-data-refresh` to fetch and normalize species/moves/learnsets into the schemas defined in the playbook.
 
-**8.4 Documentation & examples**  
+### 8.4 Documentation & examples
+
 - Add end‑to‑end examples in `docs/` showing CSV inputs → outputs for both PvE and PvP.
 
 ---
@@ -126,6 +131,7 @@ pytest
 - **Commit hygiene:** Conventional commit style (feat:, fix:, docs:, chore:, refactor:, test:, perf:).
 
 **PR acceptance checklist (copy into PR):**  
+
 - [ ] All tests pass (`pytest`)  
 - [ ] README/docs updated  
 - [ ] No breaking changes to CLI defaults  

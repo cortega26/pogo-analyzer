@@ -18,6 +18,17 @@ an individual build without generating the full scoreboard export.
 | `--fast ...` / `--charge ...` | Move descriptors used to evaluate PvE rotations and PvP pressure. |
 | `--target-defense` / `--incoming-dps` / `--alpha` | PvE tuning knobs. Provide defence, incoming DPS, and DPS↔TDO blend. |
 | `--league-cap` / `--beta` / `--sp-ref` / `--mp-ref` / `--bait-prob` | PvP tuning knobs. Select league and weighting factors. |
+| `--dodge-factor` | PvE: reduce incoming DPS and effective DPS symmetrically (0≤ρ<1). |
+| `--pve-breakpoints-hit` / `--pve-gamma-breakpoint` | PvE: reward hitting damage breakpoints. |
+| `--pve-coverage` / `--pve-theta-coverage` | PvE: typing coverage adjustment. |
+| `--pve-availability-penalty` | PvE: penalise hard-to-access movesets (0–0.99). |
+| `--pvp-energy-weight` / `--pvp-buff-weight` | PvP: kappa for fast energy; lambda for buff EV. |
+| `--cmp-percentile` / `--cmp-threshold` / `--cmp-eta` | PvP: CMP initiative bonus controls. |
+| `--pvp-coverage` / `--pvp-theta-coverage` | PvP: typing coverage adjustment. |
+| `--pvp-availability-penalty` | PvP: penalise hard-to-access movesets (0–0.99). |
+| `--anti-meta` / `--anti-meta-mu` | PvP: anti-meta bonus controls. |
+| `--pvp-breakpoints-hit` / `--pvp-gamma-breakpoint` | PvP: reward hitting damage breakpoints. |
+| `--bait-model a=,b=,c=,d=` | PvP: sigmoid bait model coefficients (overrides static bait probability). |
 
 ### Move descriptor recap
 
@@ -129,3 +140,14 @@ PvP Score (beta=0.52): 0.8817
   inference step pick the correct level.
 - Pass `--weather` to boost all moves simultaneously; override specific moves with `weather=false` or `type=1.6` tokens.
 - League presets follow Great (default), Ultra (`--league-cap 2500`), and Master (omit the cap to evaluate unrestricted stats).
+
+### Advanced toggles
+
+All advanced toggles are optional and default to neutral/no-op values. They expose the enhanced scoring knobs described in `pokemon_value_formulas_enhanced.md` without changing the default CLI behavior. See the flag table above for a quick reference.
+
+You can also opt-in to a calibrated bundle of enhanced defaults using `--enhanced-defaults`. This keeps current CSV/CLI defaults intact unless you explicitly enable it for single-Pokémon evaluations. The bundle includes:
+
+- PvE: enable energy-from-damage at 0.5 by default, set relobby penalty phi=0.08, and use gamma=0.03 and theta=0.05 when breakpoint/coverage inputs are provided.
+- PvP: use kappa=1.0 (fast energy weight), lambda=0.6 (buff weight), shield weights [0.2, 0.5, 0.3], and a sigmoid bait model `a=0.4,b=-0.1,c=0.35,d=0.0` (when `--bait-prob` and `--bait-model` are not provided).
+
+All of these remain fully overrideable by supplying the corresponding flags.

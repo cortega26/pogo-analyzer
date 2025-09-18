@@ -1,4 +1,4 @@
-"""PvP stat product and move pressure scoring utilities."""'
+"""PvP stat product and move pressure scoring utilities."""
 
 from __future__ import annotations
 
@@ -306,6 +306,7 @@ def compute_pvp_score(
     cmp_eta: float | None = None,
     anti_meta: float | None = None,
     anti_meta_mu: float | None = None,
+    league_configs: Mapping[str, LeagueConfig] | None = None,
 ) -> dict[str, float | list[dict[str, float]] | dict[str, float]]:
     """Compute the PvP score dictionary for a Pokémon build."""
 
@@ -315,10 +316,11 @@ def compute_pvp_score(
         raise ValueError("Beta must lie strictly between 0 and 1 when provided.")
 
     key = league.lower()
-    if key not in DEFAULT_LEAGUE_CONFIGS:
-        raise KeyError(f"Unknown league '{league}'. Available: {sorted(DEFAULT_LEAGUE_CONFIGS)}")
+    configs = league_configs or DEFAULT_LEAGUE_CONFIGS
+    if key not in configs:
+        raise KeyError(f"Unknown league '{league}'. Available: {sorted(configs)}")
 
-    config = DEFAULT_LEAGUE_CONFIGS[key]
+    config = configs[key]
     beta_value = beta if beta is not None else DEFAULT_BETA
     sp_reference = (
         stat_product_reference

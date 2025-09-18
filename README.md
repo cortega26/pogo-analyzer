@@ -21,10 +21,13 @@ PoGo Analyzer is a lightweight toolkit for evaluating Pokémon GO raid investmen
     - [Environment configuration](#environment-configuration)
     - [Single Pokémon quick check](#single-pokémon-quick-check)
   - [Library examples](#library-examples)
-  - [Dataset maintenance](#dataset-maintenance)
-  - [Testing](#testing)
-  - [Contributing](#contributing)
-  - [License](#license)
+- [Dataset maintenance](#dataset-maintenance)
+- [Data refresh](#data-refresh)
+- [PvP scoreboard](#pvp-scoreboard)
+- [Testing](#testing)
+- [Contributing](#contributing)
+- [License](#license)
+ - [Data refresh](#data-refresh)
 
 ## Features
 
@@ -159,6 +162,15 @@ pogo-raid-scoreboard \
 
 Move descriptors follow the format `name,power,energy_gain,duration` for fast moves and `name,power,energy_cost,duration` for charge moves. Append `stab=true`, `weather=true`, `type=1.6`, or `turns=4`/`reliability=0.8` as `key=value` pairs to model bonuses and PvP timing; pass `--weather` to apply a weather boost to all moves unless overridden per move. Use `--incoming-dps` and `--target-defense` to configure the PvE durability assumptions, and `--league-cap`/`--beta`/`--sp-ref`/`--mp-ref`/`--bait-prob` to override PvP scoring defaults. The CLI reuses `--combat-power` via the shorter `--cp` alias, recognises `--bb` as shorthand for `--best-buddy`, and accepts `--observed-hp` to disambiguate ambiguous CP values during level inference.
 
+Advanced toggles (optional, default to neutral behavior):
+
+- PvE: `--dodge-factor`, `--pve-breakpoints-hit`, `--pve-gamma-breakpoint`, `--pve-coverage`, `--pve-theta-coverage`, `--pve-availability-penalty`
+- PvP: `--pvp-energy-weight`, `--pvp-buff-weight`, `--cmp-percentile`, `--cmp-threshold`, `--cmp-eta`, `--pvp-coverage`, `--pvp-theta-coverage`, `--pvp-availability-penalty`, `--anti-meta`, `--anti-meta-mu`, `--pvp-breakpoints-hit`, `--pvp-gamma-breakpoint`, `--bait-model a=,b=,c=,d=`
+
+Enhanced defaults bundle (opt-in):
+
+- Add `--enhanced-defaults` to apply a calibrated set of defaults from the enhanced formulas playbook only for the single-Pokémon quick check. This does not change scoreboard CSV outputs or base CLI behavior.
+
 ## Library examples
 
 Import the package if you want to automate scoring in another script or notebook:
@@ -201,6 +213,30 @@ print(
 Each raid entry is defined via the [`PokemonRaidEntry`](docs/api.md#pokemonraidentry) dataclass inside [`pogo_analyzer/data/raid_entries.py`](pogo_analyzer/data/raid_entries.py). Supply the Pokémon's name, IV spread, baseline rating, and any flags that affect the computed score. The [`docs/api.md`](docs/api.md) reference includes a full parameter breakdown and scoring formula.
 
 Base species stats are resolved automatically from [`pogo_analyzer/data/base_stats.json`](pogo_analyzer/data/base_stats.json), which mirrors PvPoke's public **gamemaster** dataset. Override the lookup by passing `--base-stats` if you need to test custom stat spreads or emerging forms that have not yet landed in the dataset. Supply the Pokémon's name, IV spread, baseline rating, and any flags that affect the computed score. The [`docs/api.md`](docs/api.md) reference includes a full parameter breakdown and scoring formula.
+
+## Data refresh
+
+Prepare pre-scraped species and moves files into a validated JSON format using the offline normaliser:
+
+```
+pogo-data-refresh --species-in path/to/species.json --moves-in path/to/moves.json --out-dir normalized_data
+```
+
+See `docs/data_refresh.md` for input schemas and guardrails.
+
+## PvP scoreboard
+
+Generate a PvP scoreboard from normalized datasets and per-species learnsets:
+
+```
+pogo-pvp-scoreboard \
+  --species normalized_data/normalized_species.json \
+  --moves normalized_data/normalized_moves.json \
+  --learnsets path/to/learnsets.json \
+  --league-cap 1500
+```
+
+See `docs/pvp.md` for details and advanced options.
 
 ## Testing
 
