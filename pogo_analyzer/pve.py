@@ -49,6 +49,7 @@ class ChargeMove:
     stab: bool = False
     weather_boosted: bool = False
     type_effectiveness: float = 1.0
+    availability: str | None = None  # optional tag for legacy/event availability tweaks
 
     def __post_init__(self) -> None:  # noqa: D401 - succinct validation.
         if self.power < 0:
@@ -196,6 +197,7 @@ def _best_rotation(
     *,
     max_total_charge_uses: int = _MAX_TOTAL_CHARGE_USES,
     energy_per_second_from_damage: float = 0.0,
+    dodge_factor: float | None = None,
 ) -> _RotationCandidate:
     fast_only_damage = damage_per_hit(
         fast_move.power,
@@ -206,6 +208,8 @@ def _best_rotation(
         type_effectiveness=fast_move.type_effectiveness,
     )
     fast_only_dps = fast_only_damage / fast_move.duration
+    if dodge_factor is not None:
+        fast_only_dps *= max(0.0, 1.0 - dodge_factor)
     best_candidate = _RotationCandidate(
         fast_only_dps,
         fast_only_damage,
@@ -246,6 +250,16 @@ def _best_rotation(
                 )
                 if candidate is None:
                     continue
+                candidate_dps = candidate.dps
+                if dodge_factor is not None:
+                    candidate_dps *= max(0.0, 1.0 - dodge_factor)
+                    candidate = _RotationCandidate(
+                        candidate_dps,
+                        candidate.total_damage,
+                        candidate.total_time,
+                        candidate.fast_moves,
+                        candidate.charge_usage,
+                    )
                 if candidate.dps > best_candidate.dps + 1e-9:
                     best_candidate = candidate
 
@@ -260,6 +274,7 @@ def rotation_dps(
     *,
     max_total_charge_uses: int = _MAX_TOTAL_CHARGE_USES,
     energy_per_second_from_damage: float = 0.0,
+    dodge_factor: float | None = None,
 ) -> float:
     """Compute the best-possible rotation DPS for the provided move set."""
 
@@ -270,6 +285,7 @@ def rotation_dps(
         defender_defense,
         max_total_charge_uses=max_total_charge_uses,
         energy_per_second_from_damage=energy_per_second_from_damage,
+        dodge_factor=dodge_factor,
     )
     return best_candidate.dps
 
@@ -296,6 +312,33 @@ def pve_value(dps: float, tdo: float, *, alpha: float = 0.6) -> float:
     return (dps**alpha) * (tdo ** (1 - alpha))
 
 
+def _apply_multipliers(
+    value: float,
+    *,
+    breakpoints_hit: int | None,
+    gamma_breakpoint: float,
+    coverage: float | None,
+    theta_coverage: float,
+    availability_penalty: float,
+) -> tuple[float, dict[str, float]]:
+    modifiers: dict[str, float] = {}
+    adjusted = value
+    if breakpoints_hit:
+        bp_bonus = 1.0 + gamma_breakpoint * breakpoints_hit
+        adjusted *= bp_bonus
+        modifiers["breakpoint_bonus"] = bp_bonus
+    if coverage is not None:
+        cov_bonus = 1.0 + theta_coverage * (coverage - 0.5)
+        adjusted *= cov_bonus
+        modifiers["coverage_bonus"] = cov_bonus
+    if availability_penalty > 0:
+        penalty = max(0.0, min(availability_penalty, 0.99))
+        factor = 1.0 - penalty
+        adjusted *= factor
+        modifiers["availability_penalty"] = factor
+    return adjusted, modifiers
+
+
 def _compute_single_pve(
     attacker_attack: float,
     attacker_defense: float,
@@ -309,6 +352,12 @@ def _compute_single_pve(
     energy_from_damage_ratio: float,
     relobby_penalty: float | None,
     max_total_charge_uses: int,
+    dodge_factor: float | None,
+    breakpoints_hit: int | None,
+    gamma_breakpoint: float,
+    coverage: float | None,
+    theta_coverage: float,
+    availability_penalty: float,
 ) -> dict[str, float | Counter[str] | None]:
     if attacker_attack <= 0 or attacker_defense <= 0:
         raise ValueError("Attacker stats must be positive.")
@@ -316,6 +365,8 @@ def _compute_single_pve(
         raise ValueError("incoming_dps must be positive.")
     if energy_from_damage_ratio < 0:
         raise ValueError("energy_from_damage_ratio must be non-negative.")
+    if dodge_factor is not None and not 0 <= dodge_factor < 1:
+        raise ValueError("dodge_factor must lie in [0, 1).")
 
     energy_per_second = incoming_dps * energy_from_damage_ratio
     best_candidate = _best_rotation(
@@ -325,17 +376,28 @@ def _compute_single_pve(
         target_defense,
         max_total_charge_uses=max_total_charge_uses,
         energy_per_second_from_damage=energy_per_second,
+        dodge_factor=dodge_factor,
     )
 
     dps = best_candidate.dps
     ehp = estimate_ehp(attacker_defense, attacker_hp, target_defense=target_defense)
-    time_to_faint = ehp / incoming_dps
+    effective_incoming_dps = incoming_dps * (1.0 - dodge_factor) if dodge_factor else incoming_dps
+    time_to_faint = ehp / effective_incoming_dps
     tdo = dps * time_to_faint
     value_raw = pve_value(dps, tdo, alpha=alpha)
     penalty_factor = 1.0
     if relobby_penalty is not None and relobby_penalty > 0:
         penalty_factor = math.exp(-relobby_penalty * tdo)
-    value = value_raw * penalty_factor
+    value_base = value_raw * penalty_factor
+
+    adjusted_value, modifiers = _apply_multipliers(
+        value_base,
+        breakpoints_hit=breakpoints_hit,
+        gamma_breakpoint=gamma_breakpoint,
+        coverage=coverage,
+        theta_coverage=theta_coverage,
+        availability_penalty=availability_penalty,
+    )
 
     return {
         "dps": dps,
@@ -345,12 +407,14 @@ def _compute_single_pve(
         "charge_usage_per_cycle": best_candidate.charge_usage,
         "ehp": ehp,
         "tdo": tdo,
-        "value": value,
+        "value": adjusted_value,
         "value_raw": value_raw,
         "alpha": alpha,
         "energy_from_damage_ratio": energy_from_damage_ratio,
         "relobby_penalty": relobby_penalty,
         "penalty_factor": penalty_factor,
+        "dodge_factor": dodge_factor,
+        "modifiers": modifiers,
     }
 
 
@@ -368,6 +432,12 @@ def compute_pve_score(
     relobby_penalty: float | None = None,
     scenarios: Sequence[Mapping[str, float]] | None = None,
     max_total_charge_uses: int = _MAX_TOTAL_CHARGE_USES,
+    dodge_factor: float | None = None,
+    breakpoints_hit: int | None = None,
+    gamma_breakpoint: float = 0.0,
+    coverage: float | None = None,
+    theta_coverage: float = 0.0,
+    availability_penalty: float = 0.0,
 ) -> dict[str, float | Counter[str] | None]:
     """Compute full PvE score outputs for a Pokémon."""
 
@@ -391,6 +461,22 @@ def compute_pve_score(
                 ),
                 relobby_penalty=scenario.get("relobby_penalty", relobby_penalty),
                 max_total_charge_uses=max_total_charge_uses,
+                dodge_factor=scenario.get("dodge_factor", dodge_factor),
+                breakpoints_hit=int(scenario.get("breakpoints_hit", breakpoints_hit or 0))
+                if scenario.get("breakpoints_hit") is not None
+                else breakpoints_hit,
+                gamma_breakpoint=float(
+                    scenario.get("gamma_breakpoint", gamma_breakpoint)
+                ),
+                coverage=float(scenario.get("coverage", coverage))
+                if scenario.get("coverage") is not None
+                else coverage,
+                theta_coverage=float(
+                    scenario.get("theta_coverage", theta_coverage)
+                ),
+                availability_penalty=float(
+                    scenario.get("availability_penalty", availability_penalty)
+                ),
             )
             scenario_result["weight"] = weight
             scenario_results.append(scenario_result)
@@ -417,6 +503,12 @@ def compute_pve_score(
         energy_from_damage_ratio=energy_from_damage_ratio,
         relobby_penalty=relobby_penalty,
         max_total_charge_uses=max_total_charge_uses,
+        dodge_factor=dodge_factor,
+        breakpoints_hit=breakpoints_hit,
+        gamma_breakpoint=gamma_breakpoint,
+        coverage=coverage,
+        theta_coverage=theta_coverage,
+        availability_penalty=availability_penalty,
     )
 
 

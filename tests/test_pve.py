@@ -115,11 +115,14 @@ def test_compute_pve_score_returns_expected_keys(sample_stats: tuple[float, floa
         "energy_from_damage_ratio",
         "relobby_penalty",
         "penalty_factor",
+        "dodge_factor",
+        "modifiers",
     }
 
-    assert result["value"] == pytest.approx(
-        pve_value(result["dps"], result["tdo"], alpha=result["alpha"])
-    )
+    expected_base = pve_value(result["dps"], result["tdo"], alpha=result["alpha"]) * result["penalty_factor"]
+    assert result["value"] == pytest.approx(expected_base)
+    assert result["modifiers"] == {}
+    assert result["dodge_factor"] is None
 
 
 
@@ -152,6 +155,7 @@ def test_energy_from_damage_ratio_boosts_output(
 
     assert boosted["energy_from_damage_ratio"] == pytest.approx(0.5)
     assert boosted["value"] > 0
+    assert boosted["modifiers"] == {}
 
 
 def test_weighted_pve_scenarios_return_aggregate(
@@ -182,5 +186,6 @@ def test_weighted_pve_scenarios_return_aggregate(
     assert isinstance(breakdown, list)
     assert breakdown
     values = [scenario["value"] for scenario in breakdown]
+    assert all("modifiers" in scenario for scenario in breakdown)
     assert result["value"] <= max(values) + 1e-9
     assert result["value"] >= min(values) - 1e-9

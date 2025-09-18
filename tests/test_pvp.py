@@ -91,6 +91,7 @@ def test_compute_pvp_score_applies_config_defaults() -> None:
     assert result["move_pressure"] == pytest.approx(move_press)
     assert result["move_pressure_normalised"] == pytest.approx(move_norm)
     assert result["score"] == pytest.approx(expected_score)
+    assert result["modifiers"] == {}
 
 
 def test_compute_pvp_score_custom_overrides() -> None:
@@ -111,9 +112,25 @@ def test_compute_pvp_score_custom_overrides() -> None:
         bait_probability=0.3,
         energy_weight=0.4,
         buff_weight=BUFF_WEIGHT,
+        breakpoints_hit=2,
+        gamma_breakpoint=0.02,
+        coverage=0.7,
+        theta_coverage=0.06,
+        availability_penalty=0.02,
+        cmp_percentile=0.85,
+        cmp_threshold=0.75,
+        cmp_eta=0.03,
+        anti_meta=0.4,
+        anti_meta_mu=0.08,
     )
 
     assert result["stat_product_normalised"] > 1.0
+    assert result["modifiers"] != {}
+    mods = result["modifiers"]
+    assert mods.get("breakpoint_bonus") > 1.0
+    assert mods.get("coverage_bonus") > 1.0
+    assert mods.get("availability_penalty") < 1.0
+    assert "cmp_bonus" in mods
     assert 0 < result["move_pressure_normalised"]
     assert 0 < result["score"]
 
