@@ -29,3 +29,4 @@ instance/
 celerybeat-schedule
 celerybeat.pid
 .pytest_tmp/
+prompts_done/
