@@ -113,27 +113,96 @@ def _best_iv_and_level_under_cap(
     cap: int,
     iv_floor: int = 0,
 ) -> tuple[tuple[int, int, int], float]:
-    """Brute-force search for IVs and level that maximise SP under the CP cap.
+    """Exact frontier search for max SP under a CP cap (fast, non-brute).
 
-    Intended for small to medium datasets; for larger corpora consider caching
-    or pruning. Defaults maintain performance by keeping this opt-in.
+    Follows the IV_Optimization_Playbook algorithm:
+    - Iterate (ivD, ivS) pairs only
+    - Find highest feasible level under cap for A=0
+    - Check small level neighborhood to handle floors
+    - Binary search ivA in [0..15] at each candidate level
     """
-    best: tuple[tuple[int, int, int], float, float] | None = None  # (ivs, level, SP)
+    from math import sqrt
+    from bisect import bisect_right
+
     floors = max(0, int(iv_floor))
-    for atk_iv in range(floors, 16):
-        for def_iv in range(floors, 16):
-            for sta_iv in range(floors, 16):
-                ivs = (atk_iv, def_iv, sta_iv)
-                level = _cap_level_for_species(base_a, base_d, base_s, ivs, cap)
-                cpm = get_cpm(level)
-                atk = (base_a + atk_iv) * cpm
-                dfn = (base_d + def_iv) * cpm
-                hp = int((base_s + sta_iv) * cpm)
-                sp = atk * dfn * max(1, hp)
-                if best is None or sp > best[2] + 1e-9:
-                    best = (ivs, level, sp)
-    assert best is not None
-    return best[0], best[1]
+
+    # Precompute levels and CPM arrays
+    levels = [x / 2 for x in range(2, 101)]  # 1.0..50.0
+    C = []
+    C2 = []
+    for L in levels:
+        c = get_cpm(L)
+        C.append(c)
+        C2.append(c * c)
+
+    # Precompute Avals and sqrt terms
+    Avals = [float(base_a + a) for a in range(16)]
+    sqrtD = [sqrt(float(base_d + d)) for d in range(16)]
+    sqrtS = [sqrt(float(base_s + s)) for s in range(16)]
+
+    def cp_at(idx: int, a: int, d: int, s: int) -> int:
+        # CP = floor( (A0) * sqrt(D0) * sqrt(S0) * C2 / 10 )
+        return int((Avals[a] * sqrtD[d] * sqrtS[s] * C2[idx]) // 10.0)
+
+    best_iv: tuple[int, int, int] | None = None
+    best_level = 1.0
+    best_sp = -1.0
+
+    # For each (D,S) pair, find the rightmost level index with CP(A=0) <= cap
+    for d in range(floors, 16):
+        s = floors
+        while s < 16:
+            # Build a vector of CP for A=0 across levels to binary search; but compute on the fly via monotonicity
+            # We can bisect on a monotone key using a custom accessor
+            # Create a local list of threshold values to bisect against: t[idx] = CP0(idx)
+            # To avoid materializing full list for each (d,s), do manual binary search
+            lo, hi = 0, len(levels) - 1
+            idx = -1
+            while lo <= hi:
+                mid = (lo + hi) // 2
+                cp0 = cp_at(mid, 0, d, s)
+                if cp0 <= cap:
+                    idx = mid
+                    lo = mid + 1
+                else:
+                    hi = mid - 1
+
+            if idx < 0:
+                s += 1
+                continue
+
+            # Check a tiny neighborhood: idx, idx-1, idx-2
+            for off in (0, 1, 2):
+                k = idx - off
+                if k < 0:
+                    break
+
+                # Binary search ivA in [floors..15] for max a with CP <= cap
+                lo_a, hi_a = floors, 15
+                ans_a = floors
+                while lo_a <= hi_a:
+                    mid_a = (lo_a + hi_a) // 2
+                    if cp_at(k, mid_a, d, s) <= cap:
+                        ans_a = mid_a
+                        lo_a = mid_a + 1
+                    else:
+                        hi_a = mid_a - 1
+
+                c = C[k]
+                Aeff = (base_a + ans_a) * c
+                Deff = (base_d + d) * c
+                Heff = int((base_s + s) * c)
+                sp = Aeff * Deff * Heff
+                if sp > best_sp + 1e-9:
+                    best_sp = sp
+                    best_iv = (ans_a, d, s)
+                    best_level = levels[k]
+
+            s += 1
+
+    if best_iv is None:
+        return (floors, floors, floors), 1.0
+    return best_iv, best_level
 
 
 def _load_json(path: Path) -> Any:

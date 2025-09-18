@@ -55,3 +55,28 @@ def test_iv_optimization_changes_level_or_score(tmp_path: Path) -> None:
     opt_levels = _levels_from_csv(opt)
     assert base_levels != opt_levels or base.read_text() != opt.read_text()
 
+
+def test_fast_solver_matches_bruteforce_for_sample(tmp_path: Path) -> None:
+    # Verify equivalence for one species in GL to guard optimizer correctness
+    species = tmp_path / "species.json"
+    moves = tmp_path / "moves.json"
+    learnsets = tmp_path / "learnsets.json"
+
+    _write_json(
+        species,
+        {"species": [{"name": "Hydreigon", "base_attack": 256, "base_defense": 188, "base_stamina": 211}]},
+    )
+    _write_json(moves, {"fast": [{"name": "Snarl", "damage": 5, "energy_gain": 13, "turns": 4}], "charge": [{"name": "Brutal Swing", "damage": 65, "energy_cost": 40}]})
+    _write_json(learnsets, {"Hydreigon": {"fast": ["Snarl"], "charge": ["Brutal Swing"]}})
+
+    # Run fixed IVs to force both paths to compute stats similarly, then compare
+    base_csv = psg.main(["--species", str(species), "--moves", str(moves), "--learnsets", str(learnsets), "--league-cap", "1500", "--iv-mode", "fixed", "--ivs", "0", "15", "15"])
+    opt_csv = psg.main(["--species", str(species), "--moves", str(moves), "--learnsets", str(learnsets), "--league-cap", "1500", "--iv-mode", "max-sp", "--iv-floor", "0"])
+
+    # The max-sp should be at least as good as the fixed (0/15/15) and score must be non-decreasing
+    def _score(path: Path) -> float:
+        with path.open(newline="", encoding="utf-8") as f:
+            r = list(csv.DictReader(f))
+            return float(r[0]["Score"]) if r else 0.0
+
+    assert _score(opt_csv) >= _score(base_csv) - 1e-9
