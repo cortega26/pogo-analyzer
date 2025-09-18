@@ -77,15 +77,53 @@ def _tab_single_pokemon(st: "object") -> None:  # pragma: no cover - UI only
     from pogo_analyzer.formulas import effective_stats, infer_level_from_cp
     from pogo_analyzer.pve import ChargeMove, FastMove, compute_pve_score
     from pogo_analyzer.pvp import PvpChargeMove, PvpFastMove, compute_pvp_score
+    try:
+        from pogo_analyzer.ui_helpers import pve_verdict, pvp_verdict
+    except ModuleNotFoundError:
+        # Fallback for dev runs where module import paths may be stale
+        from importlib import util as _util
+        from pathlib import Path as _Path
+        _uh_path = _Path(__file__).with_name("ui_helpers.py")
+        spec = _util.spec_from_file_location("pogo_analyzer.ui_helpers", str(_uh_path))
+        _mod = _util.module_from_spec(spec)  # type: ignore[arg-type]
+        assert spec and spec.loader
+        spec.loader.exec_module(_mod)  # type: ignore[union-attr]
+        pve_verdict = _mod.pve_verdict  # type: ignore[attr-defined]
+        pvp_verdict = _mod.pvp_verdict  # type: ignore[attr-defined]
 
     st.header("Single Pokémon Quick Check")
+
+    # Caching & memoization for speed with version-compatible decorators
+    def _get_cache_decorator(names: list[str]):
+        for name in names:
+            deco = getattr(st, name, None)
+            if callable(deco):
+                return deco
+        # Fallback no-op decorator
+        def _noop(*_args, **_kwargs):
+            def _wrap(fn):
+                return fn
+            return _wrap
+        return _noop
+
+    _cache = _get_cache_decorator(["cache_data", "memo", "experimental_memo"])  # prefer stable APIs
+
+    @_cache()
+    def _base_stats_repo():
+        return load_default_base_stats()
+
+    @_cache()
+    def _infer(ba: int, bd: int, bs: int, ivs: tuple[int, int, int], cp_val: int, shadow: bool, buddy: bool, obs_hp: int | None):
+        level, cpm = infer_level_from_cp(ba, bd, bs, *ivs, int(cp_val), is_shadow=shadow, is_best_buddy=buddy, observed_hp=obs_hp)
+        A, D, H = effective_stats(ba, bd, bs, *ivs, level, is_shadow=shadow, is_best_buddy=buddy)
+        return level, cpm, A, D, H
 
     with st.form("quick_form", clear_on_submit=False):
         st.subheader("Basics")
         col1, col2 = st.columns(2)
         with col1:
             # Autocomplete via selectbox: type to filter list; press Enter to select
-            repo = load_default_base_stats()
+            repo = _base_stats_repo()
             options: list[str] = []
             display_to_query: dict[str, str] = {}
             for entry in repo:
@@ -146,17 +184,17 @@ def _tab_single_pokemon(st: "object") -> None:  # pragma: no cover - UI only
         if pve_enabled:
             pve_c1, pve_c2, pve_c3 = st.columns(3)
             with pve_c1:
-                fast_name = st.text_input("Fast move name", value="Snarl")
-                fast_power = st.number_input("Fast power", min_value=0.0, value=12.0)
-                fast_energy = st.number_input("Fast energy gain", min_value=0.0, value=13.0)
+                fast_name = st.text_input("Fast move name", value="")
+                fast_power = st.number_input("Fast power", min_value=0.0, value=0.0)
+                fast_energy = st.number_input("Fast energy gain", min_value=0.0, value=0.0)
                 fast_dur = st.number_input("Fast duration (s)", min_value=0.1, value=1.0)
                 fast_stab = st.checkbox("Fast STAB")
             with pve_c2:
-                ch1_name = st.text_input("Charge 1 name", value="Brutal Swing")
-                ch1_power = st.number_input("Charge 1 power", min_value=0.0, value=65.0)
-                ch1_cost = st.number_input("Charge 1 energy cost", min_value=1.0, value=40.0)
-                ch1_dur = st.number_input("Charge 1 duration (s)", min_value=0.1, value=1.9)
-                ch1_stab = st.checkbox("Charge 1 STAB", value=True)
+                ch1_name = st.text_input("Charge 1 name", value="")
+                ch1_power = st.number_input("Charge 1 power", min_value=0.0, value=0.0)
+                ch1_cost = st.number_input("Charge 1 energy cost", min_value=1.0, value=1.0)
+                ch1_dur = st.number_input("Charge 1 duration (s)", min_value=0.1, value=1.0)
+                ch1_stab = st.checkbox("Charge 1 STAB", value=False)
             with pve_c3:
                 ch2_toggle = st.checkbox("Add Charge 2")
                 ch2_name = st.text_input("Charge 2 name", value="", disabled=not ch2_toggle)
@@ -172,6 +210,45 @@ def _tab_single_pokemon(st: "object") -> None:  # pragma: no cover - UI only
                 alpha = st.number_input("Alpha (DPS↔TDO blend)", min_value=0.01, max_value=0.99, value=0.6)
                 e_from_dmg = st.number_input("Energy from damage ratio", min_value=0.0, value=0.0, help="Approx. 0.5 ≈ 1 energy per 2 HP lost.")
                 relobby_phi = st.number_input("Relobby penalty (phi)", min_value=0.0, value=0.0, help="Use >0 to dampen builds that faint often.")
+                boss_types = st.multiselect(
+                    "Boss type(s)",
+                    options=[
+                        "Normal","Fire","Water","Grass","Electric","Ice","Fighting","Poison","Ground","Flying",
+                        "Psychic","Bug","Rock","Ghost","Dragon","Dark","Steel","Fairy",
+                    ],
+                    default=["Psychic"],
+                    help="Apply type effectiveness (1.6×/0.625×) based on your move types.",
+                )
+
+            # Optional move type selectors (used to apply type effectiveness vs boss types)
+            fast_type = st.selectbox(
+                "Fast move type (optional)",
+                [
+                    "",
+                    "Normal","Fire","Water","Grass","Electric","Ice","Fighting","Poison","Ground","Flying",
+                    "Psychic","Bug","Rock","Ghost","Dragon","Dark","Steel","Fairy",
+                ],
+                index=0,
+            )
+            ch1_type = st.selectbox(
+                "Charge 1 type (optional)",
+                [
+                    "",
+                    "Normal","Fire","Water","Grass","Electric","Ice","Fighting","Poison","Ground","Flying",
+                    "Psychic","Bug","Rock","Ghost","Dragon","Dark","Steel","Fairy",
+                ],
+                index=0,
+            )
+            if ch2_toggle and ch2_name:
+                ch2_type = st.selectbox(
+                    "Charge 2 type (optional)",
+                    [
+                        "",
+                        "Normal","Fire","Water","Grass","Electric","Ice","Fighting","Poison","Ground","Flying",
+                        "Psychic","Bug","Rock","Ghost","Dragon","Dark","Steel","Fairy",
+                    ],
+                    index=0,
+                )
 
         st.divider()
         st.subheader("PvP (optional)")
@@ -194,6 +271,44 @@ def _tab_single_pokemon(st: "object") -> None:  # pragma: no cover - UI only
                 sp_ref = st.number_input("SP reference (optional)", min_value=0.0, value=0.0)
                 mp_ref = st.number_input("MP reference (optional)", min_value=0.0, value=0.0)
 
+        # Recommended moves autofill (best-known defaults per species)
+        rec_enable = st.checkbox("Use recommended moves (auto)", value=True, help="Autofill best-known PvE/PvP moves for the selected Pokémon.")
+        if rec_enable and name:
+            try:
+                from pogo_analyzer.data.move_guidance import normalise_name
+            except Exception:
+                normalise_name = lambda x: (x or "").strip().lower().replace(" ", "-")  # fallback
+            key = normalise_name(name)
+            # Minimal built-in recommendations; extend as needed
+            if key == "gengar":
+                # PvE best: Shadow Claw + Shadow Ball (STAB)
+                fast_name = fast_name or "Shadow Claw"
+                if fast_power == 0.0:
+                    fast_power = 9.0
+                if fast_energy == 0.0:
+                    fast_energy = 6.0
+                fast_dur = fast_dur or 0.7
+                fast_stab = True
+                if not fast_type:
+                    fast_type = "Ghost"
+
+                ch1_name = ch1_name or "Shadow Ball"
+                if ch1_power == 0.0:
+                    ch1_power = 100.0
+                if ch1_cost <= 1.0:
+                    ch1_cost = 50.0
+                ch1_dur = ch1_dur or 3.0
+                ch1_stab = True
+                if not ch1_type:
+                    ch1_type = "Ghost"
+
+                # PvP: Shadow Claw + Shadow Ball (typical stats)
+                if pvp_enabled:
+                    f_turns = max(1, f_turns or 2)
+                    # These are PvP stats for Shadow Claw
+                    fast_power = fast_power or 3.0
+                    fast_energy = fast_energy or 8.0
+
         submitted = st.form_submit_button("Run Quick Check")
 
     if not submitted:
@@ -204,7 +319,7 @@ def _tab_single_pokemon(st: "object") -> None:  # pragma: no cover - UI only
         return
 
     # Resolve base stats
-    repo = load_default_base_stats()
+    repo = _base_stats_repo()
     if base_a and base_d and base_s:
         ba, bd, bs = int(base_a), int(base_d), int(base_s)
     else:
@@ -221,24 +336,119 @@ def _tab_single_pokemon(st: "object") -> None:  # pragma: no cover - UI only
     # Inference
     with st.spinner("Inferring level and computing stats…"):
         try:
-            level, cpm = infer_level_from_cp(ba, bd, bs, *IVs, int(cp), is_shadow=shadow, is_best_buddy=best_buddy, observed_hp=obs_hp)
-            A, D, H = effective_stats(ba, bd, bs, *IVs, level, is_shadow=shadow, is_best_buddy=best_buddy)
+            level, cpm, A, D, H = _infer(ba, bd, bs, IVs, int(cp), shadow, best_buddy, obs_hp)
         except Exception as exc:  # noqa: BLE001
             st.error(f"Level inference failed: {exc}")
             return
 
     st.success(f"Level {level:.1f} (CPM {cpm:.6f}) — A={A:.2f}, D={D:.2f}, H={H}")
 
+    # Helper: badges and result card
+    def badge(label: str) -> None:
+        st.markdown(f'<span class="badge">{label}</span>', unsafe_allow_html=True)
+
+    def result_card(title: str, fields: dict[str, str], flags: dict[str, bool]) -> None:
+        st.markdown('<div class="card section">', unsafe_allow_html=True)
+        st.subheader(title)
+        c1, c2, c3 = st.columns(3)
+        cols = (c1, c2, c3)
+        for i, (k, v) in enumerate(fields.items()):
+            cols[i % 3].metric(k, v)
+        st.write("Badges:")
+        any_flag = False
+        for key, enabled in flags.items():
+            if enabled:
+                any_flag = True
+                badge(key)
+        if not any_flag:
+            st.caption("No special statuses")
+        st.markdown("</div>", unsafe_allow_html=True)
+
+    # Present core results in a card with badges
+    result_card(
+        f"{name} — Quick Check",
+        {
+            "Level": f"{level:.1f}",
+            "CPM": f"{cpm:.6f}",
+            "Attack": f"{A:.2f}",
+            "Defense": f"{D:.2f}",
+            "HP": f"{H:d}",
+        },
+        {"Shadow": shadow, "Purified": purified, "Best Buddy": best_buddy, "Lucky": lucky},
+    )
+
     # PvE
     if pve_enabled:
         with st.spinner("Scoring PvE…"):
             try:
-                fast = FastMove(fast_name, power=float(fast_power), energy_gain=float(fast_energy), duration=float(fast_dur), stab=bool(fast_stab))
+                def _se_multiplier(move_type: str, boss_types_list: list[str]) -> float:
+                    mt = (move_type or "").strip().lower()
+                    bts = {t.strip().lower() for t in (boss_types_list or [])}
+                    super_eff = {
+                        "ghost": {"psychic","ghost"},
+                        "dark": {"psychic","ghost"},
+                        "rock": {"fire","ice","flying","bug"},
+                        "ground": {"fire","electric","poison","rock","steel"},
+                        "fighting": {"normal","ice","rock","dark","steel"},
+                        "bug": {"grass","psychic","dark"},
+                        "grass": {"water","ground","rock"},
+                        "water": {"fire","ground","rock"},
+                        "fire": {"grass","ice","bug","steel"},
+                        "electric": {"water","flying"},
+                        "ice": {"grass","ground","flying","dragon"},
+                        "steel": {"ice","rock","fairy"},
+                        "fairy": {"fighting","dragon","dark"},
+                        "dragon": {"dragon"},
+                        "poison": {"grass","fairy"},
+                        "flying": {"grass","fighting","bug"},
+                        "psychic": {"fighting","poison"},
+                    }
+                    resisted = {
+                        "ghost": {"dark"},
+                        "dark": {"fighting","dark","fairy"},
+                        "rock": {"fighting","ground","steel"},
+                        "ground": {"grass","bug"},
+                        "fighting": {"flying","poison","psychic","bug","fairy"},
+                        "bug": {"fighting","flying","poison","ghost","steel","fire","fairy"},
+                        "grass": {"flying","poison","bug","steel","fire","dragon"},
+                        "water": {"water","grass","dragon"},
+                        "fire": {"fire","water","rock","dragon"},
+                        "electric": {"grass","electric","dragon","ground"},
+                        "ice": {"fire","water","ice","steel"},
+                        "steel": {"fire","water","electric","steel"},
+                        "fairy": {"poison","steel","fire"},
+                        "dragon": {"steel"},
+                        "poison": {"poison","ground","rock","ghost"},
+                        "flying": {"electric","rock","steel"},
+                        "psychic": {"psychic","steel"},
+                    }
+                    if mt and any(t in super_eff.get(mt, set()) for t in bts):
+                        return 1.6
+                    if mt and any(t in resisted.get(mt, set()) for t in bts):
+                        return 0.625
+                    return 1.0
+
+                fast = FastMove(
+                    fast_name,
+                    power=float(fast_power),
+                    energy_gain=float(fast_energy),
+                    duration=float(fast_dur),
+                    stab=bool(fast_stab),
+                    type_effectiveness=_se_multiplier(fast_type, boss_types if 'boss_types' in locals() else []),
+                )
                 charges = [
-                    ChargeMove(ch1_name, power=float(ch1_power), energy_cost=float(ch1_cost), duration=float(ch1_dur), stab=bool(ch1_stab))
+                    ChargeMove(
+                        ch1_name,
+                        power=float(ch1_power),
+                        energy_cost=float(ch1_cost),
+                        duration=float(ch1_dur),
+                        stab=bool(ch1_stab),
+                        type_effectiveness=_se_multiplier(ch1_type, boss_types if 'boss_types' in locals() else []),
+                    )
                 ]
                 if ch2_toggle and ch2_name:
-                    charges.append(ChargeMove(ch2_name, power=float(ch2_power), energy_cost=float(ch2_cost), duration=float(ch2_dur), stab=bool(ch2_stab)))
+                    eff2 = _se_multiplier(locals().get('ch2_type', ''), boss_types if 'boss_types' in locals() else [])
+                    charges.append(ChargeMove(ch2_name, power=float(ch2_power), energy_cost=float(ch2_cost), duration=float(ch2_dur), stab=bool(ch2_stab), type_effectiveness=eff2))
 
                 pve = compute_pve_score(
                     A, D, int(H), fast, charges,
@@ -249,6 +459,10 @@ def _tab_single_pokemon(st: "object") -> None:  # pragma: no cover - UI only
                 st.metric("Rotation DPS", f"{pve['dps']:.2f}")
                 st.metric("TDO", f"{pve['tdo']:.2f}")
                 st.metric("PvE Value", f"{pve['value']:.2f}")
+                label, advice = pve_verdict(float(pve["dps"]), float(pve["tdo"]))
+                st.info(f"PvE verdict: {label} — {advice}")
+                tier, action = __import__("pogo_analyzer").pve_tier(float(pve["dps"]), float(pve["tdo"]))
+                st.markdown(f"**Recommendation:** <span class='badge'>{action}</span> · Tier <span class='badge'>{tier}</span>", unsafe_allow_html=True)
             except Exception as exc:  # noqa: BLE001
                 st.error(f"PvE evaluation failed: {exc}")
 
@@ -286,6 +500,8 @@ def _tab_single_pokemon(st: "object") -> None:  # pragma: no cover - UI only
                 st.metric("Stat Product (norm)", f"{pvp['stat_product_normalised']:.4f}")
                 st.metric("Move Pressure (norm)", f"{pvp['move_pressure_normalised']:.4f}")
                 st.metric("PvP Score", f"{pvp['score']:.4f}")
+                vp_label, vp_advice = pvp_verdict(float(pvp["score"]))
+                st.info(f"PvP verdict: {vp_label} — {vp_advice}")
             except Exception as exc:  # noqa: BLE001
                 st.error(f"PvP evaluation failed: {exc}")
 

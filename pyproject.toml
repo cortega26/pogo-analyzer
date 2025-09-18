@@ -35,6 +35,7 @@ pogo-data-refresh = "pogo_analyzer.data_refresh:main"
 pogo-pvp-scoreboard = "pvp_scoreboard_generator:main"
 pogo-learnsets-refresh = "pogo_analyzer.learnsets_refresh:main"
 pogo-analyzer-gui = "pogo_analyzer.gui_launch:main"
+pogo-gamemaster-import = "pogo_analyzer.gamemaster_import:main"
 
 [tool.setuptools]
 py-modules = [
