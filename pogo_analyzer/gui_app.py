@@ -25,8 +25,31 @@ def main(argv: Sequence[str] | None = None) -> None:  # pragma: no cover - UI on
         ) from exc
 
     st.set_page_config(page_title="PoGo Analyzer", layout="wide")
+    # Theme tokens, spacing scale, subtle elevation, and utility classes
+    st.markdown(
+        """
+        <style>
+        :root{
+          --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-5:24px;
+          --radius:12px; --elev:0 6px 18px rgba(0,0,0,.10);
+          --primary:#3F7CEC; --success:#2FBF71; --warn:#FFB020; --error:#E5484D;
+        }
+        .card{border-radius:var(--radius); padding:var(--space-4); box-shadow:var(--elev); background:rgba(255,255,255,.03);}
+        .badge{display:inline-block; padding:2px 8px; border-radius:999px; background:rgba(255,255,255,.08); margin-right:6px;}
+        .section{margin-top:var(--space-5); margin-bottom:var(--space-4);}        
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+    # Sticky header keeps key controls visible on scroll
+    st.markdown(
+        '<div style="position:sticky;top:0;z-index:999;background:var(--bg,#0f1116);padding:8px 0;'
+        'border-bottom:1px solid rgba(255,255,255,.06)">',
+        unsafe_allow_html=True,
+    )
     st.title("PoGo Analyzer")
     st.caption("Quick checks (PvE/PvP) and scoreboards with clear, guided controls.")
+    st.markdown("</div>", unsafe_allow_html=True)
 
     tabs = st.tabs(["Quick Check", "Raid Scoreboard", "PvP Scoreboard", "About"])
 
