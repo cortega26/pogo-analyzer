@@ -106,7 +106,8 @@ def pve_tier(dps: float, tdo: float) -> Tuple[str, str]:
     elif dps_band == "Good" and tdo_band == "High":
         letter = "A"
     elif dps_band == "Good" and tdo_band == "Decent":
-        letter = "B"
+        # Upper end of Decent (>=50) is closer to A; lower end is B
+        letter = "A" if tdo >= 50.0 else "B"
     elif dps_band == "Good" and tdo_band == "Low":
         letter = "C"
     elif dps_band == "OK" and tdo_band == "Decent":

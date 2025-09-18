@@ -118,6 +118,32 @@ def _tab_single_pokemon(st: "object") -> None:  # pragma: no cover - UI only
         A, D, H = effective_stats(ba, bd, bs, *ivs, level, is_shadow=shadow, is_best_buddy=buddy)
         return level, cpm, A, D, H
 
+    @st.cache_data(show_spinner=False)
+    def _load_moves_db() -> dict:
+        import json
+        from pathlib import Path
+        path = Path("normalized_data/normalized_moves.json")
+        if not path.is_file():
+            return {}
+        try:
+            return json.loads(path.read_text(encoding="utf-8"))
+        except Exception:
+            return {}
+
+    def _lookup_move(db: dict, name: str) -> dict | None:
+        if not db or not name:
+            return None
+        for bucket in ("fast", "charge"):
+            for m in db.get(bucket, []):
+                if m.get("name") == name:
+                    return m
+        low = name.lower()
+        for bucket in ("fast", "charge"):
+            for m in db.get(bucket, []):
+                if str(m.get("name", "")).lower() == low:
+                    return m
+        return None
+
     with st.form("quick_form", clear_on_submit=False):
         st.subheader("Basics")
         col1, col2 = st.columns(2)

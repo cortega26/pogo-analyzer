@@ -357,13 +357,15 @@ def main(argv: Sequence[str] | None = None) -> Path:
                             "Best Fast": fast.name,
                             "Best Charge 1": charges[0].name,
                             "Best Charge 2": charges[1].name if len(charges) > 1 else "",
+                            "IV Mode": args.iv_mode,
                         }
         if best is not None:
             rows.append(best)
 
     # Output
     out_dir = args.output_dir or Path.cwd()
-    csv_path = out_dir / (args.csv_name or "pvp_scoreboard.csv")
+    default_name = f"pvp_scoreboard_{(args.iv_mode or 'fixed').replace('-', '_')}.csv"
+    csv_path = out_dir / (args.csv_name or default_name)
     if not rows:
         # Still write a header-only file for consistency
         csv_path.parent.mkdir(parents=True, exist_ok=True)
