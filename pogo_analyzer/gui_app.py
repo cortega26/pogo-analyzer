@@ -182,7 +182,23 @@ def _tab_single_pokemon(st: "object") -> None:  # pragma: no cover - UI only
             repo = _base_stats_repo()
             options: list[str] = []
             display_to_query: dict[str, str] = {}
+
+            def _include_in_selector(entry) -> bool:
+                slug = (entry.slug or "").strip().lower()
+                name = (entry.name or entry.slug or "").strip().lower()
+                tags = {t.strip().lower() for t in (entry.tags or ())}
+                # Exclude Mega and Shadow/Purified forms from the dropdown; radio controls variant
+                if "_mega" in slug or "mega" in tags or "(mega" in name:
+                    return False
+                if slug.startswith("shadow_") or "shadow" in tags or "(shadow" in name:
+                    return False
+                if slug.startswith("purified_") or "purified" in tags or "(purified" in name:
+                    return False
+                return True
+
             for entry in repo:
+                if not _include_in_selector(entry):
+                    continue
                 display = (entry.name or entry.slug).strip()
                 if not display:
                     continue
@@ -205,14 +221,17 @@ def _tab_single_pokemon(st: "object") -> None:  # pragma: no cover - UI only
             iv_d = st.number_input("IV Defense", 0, 15, 15)
             iv_s = st.number_input("IV Stamina", 0, 15, 15)
         with col2:
+            # Variant first to drive Lucky disabled state
             variant = st.radio(
                 "Variant",
                 options=["Normal", "Shadow", "Purified"],
                 horizontal=True,
-                help="Shadow and Purified are mutually exclusive."
+                help="Shadow and Purified are mutually exclusive.",
             )
             shadow = variant == "Shadow"
             purified = variant == "Purified"
+
+            # Lucky and Best Buddy matter; Lucky is not applicable to Shadow
             lucky = st.checkbox(
                 "Lucky (trade bonus)",
                 disabled=shadow,
@@ -221,12 +240,35 @@ def _tab_single_pokemon(st: "object") -> None:  # pragma: no cover - UI only
                     "Purified and Normal can be Lucky."
                 ),
             )
+            if shadow:
+                lucky = False
             best_buddy = st.checkbox("Best Buddy (+1 CPM level)")
             observed_hp = st.number_input("Observed HP (optional)", min_value=0, value=0, step=1)
-            has_special = st.checkbox("Exclusive move already unlocked?", value=False)
-            mega_now = st.checkbox("Mega available now")
-            mega_soon = st.checkbox("Mega arriving soon")
+            # Always evaluate best moves and mega availability automatically
             note = st.text_input("Notes (optional)", value="")
+
+            # Hint when the selected species' family has a Mega form
+            try:
+                repo = _base_stats_repo()
+                if name:
+                    e = repo.get(name)
+                    fam_val = e.family.get("id") if isinstance(e.family, dict) else e.family
+                    has_mega = False
+                    if fam_val:
+                        fam_val = str(fam_val)
+                        for cand in repo:
+                            cf = cand.family.get("id") if isinstance(cand.family, dict) else cand.family
+                            if (str(cf) == fam_val) and (
+                                ("_mega" in cand.slug.lower())
+                                or ("mega" in [t.lower() for t in cand.tags])
+                                or ((cand.name or "").lower().find("mega") >= 0)
+                            ):
+                                has_mega = True
+                                break
+                    if has_mega:
+                        st.caption("Family has a Mega form — both scores will be shown.")
+            except Exception:
+                pass
 
         st.divider()
         st.subheader("Species / Base Stats")
@@ -435,7 +477,7 @@ def _tab_single_pokemon(st: "object") -> None:  # pragma: no cover - UI only
             "Defense": f"{D:.2f}",
             "HP": f"{H:d}",
         },
-        {"Shadow": shadow, "Purified": purified, "Best Buddy": best_buddy, "Lucky": lucky},
+        {"Shadow": shadow, "Purified": purified, "Lucky": bool(lucky), "Best Buddy": bool(best_buddy)},
     )
 
     # Helper: auto-detect ETM/CD requirement
@@ -460,25 +502,75 @@ def _tab_single_pokemon(st: "object") -> None:  # pragma: no cover - UI only
                     return None, "Species has legacy/elite moves; specific requirement varies."
         return False, ""
 
+    def _mega_flags(species_label: str) -> tuple[bool, bool]:
+        """Detect whether a species (or its family) has a Mega form.
+
+        Returns (mega_now_or_exists, mega_soon_from_curated).
+        """
+        mega_presence = False
+        try:
+            repo = _base_stats_repo()
+            entry = repo.get(species_label)
+            fam_val = entry.family.get("id") if isinstance(entry.family, dict) else entry.family
+            if fam_val:
+                fam_val = str(fam_val)
+                for cand in repo:
+                    cf = cand.family.get("id") if isinstance(cand.family, dict) else cand.family
+                    if (str(cf) == fam_val) and (
+                        ("_mega" in cand.slug.lower())
+                        or ("mega" in [t.lower() for t in cand.tags])
+                        or ((cand.name or "").lower().find("mega") >= 0)
+                    ):
+                        mega_presence = True
+                        break
+        except Exception:
+            pass
+
+        mega_now_cur = False
+        mega_soon = False
+        try:
+            from pogo_analyzer.data.raid_entries import DEFAULT_RAID_ENTRIES as _ENTRIES
+            s = (species_label or "").strip().lower()
+            for e in _ENTRIES:
+                if e.name.strip().lower() == s:
+                    mega_now_cur = mega_now_cur or bool(getattr(e, "mega_now", False))
+                    mega_soon = mega_soon or bool(getattr(e, "mega_soon", False))
+        except Exception:
+            pass
+
+        mega_now = mega_now_cur or mega_presence
+        return bool(mega_now), bool(mega_soon)
+
     # Overall Raid Score snapshot with simple tier and action chips
     try:
         base_table = _base_rating_lookup()
         base_rating = base_table.get((name or "").strip().lower(), 70.0)
         ivb = calculate_iv_bonus(int(iv_a), int(iv_d), int(iv_s))
         needs_tm_auto, needs_tm_note = _auto_needs_tm(name)
-        _rs = calculate_raid_score(
-            float(base_rating),
-            float(ivb),
-            lucky=bool(lucky),
-            needs_tm=bool(False if needs_tm_auto is None else needs_tm_auto),
-            mega_bonus_now=bool(locals().get("mega_now", False)),
-            mega_bonus_soon=bool(locals().get("mega_soon", False)),
+        mega_now_flag, mega_soon_flag = _mega_flags(name)
+        # Best-case baseline: do not penalize for exclusives; evaluate without mega
+        _rs_base = calculate_raid_score(
+            float(base_rating), float(ivb), lucky=bool(lucky), needs_tm=False, mega_bonus_now=False, mega_bonus_soon=False
         )
-        if purified:
-            _rs += 1
-        if best_buddy:
-            _rs += 2
-        _rs = max(1.0, min(100.0, round(float(_rs), 1)))
+        # With mega: apply whichever flag is available; else N/A
+        _rs_mega = None
+        if mega_now_flag or mega_soon_flag:
+            _rs_mega = calculate_raid_score(
+                float(base_rating), float(ivb), lucky=bool(lucky), needs_tm=False,
+                mega_bonus_now=bool(mega_now_flag), mega_bonus_soon=bool(mega_soon_flag)
+            )
+
+        def _apply_personal_bonuses(x: float | None) -> float | None:
+            if x is None:
+                return None
+            if purified:
+                x += 1
+            if best_buddy:
+                x += 2
+            return max(1.0, min(100.0, round(float(x), 1)))
+
+        _rs_base = _apply_personal_bonuses(_rs_base)
+        _rs_mega = _apply_personal_bonuses(_rs_mega)
         def _tier(x: float) -> str:
             if x >= 90:
                 return "S"
@@ -489,28 +581,38 @@ def _tab_single_pokemon(st: "object") -> None:  # pragma: no cover - UI only
             if x >= 70:
                 return "C"
             return "D"
-        _tier_letter = _tier(_rs)
-        st.subheader("Raid Score")
-        m1, m2, m3 = st.columns(3)
+        _tier_letter = _tier(_rs_base)
+        st.subheader("Raid Score (Best Moves)")
+        m1, m2 = st.columns(2)
         with m1:
-            st.metric("Raid Score (1–100)", f"{_rs:.1f}")
+            st.metric("No Mega", f"{_rs_base:.1f}")
         with m2:
-            st.metric("Tier", _tier_letter)
+            st.metric("With Mega" + (" (est)" if (_rs_mega is None) else ""), ("N/A" if _rs_mega is None else f"{_rs_mega:.1f}"))
+
+        st.caption(f"Tier (no mega): {_tier_letter}")
+        m3 = st.container()
         with m3:
             chips: list[str] = []
             _targ = locals().get("target_cp", 0) or 0
             _cpv = locals().get("cp", 0) or 0
-            # Auto ETM/CD chip
-            if needs_tm_auto is True and not locals().get("has_special", False):
+            # Auto ETM/CD chip (note: score is best-case, no penalty applied)
+            if needs_tm_auto is True:
                 chips.append("Needs Elite TM")
             if _targ and _cpv and _cpv < _targ:
                 chips.append("Under target CP")
-            if _tier_letter in {"S", "A", "B"} and (locals().get("has_special", False) or (needs_tm_auto in (False, None))):
+            if _tier_letter in {"S", "A", "B"}:
                 chips.append("Worth building now")
             if chips:
                 st.markdown(" ".join(f"<span class='badge'>{c}</span>" for c in chips), unsafe_allow_html=True)
         if needs_tm_note:
             st.caption(needs_tm_note)
+        # Mega commentary
+        if _rs_mega is not None:
+            delta = float(_rs_mega) - float(_rs_base)
+            if delta >= 2.0:
+                st.caption("This Pokémon ranks higher with its Mega evolution due to strong raid utility.")
+            elif delta >= 0.5:
+                st.caption("Mega evolution provides a modest bump to the raid score.")
     except Exception as exc:  # noqa: BLE001
         st.warning(f"Raid score snapshot unavailable: {exc}")
 
