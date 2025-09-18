@@ -24,6 +24,7 @@ PoGo Analyzer is a lightweight toolkit for evaluating Pokémon GO raid investmen
 - [Dataset maintenance](#dataset-maintenance)
 - [Data refresh](#data-refresh)
 - [PvP scoreboard](#pvp-scoreboard)
+- [GUI](#gui)
 - [Testing](#testing)
 - [Contributing](#contributing)
 - [License](#license)
@@ -237,6 +238,19 @@ pogo-pvp-scoreboard \
 ```
 
 See `docs/pvp.md` for details and advanced options.
+
+## GUI
+
+Install the optional GUI extra and run the Streamlit app for a friendly, clickable interface with full names and inline explanations:
+
+```
+pip install .[gui]
+streamlit run pogo_analyzer/gui_app.py
+# or use the launcher after install:
+pogo-analyzer-gui
+```
+
+The GUI covers the single-Pokémon quick check (PvE/PvP) and a light PvP scoreboard helper. All advanced options are grouped with clear labels so regular users can avoid raw flags.
 
 ## Testing
 

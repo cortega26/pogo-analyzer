@@ -25,17 +25,22 @@ pandas = [
     "pandas>=2.0",
     "openpyxl>=3.1",
 ]
+gui = [
+    "streamlit>=1.32",
+]
 
 [project.scripts]
 pogo-raid-scoreboard = "raid_scoreboard_generator:main"
 pogo-data-refresh = "pogo_analyzer.data_refresh:main"
 pogo-pvp-scoreboard = "pvp_scoreboard_generator:main"
 pogo-learnsets-refresh = "pogo_analyzer.learnsets_refresh:main"
+pogo-analyzer-gui = "pogo_analyzer.gui_launch:main"
 
 [tool.setuptools]
 py-modules = [
     "raid_scoreboard_generator",
     "microbench_simple_table",
+    "pvp_scoreboard_generator",
 ]
 
 [tool.setuptools.packages.find]

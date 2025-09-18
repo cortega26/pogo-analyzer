@@ -762,6 +762,12 @@ def _evaluate_single_pokemon(args: argparse.Namespace) -> None:
             "--pokemon-name, --combat-power, and --ivs must be provided to evaluate a single Pokémon."
         )
 
+    # Variant constraints: Shadow and Purified are mutually exclusive. Shadow cannot be Lucky.
+    if args.shadow and args.purified:
+        raise SystemExit("Invalid variant: a Pokémon cannot be both Shadow and Purified.")
+    if args.shadow and args.lucky:
+        raise SystemExit("Invalid combination: Lucky status cannot apply to Shadow Pokémon.")
+
     ivs = tuple(args.ivs)
     wants_pve = bool(
         args.fast_move
