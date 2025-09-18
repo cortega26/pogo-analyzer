@@ -224,6 +224,17 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         help="Incoming DPS from the raid boss used for PvE TDO calculations.",
     )
     pve_group.add_argument(
+        "--energy-from-damage",
+        dest="energy_from_damage_ratio",
+        type=float,
+        help="Energy gained per point of incoming damage when modelling PvE rotations.",
+    )
+    pve_group.add_argument(
+        "--relobby-penalty",
+        type=float,
+        help="Apply an exp(-phi * TDO) penalty to PvE value; provide phi.",
+    )
+    pve_group.add_argument(
         "--alpha",
         dest="alpha",
         type=float,
@@ -242,6 +253,13 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         dest="beta",
         type=float,
         help="Blend factor between stat product and move pressure (default: 0.52).",
+    )
+    pvp_group.add_argument(
+        "--shield-weights",
+        type=float,
+        nargs=3,
+        metavar=("W0", "W1", "W2"),
+        help="Weights for 0/1/2 shield scenarios when blending PvP move pressure.",
     )
     pvp_group.add_argument(
         "--sp-ref",
@@ -606,6 +624,8 @@ def _evaluate_single_pokemon(args: argparse.Namespace) -> None:
         or args.incoming_dps is not None
         or args.alpha is not None
         or args.weather_boost
+        or args.energy_from_damage_ratio is not None
+        or args.relobby_penalty is not None
     )
     wants_pvp = bool(
         args.league_cap is not None
@@ -613,6 +633,7 @@ def _evaluate_single_pokemon(args: argparse.Namespace) -> None:
         or args.stat_product_reference is not None
         or args.move_pressure_reference is not None
         or args.bait_probability is not None
+        or args.shield_weights is not None
     )
     lookup = _template_entry(
         args.pokemon_name,
@@ -856,13 +877,11 @@ def _evaluate_single_pokemon(args: argparse.Namespace) -> None:
             raise SystemExit(f"Failed to parse --charge: {exc}") from exc
 
     if wants_pve and inferred_stats is None:
-        raise SystemExit(
-            "PvE scoring requires base stats and CP/IVs to infer effective stats."
-        )
+        detail = f" ({inference_error})" if inference_error else ""
+        raise SystemExit("PvE scoring requires base stats and CP/IVs to infer effective stats." + detail)
     if wants_pvp and inferred_stats is None:
-        raise SystemExit(
-            "PvP scoring requires base stats and CP/IVs to infer effective stats."
-        )
+        detail = f" ({inference_error})" if inference_error else ""
+        raise SystemExit("PvP scoring requires base stats and CP/IVs to infer effective stats." + detail)
 
     if inferred_stats:
         print()
@@ -889,6 +908,10 @@ def _evaluate_single_pokemon(args: argparse.Namespace) -> None:
         if args.incoming_dps is None:
             raise SystemExit("PvE scoring requires --incoming-dps.")
         alpha_value = args.alpha if args.alpha is not None else 0.6
+        energy_ratio = (
+            args.energy_from_damage_ratio if args.energy_from_damage_ratio is not None else 0.0
+        )
+        relobby_penalty = args.relobby_penalty
         pve_output = compute_pve_score(
             inferred_stats["attack"],
             inferred_stats["defense"],
@@ -898,6 +921,8 @@ def _evaluate_single_pokemon(args: argparse.Namespace) -> None:
             target_defense=args.target_defense,
             incoming_dps=args.incoming_dps,
             alpha=alpha_value,
+            energy_from_damage_ratio=energy_ratio,
+            relobby_penalty=relobby_penalty,
         )
 
     pvp_output: dict[str, float] | None = None
@@ -924,29 +949,52 @@ def _evaluate_single_pokemon(args: argparse.Namespace) -> None:
             stat_product_reference=args.stat_product_reference,
             move_pressure_reference=args.move_pressure_reference,
             bait_probability=args.bait_probability,
+            shield_weights=args.shield_weights,
             league_configs=DEFAULT_LEAGUE_CONFIGS,
         )
 
     if pve_output:
-        alpha_value = pve_output.get("alpha", args.alpha if args.alpha is not None else 0.6)
-        charge_usage = pve_output["charge_usage_per_cycle"]
-        charge_summary = ", ".join(
-            f"{name}: {count:.2f}" for name, count in sorted(charge_usage.items())
-        )
-        if not charge_summary:
-            charge_summary = "None"
         print()
         print("PvE value")
         print("---------")
-        print(f"Rotation DPS: {pve_output['dps']:.2f}")
-        print(f"Cycle Damage: {pve_output['cycle_damage']:.2f}")
-        print(f"Cycle Time: {pve_output['cycle_time']:.2f}s")
-        print(f"Fast Moves / Cycle: {pve_output['fast_moves_per_cycle']:.2f}")
-        print(f"Charge Use / Cycle: {charge_summary}")
-        print(f"EHP: {pve_output['ehp']:.2f}")
-        print(f"TDO: {pve_output['tdo']:.2f}")
-        print(f"PvE Value (alpha={alpha_value:.2f}): {pve_output['value']:.2f}")
-
+        alpha_value = pve_output.get("alpha", args.alpha if args.alpha is not None else 0.6)
+        if "charge_usage_per_cycle" in pve_output:
+            charge_usage = pve_output["charge_usage_per_cycle"]
+            charge_summary = ", ".join(
+                f"{name}: {count:.2f}" for name, count in sorted(charge_usage.items())
+            )
+            if not charge_summary:
+                charge_summary = "None"
+            print(f"Rotation DPS: {pve_output['dps']:.2f}")
+            print(f"Cycle Damage: {pve_output['cycle_damage']:.2f}")
+            print(f"Cycle Time: {pve_output['cycle_time']:.2f}s")
+            print(f"Fast Moves / Cycle: {pve_output['fast_moves_per_cycle']:.2f}")
+            print(f"Charge Use / Cycle: {charge_summary}")
+            print(f"EHP: {pve_output['ehp']:.2f}")
+            print(f"TDO: {pve_output['tdo']:.2f}")
+            value = pve_output['value']
+            print(f"PvE Value (alpha={alpha_value:.2f}): {value:.2f}")
+            penalty_factor = pve_output.get("penalty_factor")
+            if penalty_factor not in (None, 1.0):
+                print(f"(Relobby penalty applied: x{penalty_factor:.3f})")
+            energy_ratio = pve_output.get("energy_from_damage_ratio")
+            if energy_ratio:
+                print(f"Energy from damage ratio: {energy_ratio:.2f}")
+        else:
+            value = pve_output.get('value', 0.0)
+            print(f"Weighted PvE Value (alpha={alpha_value:.2f}): {value:.2f}")
+        if "scenarios" in pve_output:
+            print()
+            print("Scenario breakdown:")
+            for scenario in pve_output["scenarios"]:
+                weight = scenario.get("weight", 1.0)
+                scenario_value = scenario.get("value", 0.0)
+                dps = scenario.get("dps")
+                tdo = scenario.get("tdo")
+                print(
+                    f"  • weight={weight:.2f}, PvE Value={scenario_value:.2f}, "
+                    f"DPS={dps:.2f}, TDO={tdo:.2f}"
+                )
     if pvp_output:
         league_label = pvp_league.capitalize()
         beta_value = args.beta if args.beta is not None else 0.52
@@ -962,6 +1010,19 @@ def _evaluate_single_pokemon(args: argparse.Namespace) -> None:
             f"Normalised Move Pressure: {pvp_output['move_pressure_normalised']:.4f}"
         )
         print(f"PvP Score (beta={beta_value:.2f}): {pvp_output['score']:.4f}")
+        if 'shield_breakdown' in pvp_output:
+            print()
+            print('Shield scenarios:')
+            for scenario in pvp_output['shield_breakdown']:
+                weight = scenario.get('weight', 0.0)
+                bait_prob = scenario.get('bait_probability', 0.0)
+                mp_value = scenario.get('move_pressure', 0.0)
+                mp_norm = scenario.get('move_pressure_normalised', 0.0)
+                shield_count = int(scenario.get('shield_count', 0.0))
+                print(
+                    f"  • shields={shield_count}, weight={weight:.2f}, bait={bait_prob:.2f}, "
+                    f"MP={mp_value:.2f}, MP_norm={mp_norm:.4f}"
+                )
 
 
 def generate_scoreboard(

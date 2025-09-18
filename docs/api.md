@@ -73,6 +73,14 @@ metagross = repo.get("Metagross")
 print(metagross.attack, metagross.defense, metagross.stamina)
 ```
 
+## Module: `pogo_analyzer.pve`
+
+`compute_pve_score` accepts attacker stats, move data (`FastMove`/`ChargeMove`), and boss parameters to return DPS/TDO/value metrics. Optional knobs include `energy_from_damage_ratio` (defaults to 0.0), `relobby_penalty` (apply `exp(-phi * TDO)`), and scenario weighting via a sequence of `{weight, target_defense, incoming_dps, energy_from_damage_ratio, relobby_penalty}` dictionaries.
+
+## Module: `pogo_analyzer.pvp`
+
+`compute_pvp_score` reports stat product, move pressure, and the blended PvP value. The helper supports custom beta weights, manual thresholds, and optional `shield_weights` (e.g. `0.2 0.5 0.3`) to blend 0/1/2 shield scenarios. When shield blending is enabled, the result includes a `shield_breakdown` list describing per-scenario move pressure and bait probabilities.
+
 ## Module: `pogo_analyzer.data.raid_entries`
 
 ### `PokemonRaidEntry`

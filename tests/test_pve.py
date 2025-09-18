@@ -110,10 +110,77 @@ def test_compute_pve_score_returns_expected_keys(sample_stats: tuple[float, floa
         "ehp",
         "tdo",
         "value",
+        "value_raw",
         "alpha",
+        "energy_from_damage_ratio",
+        "relobby_penalty",
+        "penalty_factor",
     }
 
     assert result["value"] == pytest.approx(
         pve_value(result["dps"], result["tdo"], alpha=result["alpha"])
     )
 
+
+
+def test_energy_from_damage_ratio_boosts_output(
+    sample_stats: tuple[float, float, int],
+    sample_moves: tuple[FastMove, list[ChargeMove]],
+) -> None:
+    attack, defense, hp = sample_stats
+    fast_move, charge_moves = sample_moves
+
+    baseline = compute_pve_score(
+        attack,
+        defense,
+        hp,
+        fast_move,
+        charge_moves,
+        target_defense=190.0,
+        incoming_dps=35.0,
+    )
+    boosted = compute_pve_score(
+        attack,
+        defense,
+        hp,
+        fast_move,
+        charge_moves,
+        target_defense=190.0,
+        incoming_dps=35.0,
+        energy_from_damage_ratio=0.5,
+    )
+
+    assert boosted["energy_from_damage_ratio"] == pytest.approx(0.5)
+    assert boosted["value"] > 0
+
+
+def test_weighted_pve_scenarios_return_aggregate(
+    sample_stats: tuple[float, float, int],
+    sample_moves: tuple[FastMove, list[ChargeMove]],
+) -> None:
+    attack, defense, hp = sample_stats
+    fast_move, charge_moves = sample_moves
+
+    scenarios = [
+        {"weight": 1.0, "target_defense": 185.0, "incoming_dps": 30.0},
+        {"weight": 0.5, "target_defense": 205.0, "incoming_dps": 40.0},
+    ]
+
+    result = compute_pve_score(
+        attack,
+        defense,
+        hp,
+        fast_move,
+        charge_moves,
+        target_defense=190.0,
+        incoming_dps=35.0,
+        scenarios=scenarios,
+    )
+
+    assert "scenarios" in result
+    breakdown = result["scenarios"]
+    assert isinstance(breakdown, list)
+    assert breakdown
+    values = [scenario["value"] for scenario in breakdown]
+    assert result["value"] <= max(values) + 1e-9
+    assert result["value"] >= min(values) - 1e-9

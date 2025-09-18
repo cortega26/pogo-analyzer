@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import math
 from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 
@@ -72,7 +73,9 @@ class LeagueConfig:
     cp_cap: int | None
     stat_product_reference: float
     move_pressure_reference: float
-    bait_probability: float
+    bait_probability: float | None = None
+    shield_weights: tuple[float, float, float] | None = None
+    bait_model: Mapping[str, float] | None = None
 
 
 DEFAULT_BETA = 0.52
@@ -193,6 +196,34 @@ def move_pressure(
     return fast_component + best_charge
 
 
+def _sigmoid(value: float) -> float:
+    return 1.0 / (1.0 + math.exp(-value))
+
+
+def _resolve_bait_probability(
+    *,
+    fast_move: PvpFastMove,
+    user_probability: float | None,
+    config: LeagueConfig,
+    shield_count: int,
+) -> float:
+    if user_probability is not None:
+        return min(max(user_probability, 0.0), 1.0)
+    if config.bait_model:
+        a = config.bait_model.get("a", 0.0)
+        b = config.bait_model.get("b", 0.0)
+        c = config.bait_model.get("c", 0.0)
+        d = config.bait_model.get("d", 0.0)
+        turns_seconds = fast_move.turns * 0.5
+        ept = fast_move.energy_gain / turns_seconds
+        dpt = fast_move.damage / turns_seconds
+        value = a * ept + b * dpt + c * shield_count + d
+        return _sigmoid(value)
+    if config.bait_probability is not None:
+        return config.bait_probability
+    return 0.5
+
+
 def compute_pvp_score(
     attack: float,
     defense: float,
@@ -207,10 +238,13 @@ def compute_pvp_score(
     bait_probability: float | None = None,
     energy_weight: float = FAST_MOVE_ENERGY_WEIGHT,
     buff_weight: float = BUFF_WEIGHT,
+    shield_weights: Sequence[float] | None = None,
     league_configs: Mapping[str, LeagueConfig] = DEFAULT_LEAGUE_CONFIGS,
-) -> dict[str, float]:
+) -> dict[str, float | list[dict[str, float]]]:
     """Compute the PvP score dictionary for a Pokémon build."""
 
+    if attack <= 0 or defense <= 0 or stamina <= 0:
+        raise ValueError("Stats must be positive to score PvP performance.")
     if beta is not None and not 0.0 < beta < 1.0:
         raise ValueError("Beta must lie strictly between 0 and 1 when provided.")
 
@@ -230,26 +264,87 @@ def compute_pvp_score(
         if move_pressure_reference is not None
         else config.move_pressure_reference
     )
-    bait_prob = (
-        bait_probability if bait_probability is not None else config.bait_probability
-    )
+
+    if sp_reference <= 0 or mp_reference <= 0:
+        raise ValueError("Reference values must be positive.")
 
     stat_prod = stat_product(attack, defense, stamina)
     stat_prod_norm = normalise(stat_prod, sp_reference)
-    mp = move_pressure(
-        fast_move,
-        charge_moves,
-        bait_probability=bait_prob,
-        energy_weight=energy_weight,
-        buff_weight=buff_weight,
-    )
-    mp_norm = normalise(mp, mp_reference)
+
+    shield_weights_tuple: tuple[float, float, float] | None = None
+    if shield_weights is not None:
+        if len(shield_weights) not in {3}:
+            raise ValueError("shield_weights must provide three weights for 0/1/2 shields.")
+        shield_weights_tuple = tuple(float(weight) for weight in shield_weights)  # type: ignore[arg-type]
+    elif config.shield_weights is not None:
+        shield_weights_tuple = config.shield_weights
+
+    breakdown: list[dict[str, float]] | None = None
+
+    if shield_weights_tuple:
+        total_weight = sum(shield_weights_tuple)
+        weighted_mp = 0.0
+        weighted_mp_norm = 0.0
+        breakdown = []
+        for shield_index, weight in enumerate(shield_weights_tuple):
+            if weight <= 0:
+                continue
+            bait_prob = _resolve_bait_probability(
+                fast_move=fast_move,
+                user_probability=bait_probability,
+                config=config,
+                shield_count=shield_index,
+            )
+            mp_value = move_pressure(
+                fast_move,
+                charge_moves,
+                bait_probability=bait_prob,
+                energy_weight=energy_weight,
+                buff_weight=buff_weight,
+            )
+            mp_norm_value = normalise(mp_value, mp_reference)
+            weighted_mp += weight * mp_value
+            weighted_mp_norm += weight * mp_norm_value
+            breakdown.append(
+                {
+                    "shield_count": float(shield_index),
+                    "weight": weight,
+                    "bait_probability": bait_prob,
+                    "move_pressure": mp_value,
+                    "move_pressure_normalised": mp_norm_value,
+                }
+            )
+        if total_weight > 0:
+            mp = weighted_mp / total_weight
+            mp_norm = weighted_mp_norm / total_weight
+        else:
+            mp = 0.0
+            mp_norm = 0.0
+    else:
+        bait_prob = _resolve_bait_probability(
+            fast_move=fast_move,
+            user_probability=bait_probability,
+            config=config,
+            shield_count=1,
+        )
+        mp = move_pressure(
+            fast_move,
+            charge_moves,
+            bait_probability=bait_prob,
+            energy_weight=energy_weight,
+            buff_weight=buff_weight,
+        )
+        mp_norm = normalise(mp, mp_reference)
+
     score = (stat_prod_norm ** beta_value) * (mp_norm ** (1.0 - beta_value))
 
-    return {
+    result: dict[str, float | list[dict[str, float]]] = {
         "stat_product": stat_prod,
         "stat_product_normalised": stat_prod_norm,
         "move_pressure": mp,
         "move_pressure_normalised": mp_norm,
         "score": score,
     }
+    if breakdown is not None:
+        result["shield_breakdown"] = breakdown
+    return result

@@ -168,3 +168,26 @@ def test_invalid_inputs_raise_errors() -> None:
             [charge],
             beta=1.2,
         )
+
+
+def test_compute_pvp_score_with_shield_weights() -> None:
+    fast = PvpFastMove(name="Charm", damage=5, energy_gain=4, turns=3)
+    nuke = PvpChargeMove(name="Moonblast", damage=130, energy_cost=70)
+    bait = PvpChargeMove(name="Disarming Voice", damage=70, energy_cost=45)
+
+    result = compute_pvp_score(
+        150.0,
+        150.0,
+        170,
+        fast,
+        [nuke, bait],
+        league="great",
+        shield_weights=[0.2, 0.5, 0.3],
+    )
+
+    assert "shield_breakdown" in result
+    breakdown = result["shield_breakdown"]
+    assert isinstance(breakdown, list)
+    assert breakdown
+    shields = {int(entry["shield_count"]) for entry in breakdown}
+    assert shields.issubset({0, 1, 2})

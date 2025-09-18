@@ -133,6 +133,7 @@ pogo-raid-scoreboard \
 The CLI prints an on-the-spot summary including the computed raid score and priority tier without generating files.
 If you already have the exclusive move unlocked, add `--has-special-move` to suppress the reminder.
 Use `--target-cp` to tell the CLI what raid-ready CP you're aiming for; it only flags builds as underpowered when a target is provided.
+For deeper analysis, you can add `--energy-from-damage` (default 0.0) to model raid energy gained from taking damage, `--relobby-penalty` to dampen PvE value for frequent faints, and `--shield-weights` to blend PvP move pressure across the 0/1/2 shield scenarios.
 
 Refer to the [CLI quick-check guide](docs/cli.md) for an expanded walkthrough that covers the available flags, expected output sections, and combined PvE/PvP scoring scenarios.
 

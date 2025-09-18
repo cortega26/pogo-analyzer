@@ -6,7 +6,7 @@ import math
 from collections import Counter
 from dataclasses import dataclass
 from itertools import permutations, product
-from typing import Iterable, Sequence
+from typing import Iterable, Mapping, Sequence
 
 from .formulas import damage_per_hit
 
@@ -97,6 +97,8 @@ def _simulate_sequence(
     charge_sequence: Sequence[int],
     attacker_attack: float,
     defender_defense: float,
+    *,
+    energy_per_second_from_damage: float = 0.0,
 ) -> _SimulationResult:
     fast_damage = damage_per_hit(
         fast_move.power,
@@ -128,12 +130,16 @@ def _simulate_sequence(
         move = charge_moves[index]
         damage = charge_damages[index]
         while energy + _ENERGY_EPS < move.energy_cost:
-            energy = min(energy + fast_move.energy_gain, _ENERGY_CAP)
+            energy = min(
+                energy
+                + fast_move.energy_gain
+                + (fast_move.duration * energy_per_second_from_damage),
+                _ENERGY_CAP,
+            )
             total_damage += fast_damage
             total_time += fast_move.duration
             fast_moves_used += 1
-            if math.isclose(energy, _ENERGY_CAP) and move.energy_cost > _ENERGY_CAP - _ENERGY_EPS:
-                # Reached cap; if the cost still cannot be met we would loop forever.
+            if math.isclose(energy, _ENERGY_CAP) and energy + _ENERGY_EPS < move.energy_cost:
                 break
 
         if energy + _ENERGY_EPS < move.energy_cost:
@@ -143,6 +149,8 @@ def _simulate_sequence(
         total_damage += damage
         total_time += move.duration
         usage[move.name] += 1
+        if energy_per_second_from_damage > 0:
+            energy = min(energy + move.duration * energy_per_second_from_damage, _ENERGY_CAP)
 
     return _SimulationResult(total_damage, total_time, fast_moves_used, usage, energy)
 
@@ -154,7 +162,6 @@ def _evaluate_candidate(
     defender_defense: float,
 ) -> _RotationCandidate | None:
     if simulation.fast_moves_used == 0 and simulation.charge_usage:
-        # Should not happen because each charge requires at least one fast move.
         return None
 
     fast_damage = damage_per_hit(
@@ -188,6 +195,7 @@ def _best_rotation(
     defender_defense: float,
     *,
     max_total_charge_uses: int = _MAX_TOTAL_CHARGE_USES,
+    energy_per_second_from_damage: float = 0.0,
 ) -> _RotationCandidate:
     fast_only_damage = damage_per_hit(
         fast_move.power,
@@ -226,6 +234,7 @@ def _best_rotation(
                         sequence,
                         attacker_attack,
                         defender_defense,
+                        energy_per_second_from_damage=energy_per_second_from_damage,
                     )
                 except RuntimeError:
                     continue
@@ -250,6 +259,7 @@ def rotation_dps(
     defender_defense: float,
     *,
     max_total_charge_uses: int = _MAX_TOTAL_CHARGE_USES,
+    energy_per_second_from_damage: float = 0.0,
 ) -> float:
     """Compute the best-possible rotation DPS for the provided move set."""
 
@@ -259,6 +269,7 @@ def rotation_dps(
         attacker_attack,
         defender_defense,
         max_total_charge_uses=max_total_charge_uses,
+        energy_per_second_from_damage=energy_per_second_from_damage,
     )
     return best_candidate.dps
 
@@ -285,7 +296,7 @@ def pve_value(dps: float, tdo: float, *, alpha: float = 0.6) -> float:
     return (dps**alpha) * (tdo ** (1 - alpha))
 
 
-def compute_pve_score(
+def _compute_single_pve(
     attacker_attack: float,
     attacker_defense: float,
     attacker_hp: int,
@@ -294,28 +305,37 @@ def compute_pve_score(
     *,
     target_defense: float,
     incoming_dps: float,
-    alpha: float = 0.6,
-    max_total_charge_uses: int = _MAX_TOTAL_CHARGE_USES,
-) -> dict[str, float | Counter[str]]:
-    """Compute full PvE score outputs for a Pokémon."""
-
+    alpha: float,
+    energy_from_damage_ratio: float,
+    relobby_penalty: float | None,
+    max_total_charge_uses: int,
+) -> dict[str, float | Counter[str] | None]:
     if attacker_attack <= 0 or attacker_defense <= 0:
         raise ValueError("Attacker stats must be positive.")
     if incoming_dps <= 0:
         raise ValueError("incoming_dps must be positive.")
+    if energy_from_damage_ratio < 0:
+        raise ValueError("energy_from_damage_ratio must be non-negative.")
 
+    energy_per_second = incoming_dps * energy_from_damage_ratio
     best_candidate = _best_rotation(
         fast_move,
         charge_moves,
         attacker_attack,
         target_defense,
         max_total_charge_uses=max_total_charge_uses,
+        energy_per_second_from_damage=energy_per_second,
     )
+
     dps = best_candidate.dps
     ehp = estimate_ehp(attacker_defense, attacker_hp, target_defense=target_defense)
     time_to_faint = ehp / incoming_dps
     tdo = dps * time_to_faint
-    value = pve_value(dps, tdo, alpha=alpha)
+    value_raw = pve_value(dps, tdo, alpha=alpha)
+    penalty_factor = 1.0
+    if relobby_penalty is not None and relobby_penalty > 0:
+        penalty_factor = math.exp(-relobby_penalty * tdo)
+    value = value_raw * penalty_factor
 
     return {
         "dps": dps,
@@ -326,8 +346,78 @@ def compute_pve_score(
         "ehp": ehp,
         "tdo": tdo,
         "value": value,
+        "value_raw": value_raw,
         "alpha": alpha,
+        "energy_from_damage_ratio": energy_from_damage_ratio,
+        "relobby_penalty": relobby_penalty,
+        "penalty_factor": penalty_factor,
     }
+
+
+def compute_pve_score(
+    attacker_attack: float,
+    attacker_defense: float,
+    attacker_hp: int,
+    fast_move: FastMove,
+    charge_moves: Sequence[ChargeMove],
+    *,
+    target_defense: float,
+    incoming_dps: float,
+    alpha: float = 0.6,
+    energy_from_damage_ratio: float = 0.0,
+    relobby_penalty: float | None = None,
+    scenarios: Sequence[Mapping[str, float]] | None = None,
+    max_total_charge_uses: int = _MAX_TOTAL_CHARGE_USES,
+) -> dict[str, float | Counter[str] | None]:
+    """Compute full PvE score outputs for a Pokémon."""
+
+    if scenarios:
+        scenario_results: list[dict[str, float | Counter[str] | None]] = []
+        total_weight = 0.0
+        weighted_value = 0.0
+        for scenario in scenarios:
+            weight = float(scenario.get("weight", 1.0))
+            scenario_result = _compute_single_pve(
+                attacker_attack,
+                attacker_defense,
+                attacker_hp,
+                fast_move,
+                charge_moves,
+                target_defense=float(scenario.get("target_defense", target_defense)),
+                incoming_dps=float(scenario.get("incoming_dps", incoming_dps)),
+                alpha=alpha,
+                energy_from_damage_ratio=float(
+                    scenario.get("energy_from_damage_ratio", energy_from_damage_ratio)
+                ),
+                relobby_penalty=scenario.get("relobby_penalty", relobby_penalty),
+                max_total_charge_uses=max_total_charge_uses,
+            )
+            scenario_result["weight"] = weight
+            scenario_results.append(scenario_result)
+            total_weight += weight
+            weighted_value += weight * float(scenario_result["value"])
+
+        aggregate_value = weighted_value / total_weight if total_weight > 0 else 0.0
+        return {
+            "value": aggregate_value,
+            "alpha": alpha,
+            "scenarios": scenario_results,
+            "weights_total": total_weight,
+        }
+
+    return _compute_single_pve(
+        attacker_attack,
+        attacker_defense,
+        attacker_hp,
+        fast_move,
+        charge_moves,
+        target_defense=target_defense,
+        incoming_dps=incoming_dps,
+        alpha=alpha,
+        energy_from_damage_ratio=energy_from_damage_ratio,
+        relobby_penalty=relobby_penalty,
+        max_total_charge_uses=max_total_charge_uses,
+    )
 
 
 __all__ = [
