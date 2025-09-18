@@ -18,6 +18,7 @@ from types import ModuleType
 
 from pogo_analyzer import scoreboard as _scoreboard
 from pogo_analyzer.data import PokemonRaidEntry
+from pogo_analyzer.data.base_stats import BaseStats, load_default_base_stats
 from pogo_analyzer.data.move_guidance import get_move_guidance, normalise_name
 from pogo_analyzer.formulas import effective_stats, infer_level_from_cp
 from pogo_analyzer.pve import ChargeMove, FastMove, compute_pve_score
@@ -173,7 +174,10 @@ def parse_args(argv: Sequence[str] | None = None) -> argparse.Namespace:
         type=int,
         nargs=3,
         metavar=("BASE_ATK", "BASE_DEF", "BASE_STA"),
-        help="Base stats for the species in Attack/Defence/Stamina order.",
+        help=(
+            "Base stats for the species in Attack/Defence/Stamina order. "
+            "Defaults to an automatic lookup when omitted."
+        ),
     )
     inference_group.add_argument(
         "--observed-hp",
@@ -299,6 +303,7 @@ def _priority_label(score: float) -> str:
     return "D (Doesn't belong on a Raids list)"
 
 
+_BASE_STATS_REPOSITORY = load_default_base_stats()
 _SHADOW_BASELINE_BONUS = 6.0
 
 
@@ -343,6 +348,56 @@ class _ParsedChargeMove:
 
     pve: ChargeMove
     pvp: PvpChargeMove
+
+
+def _candidate_base_stat_names(name: str, *, shadow: bool, purified: bool) -> list[str]:
+    """Return candidate aliases for resolving base stats."""
+
+    clean = name.strip()
+    candidates: list[str] = []
+    if clean:
+        candidates.append(clean)
+        candidates.extend([clean.replace(" ", "-"), clean.replace(" ", "_")])
+    if shadow and clean and not clean.lower().startswith("shadow"):
+        candidates.insert(0, f"Shadow {clean}")
+    if purified and clean and not clean.lower().startswith("purified"):
+        candidates.append(f"Purified {clean}")
+    return [candidate for candidate in candidates if candidate]
+
+
+def _resolve_base_stats_entry(
+    *,
+    species_hint: str | None,
+    template: PokemonRaidEntry | None,
+    pokemon_name: str | None,
+    shadow: bool,
+    purified: bool,
+) -> BaseStats | None:
+    """Return the best matching base stat entry for the provided identifiers."""
+
+    names_to_try: list[str] = []
+    for candidate in (species_hint, pokemon_name):
+        if candidate:
+            names_to_try.extend(
+                _candidate_base_stat_names(candidate, shadow=shadow, purified=purified)
+            )
+    if template:
+        for hint in (template.final_form, template.name):
+            if hint:
+                names_to_try.extend(
+                    _candidate_base_stat_names(hint, shadow=shadow, purified=purified)
+                )
+    seen: set[str] = set()
+    for candidate in names_to_try:
+        if not candidate or candidate in seen:
+            continue
+        seen.add(candidate)
+        try:
+            return _BASE_STATS_REPOSITORY.get(candidate)
+        except KeyError:
+            continue
+    return None
+
 
 
 def _parse_bool(value: str) -> bool:
@@ -544,7 +599,6 @@ def _evaluate_single_pokemon(args: argparse.Namespace) -> None:
         )
 
     ivs = tuple(args.ivs)
-    base_stats = tuple(args.base_stats) if args.base_stats is not None else None
     wants_pve = bool(
         args.fast_move
         or args.charge_moves
@@ -560,11 +614,6 @@ def _evaluate_single_pokemon(args: argparse.Namespace) -> None:
         or args.move_pressure_reference is not None
         or args.bait_probability is not None
     )
-    requires_stats = base_stats is not None or wants_pve or wants_pvp or args.observed_hp is not None
-    if requires_stats and base_stats is None:
-        raise SystemExit(
-            "--base-stats must be provided to infer level, compute PvE, or compute PvP metrics."
-        )
     lookup = _template_entry(
         args.pokemon_name,
         shadow=args.shadow,
@@ -576,6 +625,31 @@ def _evaluate_single_pokemon(args: argparse.Namespace) -> None:
         guidance = get_move_guidance(args.pokemon_name)
     else:
         guidance = None
+
+    base_stats_entry: BaseStats | None = None
+    if args.base_stats is not None:
+        base_stats_tuple = tuple(args.base_stats)
+    else:
+        base_stats_entry = _resolve_base_stats_entry(
+            species_hint=args.species,
+            template=template,
+            pokemon_name=args.pokemon_name,
+            shadow=args.shadow,
+            purified=args.purified,
+        )
+        base_stats_tuple = base_stats_entry.as_tuple() if base_stats_entry else None
+
+    requires_stats = wants_pve or wants_pvp or args.observed_hp is not None
+    if requires_stats and base_stats_tuple is None:
+        identifier = (
+            args.species
+            or (template.final_form if template else None)
+            or args.pokemon_name
+            or "the requested species"
+        )
+        raise SystemExit(
+            f"Unable to locate base stats for {identifier!r}; supply --base-stats or --species with a recognised form identifier."
+        )
 
     shadow_bonus_applied = False
     shadow_baseline_adjusted = False
@@ -603,8 +677,6 @@ def _evaluate_single_pokemon(args: argparse.Namespace) -> None:
         raise SystemExit("--target-cp must be a positive integer when provided.")
     target_cp = args.target_cp or template_target_cp
     penalty = _cp_penalty(args.combat_power, target_cp=target_cp)
-    if penalty > 0:
-        base_score = max(SCORE_MIN, base_score - penalty)
 
     template_requires_move = template.requires_special_move if template else False
     template_missing_move = template.needs_tm if template else False
@@ -727,8 +799,10 @@ def _evaluate_single_pokemon(args: argparse.Namespace) -> None:
     inferred_stats: dict[str, float | int] | None = None
     inference_error: str | None = None
     species_name = args.species or args.pokemon_name
-    if base_stats is not None:
-        base_attack, base_defense, base_stamina = base_stats
+    if base_stats_entry and base_stats_entry.name:
+        species_name = base_stats_entry.name
+    if base_stats_tuple is not None:
+        base_attack, base_defense, base_stamina = base_stats_tuple
         iv_attack, iv_defense, iv_stamina = ivs
         try:
             level, cpm = infer_level_from_cp(
@@ -967,3 +1041,7 @@ __all__ = [
 
 if __name__ == "__main__":
     main()
+
+
+
+

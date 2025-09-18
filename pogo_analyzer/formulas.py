@@ -99,37 +99,56 @@ def infer_level_from_cp(
     )
     best_buddy_offset = 1.0 if is_best_buddy else 0.0
     candidates: list[tuple[float, float, int]] = []
+    best_candidate: tuple[float, float, int] | None = None
+    best_diff = float('inf')
 
     for level in _candidate_levels():
         cpm = get_cpm(level + best_buddy_offset)
         cp_estimate = math.floor(
             (A0 * math.sqrt(D0) * math.sqrt(S0) * cpm**2 / 10) + _EPSILON
         )
+        diff = abs(cp_estimate - cp)
+        if diff < best_diff:
+            hp_estimate = math.floor(S0 * cpm + _EPSILON)
+            best_candidate = (level, cpm, hp_estimate)
+            best_diff = diff
         if cp_estimate == cp:
             hp_estimate = math.floor(S0 * cpm + _EPSILON)
             candidates.append((level, cpm, hp_estimate))
 
     if not candidates:
-        raise ValueError("Observed CP is inconsistent with the provided inputs.")
+
+        if best_candidate is None:
+
+            raise ValueError("Observed CP is inconsistent with the provided inputs.")
+
+        level, cpm, _ = best_candidate
+
+        return level, cpm
 
     if len(candidates) == 1:
+
         level, cpm, _ = candidates[0]
+
         return level, cpm
 
     if observed_hp is not None:
+
         filtered = [candidate for candidate in candidates if candidate[2] == observed_hp]
+
         if len(filtered) == 1:
+
             level, cpm, _ = filtered[0]
+
             return level, cpm
+
         if not filtered:
-            raise ValueError(
-                "Observed HP does not match any level that yields the observed CP."
-            )
+
+            raise ValueError("Observed HP does not match any level that yields the observed CP.")
+
         candidates = filtered
 
-    raise ValueError(
-        "Observed CP corresponds to multiple levels; provide observed HP to disambiguate."
-    )
+    raise ValueError("Observed CP corresponds to multiple levels; provide observed HP to disambiguate.")
 
 
 def effective_stats(

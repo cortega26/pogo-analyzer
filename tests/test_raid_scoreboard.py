@@ -360,7 +360,7 @@ def test_single_pokemon_inference_and_scoring_outputs(
 ) -> None:
     """Single Pokémon evaluation should emit inferred stats and PvE/PvP scores."""
 
-    base_stats = (256, 188, 216)
+    base_stats = (256, 188, 211)
     ivs = (15, 15, 15)
     level = 35.0
     cp = _compute_cp(*base_stats, *ivs, level)
@@ -370,8 +370,6 @@ def test_single_pokemon_inference_and_scoring_outputs(
         "Hydreigon",
         "--species",
         "Hydreigon",
-        "--base-stats",
-        *map(str, base_stats),
         "--cp",
         str(cp),
         "--ivs",

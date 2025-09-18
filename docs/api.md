@@ -61,6 +61,18 @@ preview([
 ])
 ```
 
+## Module: `pogo_analyzer.data.base_stats`
+
+`BaseStats` and `BaseStatsRepository` expose the species base attack/defense/stamina used by the value formulas. The bundled dataset is generated from PvPoke's **gamemaster** feed (`pogo_analyzer/data/base_stats.json`). Use `load_default_base_stats()` to access the cached repository or `load_base_stats(path)` to point at a custom payload.
+
+```python
+from pogo_analyzer.data.base_stats import load_default_base_stats
+
+repo = load_default_base_stats()
+metagross = repo.get("Metagross")
+print(metagross.attack, metagross.defense, metagross.stamina)
+```
+
 ## Module: `pogo_analyzer.data.raid_entries`
 
 ### `PokemonRaidEntry`

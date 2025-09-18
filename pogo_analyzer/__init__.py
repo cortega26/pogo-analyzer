@@ -6,6 +6,12 @@ import re
 from importlib import metadata as _metadata
 from pathlib import Path
 
+from .data.base_stats import (
+    BaseStats,
+    BaseStatsRepository,
+    load_base_stats,
+    load_default_base_stats,
+)
 from .data.raid_entries import (
     DEFAULT_RAID_ENTRIES,
     DEFAULT_RAID_ENTRY_METADATA,
@@ -60,6 +66,10 @@ __all__ = [
     "SimpleTable",
     "build_entry_rows",
     "load_raid_entries",
+    "BaseStats",
+    "BaseStatsRepository",
+    "load_base_stats",
+    "load_default_base_stats",
     "build_rows",
     "TableLike",
     "ScoreboardExportConfig",

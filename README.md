@@ -199,6 +199,8 @@ print(
 
 Each raid entry is defined via the [`PokemonRaidEntry`](docs/api.md#pokemonraidentry) dataclass inside [`pogo_analyzer/data/raid_entries.py`](pogo_analyzer/data/raid_entries.py). Supply the Pokémon's name, IV spread, baseline rating, and any flags that affect the computed score. The [`docs/api.md`](docs/api.md) reference includes a full parameter breakdown and scoring formula.
 
+Base species stats are resolved automatically from [`pogo_analyzer/data/base_stats.json`](pogo_analyzer/data/base_stats.json), which mirrors PvPoke's public **gamemaster** dataset. Override the lookup by passing `--base-stats` if you need to test custom stat spreads or emerging forms that have not yet landed in the dataset. Supply the Pokémon's name, IV spread, baseline rating, and any flags that affect the computed score. The [`docs/api.md`](docs/api.md) reference includes a full parameter breakdown and scoring formula.
+
 ## Testing
 
 Run the unit tests whenever you change scoring logic or table utilities:
