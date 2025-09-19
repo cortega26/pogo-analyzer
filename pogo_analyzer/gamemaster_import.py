@@ -46,8 +46,9 @@ def main(argv: list[str] | None = None) -> tuple[Path, Path, Path]:
     args = parse_args(argv)
     gm = _fetch_gamemaster()
 
-    # Build move maps
+    # Build move index (do not classify yet)
     moves = gm.get("moves", [])
+    all_moves_by_name: dict[str, dict[str, Any]] = {}
     fast_moves: dict[str, dict[str, Any]] = {}
     charge_moves: dict[str, dict[str, Any]] = {}
     id_to_name: dict[str, str] = {}
@@ -67,18 +68,16 @@ def main(argv: list[str] | None = None) -> tuple[Path, Path, Path]:
             "pvp_energy_gain": float((m.get("pvpEnergy") or 0) * -1 if (m.get("pvpEnergy") or 0) < 0 else (m.get("pvpEnergyGain") or 0)),
             "pvp_turns": int(m.get("pvpTurns", 0) or 0),
         }
-        # Fast moves have pvpTurns > 0 in gamemaster, charged have pvpEnergy < 0
-        # Track ID->name for later species legacy/elite mapping
+        # Track ID->name for later mapping and defer classification
         id_to_name[mid] = entry["name"]
-        if entry["pvp_turns"] > 0:
-            fast_moves[entry["name"]] = entry
-        else:
-            charge_moves[entry["name"]] = entry
+        all_moves_by_name[entry["name"]] = entry
 
-    # Species and learnsets
+    # Species and learnsets (+ collect fast/charge membership from species learnsets)
     species_payload = []
     learnsets: dict[str, dict[str, list[str]]] = {}
     exclusive_moves: dict[str, Any] = {}
+    fast_member_names: set[str] = set()
+    charge_member_names: set[str] = set()
     for pkmn in gm.get("pokemon", []):
         name = pkmn.get("speciesName")
         if not name:
@@ -94,10 +93,14 @@ def main(argv: list[str] | None = None) -> tuple[Path, Path, Path]:
                 "types": types,
             }
         )
-        learnsets[name] = {
-            "fast": [m for m in pkmn.get("fastMoves", []) if m],
-            "charge": [m for m in pkmn.get("chargedMoves", []) if m],
-        }
+        raw_fast = [m for m in pkmn.get("fastMoves", []) if m]
+        raw_charge = [m for m in pkmn.get("chargedMoves", []) if m]
+        # Map IDs -> human names when possible
+        fast_names = [id_to_name.get(mid, mid) for mid in raw_fast]
+        charge_names = [id_to_name.get(mid, mid) for mid in raw_charge]
+        learnsets[name] = {"fast": fast_names, "charge": charge_names}
+        fast_member_names.update(fast_names)
+        charge_member_names.update(charge_names)
 
         # Legacy/Elite per species -> exclusive moves
         legacy_ids = set(pkmn.get("legacyMoves", []) or [])
@@ -122,6 +125,26 @@ def main(argv: list[str] | None = None) -> tuple[Path, Path, Path]:
                 "elite_charge": elite_charge,
             }
 
+    # Finalize move classification based on species membership first, then fall back to pvp fields
+    for mv_name, entry in all_moves_by_name.items():
+        if mv_name in fast_member_names and mv_name not in charge_member_names:
+            fast_moves[mv_name] = entry
+        elif mv_name in charge_member_names and mv_name not in fast_member_names:
+            charge_moves[mv_name] = entry
+        elif mv_name in fast_member_names and mv_name in charge_member_names:
+            # Appears in both lists in some edge cases (forms) — prefer charge if energy negative in PvE/PvP
+            # else put in fast
+            if entry.get("pve_energy_gain", 0) < 0 or entry.get("pvp_energy_gain", 0) < 0:
+                charge_moves[mv_name] = entry
+            else:
+                fast_moves[mv_name] = entry
+        else:
+            # Fallback classification
+            if entry.get("pvp_turns", 0) > 0 or entry.get("pvp_energy_gain", 0) > 0:
+                fast_moves[mv_name] = entry
+            else:
+                charge_moves[mv_name] = entry
+
     out_dir = args.out_dir
     out_dir.mkdir(parents=True, exist_ok=True)
     species_path = out_dir / "normalized_species.json"
@@ -130,12 +153,13 @@ def main(argv: list[str] | None = None) -> tuple[Path, Path, Path]:
     exclusives_path = out_dir / "exclusive_moves.json"
 
     species_path.write_text(json.dumps({"species": species_payload}, indent=2) + "\n", encoding="utf-8")
+    moves_payload = {
+        "fast": list(fast_moves.values()),
+        "charge": list(charge_moves.values()),
+    }
     moves_path.write_text(
         json.dumps(
-            {
-                "fast": list(fast_moves.values()),
-                "charge": list(charge_moves.values()),
-            },
+            moves_payload,
             indent=2,
         )
         + "\n",
@@ -158,7 +182,10 @@ def main(argv: list[str] | None = None) -> tuple[Path, Path, Path]:
         print("Saved:", exclusives_path.resolve())
 
     print("Saved:", species_path.resolve())
-    print("Saved:", moves_path.resolve())
+    print(
+        "Saved:", moves_path.resolve(),
+        f"(fast={len(moves_payload['fast'])}, charge={len(moves_payload['charge'])})",
+    )
     print("Saved:", learnsets_path.resolve())
     return species_path, moves_path, learnsets_path
 

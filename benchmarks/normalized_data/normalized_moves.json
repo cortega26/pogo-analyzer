@@ -1,10 +1,31 @@
 {
-  "fast": [
+  "fast": [],
+  "charge": [
     {
       "name": "Acid",
       "type": "poison",
       "pve_power": 6.0,
       "pve_energy_gain": 8.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Acid Spray",
+      "type": "poison",
+      "pve_power": 20.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Acrobatics",
+      "type": "flying",
+      "pve_power": 110.0,
+      "pve_energy_gain": 0.0,
       "pve_duration_s": 0.0,
       "pvp_damage": 0.0,
       "pvp_energy_gain": 0.0,
@@ -31,10 +52,140 @@
       "pvp_turns": 0
     },
     {
+      "name": "Aerial Ace",
+      "type": "flying",
+      "pve_power": 60.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Aeroblast",
+      "type": "flying",
+      "pve_power": 170.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Air Cutter",
+      "type": "flying",
+      "pve_power": 45.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Ancient Power",
+      "type": "rock",
+      "pve_power": 60.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Aqua Jet",
+      "type": "water",
+      "pve_power": 70.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Aqua Step",
+      "type": "water",
+      "pve_power": 55.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Aqua Tail",
+      "type": "water",
+      "pve_power": 55.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
       "name": "Astonish",
       "type": "ghost",
       "pve_power": 12.0,
       "pve_energy_gain": 10.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Aura Sphere",
+      "type": "fighting",
+      "pve_power": 80.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Aura Wheel",
+      "type": "electric",
+      "pve_power": 100.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Aurora Beam",
+      "type": "ice",
+      "pve_power": 80.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Avalanche",
+      "type": "ice",
+      "pve_power": 90.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Behemoth Bash",
+      "type": "steel",
+      "pve_power": 80.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Behemoth Blade",
+      "type": "steel",
+      "pve_power": 100.0,
+      "pve_energy_gain": 0.0,
       "pve_duration_s": 0.0,
       "pvp_damage": 0.0,
       "pvp_energy_gain": 0.0,
@@ -51,6 +202,126 @@
       "pvp_turns": 0
     },
     {
+      "name": "Blast Burn",
+      "type": "fire",
+      "pve_power": 110.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Blaze Kick",
+      "type": "fire",
+      "pve_power": 60.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Bleakwind Storm",
+      "type": "flying",
+      "pve_power": 60.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Blizzard",
+      "type": "ice",
+      "pve_power": 140.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Body Slam",
+      "type": "normal",
+      "pve_power": 55.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Bone Club",
+      "type": "ground",
+      "pve_power": 55.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Boomburst",
+      "type": "normal",
+      "pve_power": 150.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Brave Bird",
+      "type": "flying",
+      "pve_power": 130.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Breaking Swipe",
+      "type": "dragon",
+      "pve_power": 50.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Brick Break",
+      "type": "fighting",
+      "pve_power": 40.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Brine",
+      "type": "water",
+      "pve_power": 60.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Brutal Swing",
+      "type": "dark",
+      "pve_power": 55.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
       "name": "Bubble",
       "type": "water",
       "pve_power": 8.0,
@@ -61,10 +332,40 @@
       "pvp_turns": 0
     },
     {
+      "name": "Bubble Beam",
+      "type": "water",
+      "pve_power": 25.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
       "name": "Bug Bite",
       "type": "bug",
       "pve_power": 4.0,
       "pve_energy_gain": 3.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Bug Buzz",
+      "type": "bug",
+      "pve_power": 100.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Bulldoze",
+      "type": "ground",
+      "pve_power": 45.0,
+      "pve_energy_gain": 0.0,
       "pve_duration_s": 0.0,
       "pvp_damage": 0.0,
       "pvp_energy_gain": 0.0,
@@ -111,6 +412,36 @@
       "pvp_turns": 0
     },
     {
+      "name": "Chilling Water",
+      "type": "water",
+      "pve_power": 60.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Clanging Scales",
+      "type": "dragon",
+      "pve_power": 120.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Close Combat",
+      "type": "fighting",
+      "pve_power": 100.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
       "name": "Confusion",
       "type": "psychic",
       "pve_power": 16.0,
@@ -131,10 +462,140 @@
       "pvp_turns": 0
     },
     {
+      "name": "Crabhammer",
+      "type": "water",
+      "pve_power": 85.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Cross Chop",
+      "type": "fighting",
+      "pve_power": 55.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Cross Poison",
+      "type": "poison",
+      "pve_power": 50.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Crunch",
+      "type": "dark",
+      "pve_power": 70.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Crush Grip",
+      "type": "normal",
+      "pve_power": 110.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
       "name": "Cut",
       "type": "normal",
       "pve_power": 3.0,
       "pve_energy_gain": 2.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Darkest Lariat",
+      "type": "dark",
+      "pve_power": 120.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Dark Pulse",
+      "type": "dark",
+      "pve_power": 80.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Dazzling Gleam",
+      "type": "fairy",
+      "pve_power": 90.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Dig",
+      "type": "ground",
+      "pve_power": 70.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Disarming Voice",
+      "type": "fairy",
+      "pve_power": 70.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Discharge",
+      "type": "electric",
+      "pve_power": 55.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Doom Desire",
+      "type": "steel",
+      "pve_power": 80.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Double Iron Bash",
+      "type": "steel",
+      "pve_power": 55.0,
+      "pve_energy_gain": 0.0,
       "pve_duration_s": 0.0,
       "pvp_damage": 0.0,
       "pvp_energy_gain": 0.0,
@@ -151,10 +612,60 @@
       "pvp_turns": 0
     },
     {
+      "name": "Draco Meteor",
+      "type": "dragon",
+      "pve_power": 150.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Dragon Ascent",
+      "type": "flying",
+      "pve_power": 150.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
       "name": "Dragon Breath",
       "type": "dragon",
       "pve_power": 3.0,
       "pve_energy_gain": 4.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Dragon Claw",
+      "type": "dragon",
+      "pve_power": 80.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Dragon Energy",
+      "type": "dragon",
+      "pve_power": 100.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Dragon Pulse",
+      "type": "dragon",
+      "pve_power": 90.0,
+      "pve_energy_gain": 0.0,
       "pve_duration_s": 0.0,
       "pvp_damage": 0.0,
       "pvp_energy_gain": 0.0,
@@ -171,10 +682,100 @@
       "pvp_turns": 0
     },
     {
+      "name": "Draining Kiss",
+      "type": "fairy",
+      "pve_power": 60.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Drain Punch",
+      "type": "fighting",
+      "pve_power": 20.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Drill Peck",
+      "type": "flying",
+      "pve_power": 70.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Drill Run",
+      "type": "ground",
+      "pve_power": 80.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Dynamax Cannon",
+      "type": "dragon",
+      "pve_power": 80.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Dynamic Punch",
+      "type": "fighting",
+      "pve_power": 90.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Earthquake",
+      "type": "ground",
+      "pve_power": 110.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Earth Power",
+      "type": "ground",
+      "pve_power": 90.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
       "name": "Ember",
       "type": "fire",
       "pve_power": 4.0,
       "pve_energy_gain": 9.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Energy Ball",
+      "type": "grass",
+      "pve_power": 90.0,
+      "pve_energy_gain": 0.0,
       "pve_duration_s": 0.0,
       "pvp_damage": 0.0,
       "pvp_energy_gain": 0.0,
@@ -201,10 +802,40 @@
       "pvp_turns": 0
     },
     {
+      "name": "Feather Dance",
+      "type": "flying",
+      "pve_power": 35.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
       "name": "Feint Attack",
       "type": "dark",
       "pve_power": 6.0,
       "pve_energy_gain": 6.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Fell Stinger",
+      "type": "bug",
+      "pve_power": 20.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Fire Blast",
+      "type": "fire",
+      "pve_power": 140.0,
+      "pve_energy_gain": 0.0,
       "pve_duration_s": 0.0,
       "pvp_damage": 0.0,
       "pvp_energy_gain": 0.0,
@@ -221,10 +852,110 @@
       "pvp_turns": 0
     },
     {
+      "name": "Fire Punch",
+      "type": "fire",
+      "pve_power": 60.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
       "name": "Fire Spin",
       "type": "fire",
       "pve_power": 11.0,
       "pve_energy_gain": 10.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Flamethrower",
+      "type": "fire",
+      "pve_power": 90.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Flame Burst",
+      "type": "fire",
+      "pve_power": 70.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Flame Charge",
+      "type": "fire",
+      "pve_power": 65.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Flame Wheel",
+      "type": "fire",
+      "pve_power": 80.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Flash Cannon",
+      "type": "steel",
+      "pve_power": 110.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Flower Trick",
+      "type": "grass",
+      "pve_power": 30.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Fly",
+      "type": "flying",
+      "pve_power": 80.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Flying Press",
+      "type": "fighting",
+      "pve_power": 90.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Focus Blast",
+      "type": "fighting",
+      "pve_power": 150.0,
+      "pve_energy_gain": 0.0,
       "pve_duration_s": 0.0,
       "pvp_damage": 0.0,
       "pvp_energy_gain": 0.0,
@@ -241,10 +972,50 @@
       "pvp_turns": 0
     },
     {
+      "name": "Foul Play",
+      "type": "dark",
+      "pve_power": 60.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Freeze Shock",
+      "type": "ice",
+      "pve_power": 120.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Frenzy Plant",
+      "type": "grass",
+      "pve_power": 100.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
       "name": "Frost Breath",
       "type": "ice",
       "pve_power": 7.0,
       "pve_energy_gain": 5.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Frustration",
+      "type": "normal",
+      "pve_power": 10.0,
+      "pve_energy_gain": 0.0,
       "pve_duration_s": 0.0,
       "pvp_damage": 0.0,
       "pvp_energy_gain": 0.0,
@@ -261,6 +1032,36 @@
       "pvp_turns": 0
     },
     {
+      "name": "Fusion Bolt",
+      "type": "electric",
+      "pve_power": 90.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Fusion Flare",
+      "type": "fire",
+      "pve_power": 90.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Future Sight",
+      "type": "psychic",
+      "pve_power": 110.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
       "name": "Geomancy",
       "type": "fairy",
       "pve_power": 4.0,
@@ -271,10 +1072,100 @@
       "pvp_turns": 0
     },
     {
+      "name": "Giga Drain",
+      "type": "grass",
+      "pve_power": 50.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Giga Impact",
+      "type": "normal",
+      "pve_power": 150.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Glaciate",
+      "type": "ice",
+      "pve_power": 60.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Grass Knot",
+      "type": "grass",
+      "pve_power": 90.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Gunk Shot",
+      "type": "poison",
+      "pve_power": 130.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
       "name": "Gust",
       "type": "flying",
       "pve_power": 16.0,
       "pve_energy_gain": 12.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Gyro Ball",
+      "type": "steel",
+      "pve_power": 80.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Heart Stamp",
+      "type": "psychic",
+      "pve_power": 40.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Heat Wave",
+      "type": "fire",
+      "pve_power": 95.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Heavy Slam",
+      "type": "steel",
+      "pve_power": 70.0,
+      "pve_energy_gain": 0.0,
       "pve_duration_s": 0.0,
       "pvp_damage": 0.0,
       "pvp_energy_gain": 0.0,
@@ -451,1408 +1342,6 @@
       "pvp_turns": 0
     },
     {
-      "name": "Ice Fang",
-      "type": "ice",
-      "pve_power": 8.0,
-      "pve_energy_gain": 6.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Ice Shard",
-      "type": "ice",
-      "pve_power": 9.0,
-      "pve_energy_gain": 10.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Incinerate",
-      "type": "fire",
-      "pve_power": 20.0,
-      "pve_energy_gain": 20.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Infestation",
-      "type": "bug",
-      "pve_power": 6.0,
-      "pve_energy_gain": 12.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Iron Tail",
-      "type": "steel",
-      "pve_power": 10.0,
-      "pve_energy_gain": 7.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Karate Chop",
-      "type": "fighting",
-      "pve_power": 5.0,
-      "pve_energy_gain": 9.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Leafage",
-      "type": "grass",
-      "pve_power": 6.0,
-      "pve_energy_gain": 8.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Lick",
-      "type": "ghost",
-      "pve_power": 3.0,
-      "pve_energy_gain": 3.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Lock On",
-      "type": "normal",
-      "pve_power": 1.0,
-      "pve_energy_gain": 5.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Low Kick",
-      "type": "fighting",
-      "pve_power": 4.0,
-      "pve_energy_gain": 5.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Magical Leaf",
-      "type": "grass",
-      "pve_power": 10.0,
-      "pve_energy_gain": 10.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Metal Claw",
-      "type": "steel",
-      "pve_power": 5.0,
-      "pve_energy_gain": 7.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Metal Sound",
-      "type": "steel",
-      "pve_power": 5.0,
-      "pve_energy_gain": 8.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Mud Shot",
-      "type": "ground",
-      "pve_power": 4.0,
-      "pve_energy_gain": 8.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Mud Slap",
-      "type": "ground",
-      "pve_power": 12.0,
-      "pve_energy_gain": 10.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Peck",
-      "type": "flying",
-      "pve_power": 6.0,
-      "pve_energy_gain": 8.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Poison Jab",
-      "type": "poison",
-      "pve_power": 7.0,
-      "pve_energy_gain": 7.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Poison Sting",
-      "type": "poison",
-      "pve_power": 4.0,
-      "pve_energy_gain": 9.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Pound",
-      "type": "normal",
-      "pve_power": 4.0,
-      "pve_energy_gain": 4.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Powder Snow",
-      "type": "ice",
-      "pve_power": 5.0,
-      "pve_energy_gain": 8.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Present",
-      "type": "normal",
-      "pve_power": 3.0,
-      "pve_energy_gain": 12.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Psywave",
-      "type": "psychic",
-      "pve_power": 3.0,
-      "pve_energy_gain": 4.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Quick Attack",
-      "type": "normal",
-      "pve_power": 5.0,
-      "pve_energy_gain": 8.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Razor Leaf",
-      "type": "grass",
-      "pve_power": 9.0,
-      "pve_energy_gain": 4.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Rock Smash",
-      "type": "fighting",
-      "pve_power": 9.0,
-      "pve_energy_gain": 7.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Rock Throw",
-      "type": "rock",
-      "pve_power": 8.0,
-      "pve_energy_gain": 5.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Rollout",
-      "type": "rock",
-      "pve_power": 7.0,
-      "pve_energy_gain": 13.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Sand Attack",
-      "type": "ground",
-      "pve_power": 2.0,
-      "pve_energy_gain": 4.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Scratch",
-      "type": "normal",
-      "pve_power": 4.0,
-      "pve_energy_gain": 2.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Shadow Claw",
-      "type": "ghost",
-      "pve_power": 6.0,
-      "pve_energy_gain": 8.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Smack Down",
-      "type": "rock",
-      "pve_power": 12.0,
-      "pve_energy_gain": 8.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Snarl",
-      "type": "dark",
-      "pve_power": 5.0,
-      "pve_energy_gain": 13.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Spark",
-      "type": "electric",
-      "pve_power": 5.0,
-      "pve_energy_gain": 7.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Splash",
-      "type": "water",
-      "pve_power": 0.0,
-      "pve_energy_gain": 12.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Steel Wing",
-      "type": "steel",
-      "pve_power": 7.0,
-      "pve_energy_gain": 5.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Struggle",
-      "type": "normal",
-      "pve_power": 35.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Struggle Bug",
-      "type": "bug",
-      "pve_power": 9.0,
-      "pve_energy_gain": 8.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Sucker Punch",
-      "type": "dark",
-      "pve_power": 8.0,
-      "pve_energy_gain": 7.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Tackle",
-      "type": "normal",
-      "pve_power": 3.0,
-      "pve_energy_gain": 3.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Take Down",
-      "type": "normal",
-      "pve_power": 5.0,
-      "pve_energy_gain": 8.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Thunder Fang",
-      "type": "electric",
-      "pve_power": 8.0,
-      "pve_energy_gain": 6.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Thunder Shock",
-      "type": "electric",
-      "pve_power": 4.0,
-      "pve_energy_gain": 9.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Transform",
-      "type": "normal",
-      "pve_power": 0.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Vine Whip",
-      "type": "grass",
-      "pve_power": 5.0,
-      "pve_energy_gain": 8.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Volt Switch",
-      "type": "electric",
-      "pve_power": 14.0,
-      "pve_energy_gain": 16.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Waterfall",
-      "type": "water",
-      "pve_power": 12.0,
-      "pve_energy_gain": 8.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Water Gun",
-      "type": "water",
-      "pve_power": 3.0,
-      "pve_energy_gain": 3.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Water Shuriken",
-      "type": "water",
-      "pve_power": 6.0,
-      "pve_energy_gain": 14.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Wing Attack",
-      "type": "flying",
-      "pve_power": 5.0,
-      "pve_energy_gain": 7.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Yawn",
-      "type": "normal",
-      "pve_power": 0.0,
-      "pve_energy_gain": 12.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Zen Headbutt",
-      "type": "psychic",
-      "pve_power": 8.0,
-      "pve_energy_gain": 6.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    }
-  ],
-  "charge": [
-    {
-      "name": "Acid Spray",
-      "type": "poison",
-      "pve_power": 20.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Acrobatics",
-      "type": "flying",
-      "pve_power": 110.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Aerial Ace",
-      "type": "flying",
-      "pve_power": 60.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Aeroblast",
-      "type": "flying",
-      "pve_power": 170.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Air Cutter",
-      "type": "flying",
-      "pve_power": 45.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Ancient Power",
-      "type": "rock",
-      "pve_power": 60.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Aqua Jet",
-      "type": "water",
-      "pve_power": 70.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Aqua Step",
-      "type": "water",
-      "pve_power": 55.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Aqua Tail",
-      "type": "water",
-      "pve_power": 55.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Aura Sphere",
-      "type": "fighting",
-      "pve_power": 80.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Aura Wheel",
-      "type": "electric",
-      "pve_power": 100.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Aurora Beam",
-      "type": "ice",
-      "pve_power": 80.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Avalanche",
-      "type": "ice",
-      "pve_power": 90.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Behemoth Bash",
-      "type": "steel",
-      "pve_power": 80.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Behemoth Blade",
-      "type": "steel",
-      "pve_power": 100.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Blast Burn",
-      "type": "fire",
-      "pve_power": 110.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Blaze Kick",
-      "type": "fire",
-      "pve_power": 60.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Bleakwind Storm",
-      "type": "flying",
-      "pve_power": 60.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Blizzard",
-      "type": "ice",
-      "pve_power": 140.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Body Slam",
-      "type": "normal",
-      "pve_power": 55.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Bone Club",
-      "type": "ground",
-      "pve_power": 55.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Boomburst",
-      "type": "normal",
-      "pve_power": 150.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Brave Bird",
-      "type": "flying",
-      "pve_power": 130.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Breaking Swipe",
-      "type": "dragon",
-      "pve_power": 50.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Brick Break",
-      "type": "fighting",
-      "pve_power": 40.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Brine",
-      "type": "water",
-      "pve_power": 60.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Brutal Swing",
-      "type": "dark",
-      "pve_power": 55.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Bubble Beam",
-      "type": "water",
-      "pve_power": 25.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Bug Buzz",
-      "type": "bug",
-      "pve_power": 100.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Bulldoze",
-      "type": "ground",
-      "pve_power": 45.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Chilling Water",
-      "type": "water",
-      "pve_power": 60.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Clanging Scales",
-      "type": "dragon",
-      "pve_power": 120.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Close Combat",
-      "type": "fighting",
-      "pve_power": 100.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Crabhammer",
-      "type": "water",
-      "pve_power": 85.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Cross Chop",
-      "type": "fighting",
-      "pve_power": 55.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Cross Poison",
-      "type": "poison",
-      "pve_power": 50.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Crunch",
-      "type": "dark",
-      "pve_power": 70.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Crush Grip",
-      "type": "normal",
-      "pve_power": 110.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Darkest Lariat",
-      "type": "dark",
-      "pve_power": 120.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Dark Pulse",
-      "type": "dark",
-      "pve_power": 80.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Dazzling Gleam",
-      "type": "fairy",
-      "pve_power": 90.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Dig",
-      "type": "ground",
-      "pve_power": 70.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Disarming Voice",
-      "type": "fairy",
-      "pve_power": 70.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Discharge",
-      "type": "electric",
-      "pve_power": 55.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Doom Desire",
-      "type": "steel",
-      "pve_power": 80.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Double Iron Bash",
-      "type": "steel",
-      "pve_power": 55.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Draco Meteor",
-      "type": "dragon",
-      "pve_power": 150.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Dragon Ascent",
-      "type": "flying",
-      "pve_power": 150.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Dragon Claw",
-      "type": "dragon",
-      "pve_power": 80.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Dragon Energy",
-      "type": "dragon",
-      "pve_power": 100.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Dragon Pulse",
-      "type": "dragon",
-      "pve_power": 90.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Draining Kiss",
-      "type": "fairy",
-      "pve_power": 60.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Drain Punch",
-      "type": "fighting",
-      "pve_power": 20.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Drill Peck",
-      "type": "flying",
-      "pve_power": 70.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Drill Run",
-      "type": "ground",
-      "pve_power": 80.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Dynamax Cannon",
-      "type": "dragon",
-      "pve_power": 80.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Dynamic Punch",
-      "type": "fighting",
-      "pve_power": 90.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Earthquake",
-      "type": "ground",
-      "pve_power": 110.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Earth Power",
-      "type": "ground",
-      "pve_power": 90.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Energy Ball",
-      "type": "grass",
-      "pve_power": 90.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Feather Dance",
-      "type": "flying",
-      "pve_power": 35.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Fell Stinger",
-      "type": "bug",
-      "pve_power": 20.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Fire Blast",
-      "type": "fire",
-      "pve_power": 140.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Fire Punch",
-      "type": "fire",
-      "pve_power": 60.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Flamethrower",
-      "type": "fire",
-      "pve_power": 90.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Flame Burst",
-      "type": "fire",
-      "pve_power": 70.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Flame Charge",
-      "type": "fire",
-      "pve_power": 65.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Flame Wheel",
-      "type": "fire",
-      "pve_power": 80.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Flash Cannon",
-      "type": "steel",
-      "pve_power": 110.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Flower Trick",
-      "type": "grass",
-      "pve_power": 30.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Fly",
-      "type": "flying",
-      "pve_power": 80.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Flying Press",
-      "type": "fighting",
-      "pve_power": 90.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Focus Blast",
-      "type": "fighting",
-      "pve_power": 150.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Foul Play",
-      "type": "dark",
-      "pve_power": 60.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Freeze Shock",
-      "type": "ice",
-      "pve_power": 120.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Frenzy Plant",
-      "type": "grass",
-      "pve_power": 100.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Frustration",
-      "type": "normal",
-      "pve_power": 10.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Fusion Bolt",
-      "type": "electric",
-      "pve_power": 90.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Fusion Flare",
-      "type": "fire",
-      "pve_power": 90.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Future Sight",
-      "type": "psychic",
-      "pve_power": 110.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Giga Drain",
-      "type": "grass",
-      "pve_power": 50.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Giga Impact",
-      "type": "normal",
-      "pve_power": 150.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Glaciate",
-      "type": "ice",
-      "pve_power": 60.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Grass Knot",
-      "type": "grass",
-      "pve_power": 90.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Gunk Shot",
-      "type": "poison",
-      "pve_power": 130.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Gyro Ball",
-      "type": "steel",
-      "pve_power": 80.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Heart Stamp",
-      "type": "psychic",
-      "pve_power": 40.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Heat Wave",
-      "type": "fire",
-      "pve_power": 95.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
-      "name": "Heavy Slam",
-      "type": "steel",
-      "pve_power": 70.0,
-      "pve_energy_gain": 0.0,
-      "pve_duration_s": 0.0,
-      "pvp_damage": 0.0,
-      "pvp_energy_gain": 0.0,
-      "pvp_turns": 0
-    },
-    {
       "name": "High Horsepower",
       "type": "ground",
       "pve_power": 100.0,
@@ -1963,10 +1452,30 @@
       "pvp_turns": 0
     },
     {
+      "name": "Ice Fang",
+      "type": "ice",
+      "pve_power": 8.0,
+      "pve_energy_gain": 6.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
       "name": "Ice Punch",
       "type": "ice",
       "pve_power": 60.0,
       "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Ice Shard",
+      "type": "ice",
+      "pve_power": 9.0,
+      "pve_energy_gain": 10.0,
       "pve_duration_s": 0.0,
       "pvp_damage": 0.0,
       "pvp_energy_gain": 0.0,
@@ -1993,6 +1502,26 @@
       "pvp_turns": 0
     },
     {
+      "name": "Incinerate",
+      "type": "fire",
+      "pve_power": 20.0,
+      "pve_energy_gain": 20.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Infestation",
+      "type": "bug",
+      "pve_power": 6.0,
+      "pve_energy_gain": 12.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
       "name": "Iron Head",
       "type": "steel",
       "pve_power": 70.0,
@@ -2003,10 +1532,40 @@
       "pvp_turns": 0
     },
     {
+      "name": "Iron Tail",
+      "type": "steel",
+      "pve_power": 10.0,
+      "pve_energy_gain": 7.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Karate Chop",
+      "type": "fighting",
+      "pve_power": 5.0,
+      "pve_energy_gain": 9.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
       "name": "Last Resort",
       "type": "normal",
       "pve_power": 90.0,
       "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Leafage",
+      "type": "grass",
+      "pve_power": 6.0,
+      "pve_energy_gain": 8.0,
       "pve_duration_s": 0.0,
       "pvp_damage": 0.0,
       "pvp_energy_gain": 0.0,
@@ -2043,10 +1602,40 @@
       "pvp_turns": 0
     },
     {
+      "name": "Lick",
+      "type": "ghost",
+      "pve_power": 3.0,
+      "pve_energy_gain": 3.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
       "name": "Liquidation",
       "type": "water",
       "pve_power": 70.0,
       "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Lock On",
+      "type": "normal",
+      "pve_power": 1.0,
+      "pve_energy_gain": 5.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Low Kick",
+      "type": "fighting",
+      "pve_power": 4.0,
+      "pve_energy_gain": 5.0,
       "pve_duration_s": 0.0,
       "pvp_damage": 0.0,
       "pvp_energy_gain": 0.0,
@@ -2077,6 +1666,16 @@
       "type": "psychic",
       "pve_power": 120.0,
       "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Magical Leaf",
+      "type": "grass",
+      "pve_power": 10.0,
+      "pve_energy_gain": 10.0,
       "pve_duration_s": 0.0,
       "pvp_damage": 0.0,
       "pvp_energy_gain": 0.0,
@@ -2117,6 +1716,26 @@
       "type": "grass",
       "pve_power": 25.0,
       "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Metal Claw",
+      "type": "steel",
+      "pve_power": 5.0,
+      "pve_energy_gain": 7.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Metal Sound",
+      "type": "steel",
+      "pve_power": 5.0,
+      "pve_energy_gain": 8.0,
       "pve_duration_s": 0.0,
       "pvp_damage": 0.0,
       "pvp_energy_gain": 0.0,
@@ -2207,6 +1826,26 @@
       "type": "ground",
       "pve_power": 60.0,
       "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Mud Shot",
+      "type": "ground",
+      "pve_power": 4.0,
+      "pve_energy_gain": 8.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Mud Slap",
+      "type": "ground",
+      "pve_power": 12.0,
+      "pve_energy_gain": 10.0,
       "pve_duration_s": 0.0,
       "pvp_damage": 0.0,
       "pvp_energy_gain": 0.0,
@@ -2343,6 +1982,16 @@
       "pvp_turns": 0
     },
     {
+      "name": "Peck",
+      "type": "flying",
+      "pve_power": 6.0,
+      "pve_energy_gain": 8.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
       "name": "Petal Blizzard",
       "type": "grass",
       "pve_power": 110.0,
@@ -2373,10 +2022,50 @@
       "pvp_turns": 0
     },
     {
+      "name": "Poison Jab",
+      "type": "poison",
+      "pve_power": 7.0,
+      "pve_energy_gain": 7.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Poison Sting",
+      "type": "poison",
+      "pve_power": 4.0,
+      "pve_energy_gain": 9.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
       "name": "Poltergeist",
       "type": "ghost",
       "pve_power": 150.0,
       "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Pound",
+      "type": "normal",
+      "pve_power": 4.0,
+      "pve_energy_gain": 4.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Powder Snow",
+      "type": "ice",
+      "pve_power": 5.0,
+      "pve_energy_gain": 8.0,
       "pve_duration_s": 0.0,
       "pvp_damage": 0.0,
       "pvp_energy_gain": 0.0,
@@ -2417,6 +2106,16 @@
       "type": "ground",
       "pve_power": 130.0,
       "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Present",
+      "type": "normal",
+      "pve_power": 3.0,
+      "pve_energy_gain": 12.0,
       "pve_duration_s": 0.0,
       "pvp_damage": 0.0,
       "pvp_energy_gain": 0.0,
@@ -2483,10 +2182,40 @@
       "pvp_turns": 0
     },
     {
+      "name": "Psywave",
+      "type": "psychic",
+      "pve_power": 3.0,
+      "pve_energy_gain": 4.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Quick Attack",
+      "type": "normal",
+      "pve_power": 5.0,
+      "pve_energy_gain": 8.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
       "name": "Rage Fist",
       "type": "ghost",
       "pve_power": 50.0,
       "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Razor Leaf",
+      "type": "grass",
+      "pve_power": 9.0,
+      "pve_energy_gain": 4.0,
       "pve_duration_s": 0.0,
       "pvp_damage": 0.0,
       "pvp_energy_gain": 0.0,
@@ -2553,6 +2282,26 @@
       "pvp_turns": 0
     },
     {
+      "name": "Rock Smash",
+      "type": "fighting",
+      "pve_power": 9.0,
+      "pve_energy_gain": 7.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Rock Throw",
+      "type": "rock",
+      "pve_power": 8.0,
+      "pve_energy_gain": 5.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
       "name": "Rock Tomb",
       "type": "rock",
       "pve_power": 80.0,
@@ -2567,6 +2316,16 @@
       "type": "rock",
       "pve_power": 110.0,
       "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Rollout",
+      "type": "rock",
+      "pve_power": 7.0,
+      "pve_energy_gain": 13.0,
       "pve_duration_s": 0.0,
       "pvp_damage": 0.0,
       "pvp_energy_gain": 0.0,
@@ -2603,6 +2362,16 @@
       "pvp_turns": 0
     },
     {
+      "name": "Sand Attack",
+      "type": "ground",
+      "pve_power": 2.0,
+      "pve_energy_gain": 4.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
       "name": "Sand Tomb",
       "type": "ground",
       "pve_power": 25.0,
@@ -2627,6 +2396,16 @@
       "type": "ground",
       "pve_power": 80.0,
       "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Scratch",
+      "type": "normal",
+      "pve_power": 4.0,
+      "pve_energy_gain": 2.0,
       "pve_duration_s": 0.0,
       "pvp_damage": 0.0,
       "pvp_energy_gain": 0.0,
@@ -2667,6 +2446,16 @@
       "type": "ghost",
       "pve_power": 80.0,
       "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Shadow Claw",
+      "type": "ghost",
+      "pve_power": 6.0,
+      "pve_energy_gain": 8.0,
       "pve_duration_s": 0.0,
       "pvp_damage": 0.0,
       "pvp_energy_gain": 0.0,
@@ -2773,6 +2562,26 @@
       "pvp_turns": 0
     },
     {
+      "name": "Smack Down",
+      "type": "rock",
+      "pve_power": 12.0,
+      "pve_energy_gain": 8.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Snarl",
+      "type": "dark",
+      "pve_power": 5.0,
+      "pve_energy_gain": 13.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
       "name": "Solar Beam",
       "type": "grass",
       "pve_power": 150.0,
@@ -2787,6 +2596,16 @@
       "type": "dragon",
       "pve_power": 95.0,
       "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Spark",
+      "type": "electric",
+      "pve_power": 5.0,
+      "pve_energy_gain": 7.0,
       "pve_duration_s": 0.0,
       "pvp_damage": 0.0,
       "pvp_energy_gain": 0.0,
@@ -2813,10 +2632,30 @@
       "pvp_turns": 0
     },
     {
+      "name": "Splash",
+      "type": "water",
+      "pve_power": 0.0,
+      "pve_energy_gain": 12.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
       "name": "Springtide Storm (Speculative)",
       "type": "fairy",
       "pve_power": 60.0,
       "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Steel Wing",
+      "type": "steel",
+      "pve_power": 7.0,
+      "pve_energy_gain": 5.0,
       "pve_duration_s": 0.0,
       "pvp_damage": 0.0,
       "pvp_energy_gain": 0.0,
@@ -2843,10 +2682,40 @@
       "pvp_turns": 0
     },
     {
+      "name": "Struggle",
+      "type": "normal",
+      "pve_power": 35.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Struggle Bug",
+      "type": "bug",
+      "pve_power": 9.0,
+      "pve_energy_gain": 8.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
       "name": "Submission",
       "type": "fighting",
       "pve_power": 60.0,
       "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Sucker Punch",
+      "type": "dark",
+      "pve_power": 8.0,
+      "pve_energy_gain": 7.0,
       "pve_duration_s": 0.0,
       "pvp_damage": 0.0,
       "pvp_energy_gain": 0.0,
@@ -2897,6 +2766,26 @@
       "type": "psychic",
       "pve_power": 80.0,
       "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Tackle",
+      "type": "normal",
+      "pve_power": 3.0,
+      "pve_energy_gain": 3.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Take Down",
+      "type": "normal",
+      "pve_power": 5.0,
+      "pve_energy_gain": 8.0,
       "pve_duration_s": 0.0,
       "pvp_damage": 0.0,
       "pvp_energy_gain": 0.0,
@@ -2983,10 +2872,30 @@
       "pvp_turns": 0
     },
     {
+      "name": "Thunder Fang",
+      "type": "electric",
+      "pve_power": 8.0,
+      "pve_energy_gain": 6.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
       "name": "Thunder Punch",
       "type": "electric",
       "pve_power": 60.0,
       "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Thunder Shock",
+      "type": "electric",
+      "pve_power": 4.0,
+      "pve_energy_gain": 9.0,
       "pve_duration_s": 0.0,
       "pvp_damage": 0.0,
       "pvp_energy_gain": 0.0,
@@ -3006,6 +2915,16 @@
       "name": "Trailblaze",
       "type": "grass",
       "pve_power": 65.0,
+      "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Transform",
+      "type": "normal",
+      "pve_power": 0.0,
       "pve_energy_gain": 0.0,
       "pve_duration_s": 0.0,
       "pvp_damage": 0.0,
@@ -3063,6 +2982,26 @@
       "pvp_turns": 0
     },
     {
+      "name": "Vine Whip",
+      "type": "grass",
+      "pve_power": 5.0,
+      "pve_energy_gain": 8.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Volt Switch",
+      "type": "electric",
+      "pve_power": 14.0,
+      "pve_energy_gain": 16.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
       "name": "Volt Tackle",
       "type": "electric",
       "pve_power": 90.0,
@@ -3083,6 +3022,26 @@
       "pvp_turns": 0
     },
     {
+      "name": "Waterfall",
+      "type": "water",
+      "pve_power": 12.0,
+      "pve_energy_gain": 8.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Water Gun",
+      "type": "water",
+      "pve_power": 3.0,
+      "pve_energy_gain": 3.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
       "name": "Water Gun Fast Blastoise",
       "type": "water",
       "pve_power": 6.0,
@@ -3097,6 +3056,16 @@
       "type": "water",
       "pve_power": 80.0,
       "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Water Shuriken",
+      "type": "water",
+      "pve_power": 6.0,
+      "pve_energy_gain": 14.0,
       "pve_duration_s": 0.0,
       "pvp_damage": 0.0,
       "pvp_energy_gain": 0.0,
@@ -3173,6 +3142,16 @@
       "pvp_turns": 0
     },
     {
+      "name": "Wing Attack",
+      "type": "flying",
+      "pve_power": 5.0,
+      "pve_energy_gain": 7.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
       "name": "Wrap",
       "type": "normal",
       "pve_power": 60.0,
@@ -3193,10 +3172,30 @@
       "pvp_turns": 0
     },
     {
+      "name": "Yawn",
+      "type": "normal",
+      "pve_power": 0.0,
+      "pve_energy_gain": 12.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
       "name": "Zap Cannon",
       "type": "electric",
       "pve_power": 150.0,
       "pve_energy_gain": 0.0,
+      "pve_duration_s": 0.0,
+      "pvp_damage": 0.0,
+      "pvp_energy_gain": 0.0,
+      "pvp_turns": 0
+    },
+    {
+      "name": "Zen Headbutt",
+      "type": "psychic",
+      "pve_power": 8.0,
+      "pve_energy_gain": 6.0,
       "pve_duration_s": 0.0,
       "pvp_damage": 0.0,
       "pvp_energy_gain": 0.0,

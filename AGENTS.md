@@ -53,7 +53,6 @@ This guide also includes **forward‑looking hooks** for PvP scoring so an agent
 - **Pure‑Python fallback:** Excel export must remain optional. If pandas/openpyxl aren’t installed, CSV output must still work. citeturn0view0
 - **Tests must pass:** Add/update tests for new functionality and fix any failing tests before merging. (Run `pytest` locally.) citeturn0view0
 - **No secrets in repo:** Never commit API keys, cookies, or scrape credentials. Use environment variables for any optional integration.
-- **Rate‑limit friendly scraping:** See §10; obey robots.txt/TOS; use caching; don’t hammer sources.
 - **Deterministic results:** For the same inputs, outputs should be reproducible unless a data source changed. Stamp outputs with data version when feasible.
 
 ---
@@ -159,7 +158,6 @@ Refresh weekly or on season/balance changes; obey robots.txt, back off on 429, a
 - **Data drift:** Stamp generated outputs with a `data_version` and `source_date` if you introduce scraped inputs.  
 - **Scrape fragility:** Prefer structured downloads (CSV) over HTML scraping. Add schema validators.  
 - **Performance regressions:** Benchmark large rosters; keep complexity linear in number of entries.  
-- **License/TOS issues:** Respect third‑party terms; don’t redistribute scraped datasets in repo without permission; document how to reproduce locally.
 
 ---
 

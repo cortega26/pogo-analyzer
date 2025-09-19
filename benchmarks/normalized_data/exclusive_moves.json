@@ -1,0 +1,5205 @@
+{
+  "metadata": {
+    "source": "pvpoke-gamemaster",
+    "notes": "Per-species legacy/elite moves parsed from gamemaster"
+  },
+  "exclusives": {
+    "Venusaur": {
+      "fast": [],
+      "charge": [
+        "Frenzy Plant"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Frenzy Plant"
+      ]
+    },
+    "Venusaur (Mega)": {
+      "fast": [],
+      "charge": [
+        "Frenzy Plant"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Frenzy Plant"
+      ]
+    },
+    "Venusaur (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Frenzy Plant"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Frenzy Plant"
+      ]
+    },
+    "Charmeleon": {
+      "fast": [],
+      "charge": [
+        "Scratch"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Scratch"
+      ]
+    },
+    "Charmeleon (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Scratch"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Scratch"
+      ]
+    },
+    "Charizard": {
+      "fast": [],
+      "charge": [
+        "Blast Burn",
+        "Dragon Breath",
+        "Ember",
+        "Flamethrower",
+        "Wing Attack"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Blast Burn",
+        "Dragon Breath",
+        "Ember",
+        "Flamethrower",
+        "Wing Attack"
+      ]
+    },
+    "Charizard (Mega X)": {
+      "fast": [],
+      "charge": [
+        "Blast Burn",
+        "Dragon Breath",
+        "Ember",
+        "Flamethrower",
+        "Wing Attack"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Blast Burn",
+        "Dragon Breath",
+        "Ember",
+        "Flamethrower",
+        "Wing Attack"
+      ]
+    },
+    "Charizard (Mega Y)": {
+      "fast": [],
+      "charge": [
+        "Blast Burn",
+        "Dragon Breath",
+        "Ember",
+        "Flamethrower",
+        "Wing Attack"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Blast Burn",
+        "Dragon Breath",
+        "Ember",
+        "Flamethrower",
+        "Wing Attack"
+      ]
+    },
+    "Charizard (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Blast Burn",
+        "Dragon Breath",
+        "Ember",
+        "Flamethrower",
+        "Wing Attack"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Blast Burn",
+        "Dragon Breath",
+        "Ember",
+        "Flamethrower",
+        "Wing Attack"
+      ]
+    },
+    "Blastoise": {
+      "fast": [],
+      "charge": [
+        "Hydro Cannon"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Hydro Cannon"
+      ]
+    },
+    "Blastoise (Mega)": {
+      "fast": [],
+      "charge": [
+        "Hydro Cannon"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Hydro Cannon"
+      ]
+    },
+    "Blastoise (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Hydro Cannon"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Hydro Cannon"
+      ]
+    },
+    "Butterfree": {
+      "fast": [],
+      "charge": [
+        "Bug Bite"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Bug Bite"
+      ]
+    },
+    "Butterfree (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Bug Bite"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Bug Bite"
+      ]
+    },
+    "Beedrill": {
+      "fast": [],
+      "charge": [
+        "Bug Bite",
+        "Drill Run"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Bug Bite",
+        "Drill Run"
+      ]
+    },
+    "Beedrill (Mega)": {
+      "fast": [],
+      "charge": [
+        "Bug Bite",
+        "Drill Run"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Bug Bite",
+        "Drill Run"
+      ]
+    },
+    "Beedrill (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Bug Bite",
+        "Drill Run"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Bug Bite",
+        "Drill Run"
+      ]
+    },
+    "Pidgeot": {
+      "fast": [],
+      "charge": [
+        "Air Cutter",
+        "Gust",
+        "Wing Attack"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Air Cutter",
+        "Gust",
+        "Wing Attack"
+      ]
+    },
+    "Pidgeot (Mega)": {
+      "fast": [],
+      "charge": [
+        "Air Cutter",
+        "Gust",
+        "Wing Attack"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Air Cutter",
+        "Gust",
+        "Wing Attack"
+      ]
+    },
+    "Pidgeot (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Air Cutter",
+        "Gust",
+        "Wing Attack"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Air Cutter",
+        "Gust",
+        "Wing Attack"
+      ]
+    },
+    "Spearow": {
+      "fast": [],
+      "charge": [
+        "Twister"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Twister"
+      ]
+    },
+    "Fearow": {
+      "fast": [],
+      "charge": [
+        "Twister"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Twister"
+      ]
+    },
+    "Ekans": {
+      "fast": [],
+      "charge": [
+        "Gunk Shot"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Gunk Shot"
+      ]
+    },
+    "Ekans (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Gunk Shot"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Gunk Shot"
+      ]
+    },
+    "Pikachu": {
+      "fast": [],
+      "charge": [
+        "Present",
+        "Surf",
+        "Thunder"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Present",
+        "Surf",
+        "Thunder"
+      ]
+    },
+    "Pikachu (5th Anniversary)": {
+      "fast": [],
+      "charge": [
+        "Present"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Present"
+      ]
+    },
+    "Pikachu (Horizons)": {
+      "fast": [],
+      "charge": [
+        "Volt Tackle"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Volt Tackle"
+      ]
+    },
+    "Pikachu (Shaymin Scarf)": {
+      "fast": [],
+      "charge": [
+        "Present",
+        "Surf",
+        "Thunder"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Present",
+        "Surf",
+        "Thunder"
+      ]
+    },
+    "Raichu": {
+      "fast": [],
+      "charge": [
+        "Thunder"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Thunder"
+      ]
+    },
+    "Sandshrew": {
+      "fast": [],
+      "charge": [
+        "Rock Tomb"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Rock Tomb"
+      ]
+    },
+    "Sandshrew (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Rock Tomb"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Rock Tomb"
+      ]
+    },
+    "Sandslash": {
+      "fast": [],
+      "charge": [
+        "Night Slash"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Night Slash"
+      ]
+    },
+    "Sandslash (Alolan)": {
+      "fast": [],
+      "charge": [
+        "Shadow Claw"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Shadow Claw"
+      ]
+    },
+    "Sandslash (Alolan) (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Shadow Claw"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Shadow Claw"
+      ]
+    },
+    "Sandslash (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Night Slash"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Night Slash"
+      ]
+    },
+    "Nidoking": {
+      "fast": [],
+      "charge": [
+        "Fury Cutter"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Fury Cutter"
+      ]
+    },
+    "Nidoking (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Fury Cutter"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Fury Cutter"
+      ]
+    },
+    "Clefable": {
+      "fast": [],
+      "charge": [
+        "Pound"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Pound"
+      ]
+    },
+    "Ninetales": {
+      "fast": [],
+      "charge": [
+        "Ember",
+        "Fire Blast",
+        "Flamethrower"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Ember",
+        "Fire Blast",
+        "Flamethrower"
+      ]
+    },
+    "Ninetales (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Ember",
+        "Fire Blast",
+        "Flamethrower"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Ember",
+        "Fire Blast",
+        "Flamethrower"
+      ]
+    },
+    "Jigglypuff": {
+      "fast": [],
+      "charge": [
+        "Body Slam",
+        "Play Rough"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Body Slam",
+        "Play Rough"
+      ]
+    },
+    "Zubat": {
+      "fast": [],
+      "charge": [
+        "Sludge Bomb"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Sludge Bomb"
+      ]
+    },
+    "Zubat (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Sludge Bomb"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Sludge Bomb"
+      ]
+    },
+    "Golbat": {
+      "fast": [],
+      "charge": [
+        "Ominous Wind"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Ominous Wind"
+      ]
+    },
+    "Golbat (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Ominous Wind"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Ominous Wind"
+      ]
+    },
+    "Parasect": {
+      "fast": [],
+      "charge": [
+        "Bug Bite"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Bug Bite"
+      ]
+    },
+    "Venomoth": {
+      "fast": [],
+      "charge": [
+        "Bug Bite"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Bug Bite"
+      ]
+    },
+    "Venomoth (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Bug Bite"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Bug Bite"
+      ]
+    },
+    "Meowth": {
+      "fast": [],
+      "charge": [
+        "Body Slam"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Body Slam"
+      ]
+    },
+    "Meowth (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Body Slam"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Body Slam"
+      ]
+    },
+    "Persian": {
+      "fast": [],
+      "charge": [
+        "Night Slash"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Night Slash"
+      ]
+    },
+    "Persian (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Night Slash"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Night Slash"
+      ]
+    },
+    "Primeape": {
+      "fast": [],
+      "charge": [
+        "Cross Chop",
+        "Karate Chop",
+        "Rage Fist"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Cross Chop",
+        "Karate Chop",
+        "Rage Fist"
+      ]
+    },
+    "Primeape (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Cross Chop",
+        "Karate Chop",
+        "Rage Fist"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Cross Chop",
+        "Karate Chop",
+        "Rage Fist"
+      ]
+    },
+    "Arcanine": {
+      "fast": [],
+      "charge": [
+        "Bite",
+        "Bulldoze"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Bite",
+        "Bulldoze"
+      ]
+    },
+    "Arcanine (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Bite",
+        "Bulldoze"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Bite",
+        "Bulldoze"
+      ]
+    },
+    "Poliwhirl": {
+      "fast": [],
+      "charge": [
+        "Scald"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Scald"
+      ]
+    },
+    "Poliwhirl (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Scald"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Scald"
+      ]
+    },
+    "Poliwrath": {
+      "fast": [],
+      "charge": [
+        "Counter",
+        "Submission"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Counter",
+        "Submission"
+      ]
+    },
+    "Poliwrath (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Counter",
+        "Submission"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Counter",
+        "Submission"
+      ]
+    },
+    "Alakazam": {
+      "fast": [],
+      "charge": [
+        "Counter",
+        "Dazzling Gleam",
+        "Psychic"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Counter",
+        "Dazzling Gleam",
+        "Psychic"
+      ]
+    },
+    "Alakazam (Mega)": {
+      "fast": [],
+      "charge": [
+        "Counter",
+        "Dazzling Gleam",
+        "Psychic"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Counter",
+        "Dazzling Gleam",
+        "Psychic"
+      ]
+    },
+    "Alakazam (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Counter",
+        "Dazzling Gleam",
+        "Psychic"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Counter",
+        "Dazzling Gleam",
+        "Psychic"
+      ]
+    },
+    "Machop": {
+      "fast": [],
+      "charge": [
+        "Low Kick"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Low Kick"
+      ]
+    },
+    "Machop (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Low Kick"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Low Kick"
+      ]
+    },
+    "Machoke": {
+      "fast": [],
+      "charge": [
+        "Cross Chop"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Cross Chop"
+      ]
+    },
+    "Machoke (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Cross Chop"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Cross Chop"
+      ]
+    },
+    "Machamp": {
+      "fast": [],
+      "charge": [
+        "Karate Chop",
+        "Payback",
+        "Stone Edge",
+        "Submission"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Karate Chop",
+        "Payback",
+        "Stone Edge",
+        "Submission"
+      ]
+    },
+    "Machamp (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Karate Chop",
+        "Payback",
+        "Stone Edge",
+        "Submission"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Karate Chop",
+        "Payback",
+        "Stone Edge",
+        "Submission"
+      ]
+    },
+    "Weepinbell": {
+      "fast": [],
+      "charge": [
+        "Razor Leaf"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Razor Leaf"
+      ]
+    },
+    "Weepinbell (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Razor Leaf"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Razor Leaf"
+      ]
+    },
+    "Victreebel": {
+      "fast": [],
+      "charge": [
+        "Magical Leaf"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Magical Leaf"
+      ]
+    },
+    "Victreebel (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Magical Leaf"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Magical Leaf"
+      ]
+    },
+    "Graveler": {
+      "fast": [],
+      "charge": [
+        "Rock Slide"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Rock Slide"
+      ]
+    },
+    "Graveler (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Rock Slide"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Rock Slide"
+      ]
+    },
+    "Golem (Alolan)": {
+      "fast": [],
+      "charge": [
+        "Rollout"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Rollout"
+      ]
+    },
+    "Golem (Alolan) (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Rollout"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Rollout"
+      ]
+    },
+    "Ponyta": {
+      "fast": [],
+      "charge": [
+        "Fire Blast"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Fire Blast"
+      ]
+    },
+    "Rapidash": {
+      "fast": [],
+      "charge": [
+        "Ember",
+        "Wild Charge"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Ember",
+        "Wild Charge"
+      ]
+    },
+    "Rapidash (Galarian)": {
+      "fast": [],
+      "charge": [
+        "Wild Charge"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Wild Charge"
+      ]
+    },
+    "Slowbro": {
+      "fast": [],
+      "charge": [
+        "Surf"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Surf"
+      ]
+    },
+    "Slowbro (Galarian)": {
+      "fast": [],
+      "charge": [
+        "Surf"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Surf"
+      ]
+    },
+    "Slowbro (Mega)": {
+      "fast": [],
+      "charge": [
+        "Surf"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Surf"
+      ]
+    },
+    "Slowbro (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Surf"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Surf"
+      ]
+    },
+    "Farfetch'd": {
+      "fast": [],
+      "charge": [
+        "Cut"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Cut"
+      ]
+    },
+    "Doduo": {
+      "fast": [],
+      "charge": [
+        "Swift"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Swift"
+      ]
+    },
+    "Dodrio": {
+      "fast": [],
+      "charge": [
+        "Air Cutter"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Air Cutter"
+      ]
+    },
+    "Seel": {
+      "fast": [],
+      "charge": [
+        "Aqua Jet",
+        "Water Gun"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Aqua Jet",
+        "Water Gun"
+      ]
+    },
+    "Dewgong": {
+      "fast": [],
+      "charge": [
+        "Aqua Jet",
+        "Ice Shard",
+        "Icy Wind"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Aqua Jet",
+        "Ice Shard",
+        "Icy Wind"
+      ]
+    },
+    "Grimer": {
+      "fast": [],
+      "charge": [
+        "Acid"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [
+        "Acid"
+      ],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Muk": {
+      "fast": [],
+      "charge": [
+        "Acid",
+        "Lick"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [
+        "Acid"
+      ],
+      "elite_fast": [],
+      "elite_charge": [
+        "Lick"
+      ]
+    },
+    "Muk (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Lick"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Lick"
+      ]
+    },
+    "Cloyster": {
+      "fast": [],
+      "charge": [
+        "Blizzard"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Blizzard"
+      ]
+    },
+    "Cloyster (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Blizzard"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Blizzard"
+      ]
+    },
+    "Gastly": {
+      "fast": [],
+      "charge": [
+        "Ominous Wind",
+        "Sucker Punch"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Ominous Wind",
+        "Sucker Punch"
+      ]
+    },
+    "Gastly (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Ominous Wind",
+        "Sucker Punch"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Ominous Wind",
+        "Sucker Punch"
+      ]
+    },
+    "Haunter": {
+      "fast": [],
+      "charge": [
+        "Lick"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Lick"
+      ]
+    },
+    "Haunter (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Lick"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Lick"
+      ]
+    },
+    "Gengar": {
+      "fast": [],
+      "charge": [
+        "Dark Pulse",
+        "Lick",
+        "Psychic",
+        "Shadow Punch",
+        "Sludge Wave"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Dark Pulse",
+        "Lick",
+        "Psychic",
+        "Shadow Punch",
+        "Sludge Wave"
+      ]
+    },
+    "Gengar (Mega)": {
+      "fast": [],
+      "charge": [
+        "Dark Pulse",
+        "Lick",
+        "Psychic",
+        "Shadow Punch",
+        "Sludge Wave"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Dark Pulse",
+        "Lick",
+        "Psychic",
+        "Shadow Punch",
+        "Sludge Wave"
+      ]
+    },
+    "Gengar (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Dark Pulse",
+        "Lick",
+        "Psychic",
+        "Shadow Punch",
+        "Sludge Wave"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Dark Pulse",
+        "Lick",
+        "Psychic",
+        "Shadow Punch",
+        "Sludge Wave"
+      ]
+    },
+    "Onix": {
+      "fast": [],
+      "charge": [
+        "Iron Head",
+        "Rock Slide"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Iron Head",
+        "Rock Slide"
+      ]
+    },
+    "Onix (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Iron Head",
+        "Rock Slide"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Iron Head",
+        "Rock Slide"
+      ]
+    },
+    "Hypno": {
+      "fast": [],
+      "charge": [
+        "Psyshock"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Psyshock"
+      ]
+    },
+    "Hypno (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Psyshock"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Psyshock"
+      ]
+    },
+    "Kingler": {
+      "fast": [],
+      "charge": [
+        "Mud Shot"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Mud Shot"
+      ]
+    },
+    "Voltorb": {
+      "fast": [],
+      "charge": [
+        "Signal Beam"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Signal Beam"
+      ]
+    },
+    "Voltorb (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Signal Beam"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Signal Beam"
+      ]
+    },
+    "Electrode": {
+      "fast": [],
+      "charge": [
+        "Tackle"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Tackle"
+      ]
+    },
+    "Electrode (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Tackle"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Tackle"
+      ]
+    },
+    "Exeggutor": {
+      "fast": [],
+      "charge": [
+        "Zen Headbutt"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Zen Headbutt"
+      ]
+    },
+    "Exeggutor (Alolan)": {
+      "fast": [],
+      "charge": [
+        "Draco Meteor"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Draco Meteor"
+      ]
+    },
+    "Exeggutor (Alolan) (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Draco Meteor"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Draco Meteor"
+      ]
+    },
+    "Exeggutor (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Zen Headbutt"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Zen Headbutt"
+      ]
+    },
+    "Marowak (Alolan)": {
+      "fast": [],
+      "charge": [
+        "Shadow Bone"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Shadow Bone"
+      ]
+    },
+    "Marowak (Alolan) (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Shadow Bone"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Shadow Bone"
+      ]
+    },
+    "Hitmonlee": {
+      "fast": [],
+      "charge": [
+        "Brick Break",
+        "Stomp"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Brick Break",
+        "Stomp"
+      ]
+    },
+    "Hitmonlee (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Brick Break",
+        "Stomp"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Brick Break",
+        "Stomp"
+      ]
+    },
+    "Hitmonchan": {
+      "fast": [],
+      "charge": [
+        "Brick Break",
+        "Rock Smash"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Brick Break",
+        "Rock Smash"
+      ]
+    },
+    "Hitmonchan (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Brick Break",
+        "Rock Smash"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Brick Break",
+        "Rock Smash"
+      ]
+    },
+    "Lickitung": {
+      "fast": [],
+      "charge": [
+        "Body Slam"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Body Slam"
+      ]
+    },
+    "Koffing": {
+      "fast": [],
+      "charge": [
+        "Acid"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [
+        "Acid"
+      ],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Weezing": {
+      "fast": [],
+      "charge": [
+        "Acid"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [
+        "Acid"
+      ],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Rhydon": {
+      "fast": [],
+      "charge": [
+        "Megahorn"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Megahorn"
+      ]
+    },
+    "Rhydon (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Megahorn"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Megahorn"
+      ]
+    },
+    "Chansey": {
+      "fast": [],
+      "charge": [
+        "Psybeam"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [
+        "Psybeam"
+      ],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Tangela": {
+      "fast": [],
+      "charge": [
+        "Power Whip"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Power Whip"
+      ]
+    },
+    "Tangela (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Power Whip"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Power Whip"
+      ]
+    },
+    "Kangaskhan": {
+      "fast": [],
+      "charge": [
+        "Brick Break",
+        "Stomp"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Brick Break",
+        "Stomp"
+      ]
+    },
+    "Kangaskhan (Mega)": {
+      "fast": [],
+      "charge": [
+        "Brick Break",
+        "Stomp"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Brick Break",
+        "Stomp"
+      ]
+    },
+    "Seadra": {
+      "fast": [],
+      "charge": [
+        "Blizzard"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Blizzard"
+      ]
+    },
+    "Seadra (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Blizzard"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Blizzard"
+      ]
+    },
+    "Seaking": {
+      "fast": [],
+      "charge": [
+        "Drill Run",
+        "Icy Wind",
+        "Poison Jab"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Drill Run",
+        "Icy Wind",
+        "Poison Jab"
+      ]
+    },
+    "Staryu": {
+      "fast": [],
+      "charge": [
+        "Quick Attack"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [
+        "Quick Attack"
+      ],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Starmie": {
+      "fast": [],
+      "charge": [
+        "Quick Attack",
+        "Tackle"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [
+        "Quick Attack"
+      ],
+      "elite_fast": [],
+      "elite_charge": [
+        "Tackle"
+      ]
+    },
+    "Starmie (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Tackle"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Tackle"
+      ]
+    },
+    "Scyther": {
+      "fast": [],
+      "charge": [
+        "Bug Buzz",
+        "Steel Wing"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Bug Buzz",
+        "Steel Wing"
+      ]
+    },
+    "Scyther (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Bug Buzz",
+        "Steel Wing"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Bug Buzz",
+        "Steel Wing"
+      ]
+    },
+    "Jynx": {
+      "fast": [],
+      "charge": [
+        "Ice Punch",
+        "Pound"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Ice Punch",
+        "Pound"
+      ]
+    },
+    "Pinsir": {
+      "fast": [],
+      "charge": [
+        "Submission"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Submission"
+      ]
+    },
+    "Pinsir (Mega)": {
+      "fast": [],
+      "charge": [
+        "Submission"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Submission"
+      ]
+    },
+    "Pinsir (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Submission"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Submission"
+      ]
+    },
+    "Gyarados": {
+      "fast": [],
+      "charge": [
+        "Aqua Tail",
+        "Dragon Pulse",
+        "Dragon Tail"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Aqua Tail",
+        "Dragon Pulse",
+        "Dragon Tail"
+      ]
+    },
+    "Gyarados (Mega)": {
+      "fast": [],
+      "charge": [
+        "Aqua Tail",
+        "Dragon Pulse",
+        "Dragon Tail"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Aqua Tail",
+        "Dragon Pulse",
+        "Dragon Tail"
+      ]
+    },
+    "Gyarados (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Aqua Tail",
+        "Dragon Pulse",
+        "Dragon Tail"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Aqua Tail",
+        "Dragon Pulse",
+        "Dragon Tail"
+      ]
+    },
+    "Lapras": {
+      "fast": [],
+      "charge": [
+        "Dragon Pulse",
+        "Ice Beam",
+        "Ice Shard"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Dragon Pulse",
+        "Ice Beam",
+        "Ice Shard"
+      ]
+    },
+    "Lapras (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Dragon Pulse",
+        "Ice Beam",
+        "Ice Shard"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Dragon Pulse",
+        "Ice Beam",
+        "Ice Shard"
+      ]
+    },
+    "Eevee": {
+      "fast": [],
+      "charge": [
+        "Body Slam",
+        "Last Resort"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Body Slam",
+        "Last Resort"
+      ]
+    },
+    "Vaporeon": {
+      "fast": [],
+      "charge": [
+        "Last Resort",
+        "Scald"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Last Resort",
+        "Scald"
+      ]
+    },
+    "Jolteon": {
+      "fast": [],
+      "charge": [
+        "Last Resort",
+        "Zap Cannon"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Last Resort",
+        "Zap Cannon"
+      ]
+    },
+    "Flareon": {
+      "fast": [],
+      "charge": [
+        "Heat Wave",
+        "Last Resort",
+        "Superpower"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Heat Wave",
+        "Last Resort",
+        "Superpower"
+      ]
+    },
+    "Porygon": {
+      "fast": [],
+      "charge": [
+        "Discharge",
+        "Psybeam",
+        "Quick Attack",
+        "Signal Beam",
+        "Tackle",
+        "Zen Headbutt"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [
+        "Quick Attack"
+      ],
+      "elite_fast": [],
+      "elite_charge": [
+        "Discharge",
+        "Psybeam",
+        "Signal Beam",
+        "Tackle",
+        "Zen Headbutt"
+      ]
+    },
+    "Porygon (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Discharge",
+        "Psybeam",
+        "Signal Beam",
+        "Tackle",
+        "Zen Headbutt"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Discharge",
+        "Psybeam",
+        "Signal Beam",
+        "Tackle",
+        "Zen Headbutt"
+      ]
+    },
+    "Omanyte": {
+      "fast": [],
+      "charge": [
+        "Brine",
+        "Rock Tomb"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Brine",
+        "Rock Tomb"
+      ]
+    },
+    "Omanyte (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Brine",
+        "Rock Tomb"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Brine",
+        "Rock Tomb"
+      ]
+    },
+    "Omastar": {
+      "fast": [],
+      "charge": [
+        "Rock Slide",
+        "Rock Throw"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Rock Slide",
+        "Rock Throw"
+      ]
+    },
+    "Omastar (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Rock Slide",
+        "Rock Throw"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Rock Slide",
+        "Rock Throw"
+      ]
+    },
+    "Kabutops": {
+      "fast": [],
+      "charge": [
+        "Fury Cutter"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Fury Cutter"
+      ]
+    },
+    "Snorlax": {
+      "fast": [],
+      "charge": [
+        "Yawn"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Yawn"
+      ]
+    },
+    "Snorlax (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Yawn"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Yawn"
+      ]
+    },
+    "Articuno": {
+      "fast": [],
+      "charge": [
+        "Hurricane"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Hurricane"
+      ]
+    },
+    "Articuno (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Hurricane"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Hurricane"
+      ]
+    },
+    "Zapdos": {
+      "fast": [],
+      "charge": [
+        "Thunder Shock"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Thunder Shock"
+      ]
+    },
+    "Zapdos (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Thunder Shock"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Thunder Shock"
+      ]
+    },
+    "Moltres": {
+      "fast": [],
+      "charge": [
+        "Sky Attack"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Sky Attack"
+      ]
+    },
+    "Moltres (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Sky Attack"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Sky Attack"
+      ]
+    },
+    "Dragonite": {
+      "fast": [],
+      "charge": [
+        "Draco Meteor",
+        "Dragon Pulse"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Draco Meteor",
+        "Dragon Pulse"
+      ]
+    },
+    "Dragonite (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Draco Meteor",
+        "Dragon Pulse"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Draco Meteor",
+        "Dragon Pulse"
+      ]
+    },
+    "Mewtwo": {
+      "fast": [],
+      "charge": [
+        "Hyper Beam",
+        "Psystrike",
+        "Shadow Ball"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Hyper Beam",
+        "Psystrike",
+        "Shadow Ball"
+      ]
+    },
+    "Mewtwo (Armored)": {
+      "fast": [],
+      "charge": [
+        "Psystrike"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Psystrike"
+      ]
+    },
+    "Mewtwo (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Hyper Beam",
+        "Psystrike",
+        "Shadow Ball"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Hyper Beam",
+        "Psystrike",
+        "Shadow Ball"
+      ]
+    },
+    "Meganium": {
+      "fast": [],
+      "charge": [
+        "Frenzy Plant"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Frenzy Plant"
+      ]
+    },
+    "Meganium (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Frenzy Plant"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Frenzy Plant"
+      ]
+    },
+    "Typhlosion": {
+      "fast": [],
+      "charge": [
+        "Blast Burn"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Blast Burn"
+      ]
+    },
+    "Typhlosion (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Blast Burn"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Blast Burn"
+      ]
+    },
+    "Feraligatr": {
+      "fast": [],
+      "charge": [
+        "Hydro Cannon",
+        "Water Gun"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Hydro Cannon",
+        "Water Gun"
+      ]
+    },
+    "Feraligatr (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Hydro Cannon",
+        "Water Gun"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Hydro Cannon",
+        "Water Gun"
+      ]
+    },
+    "Pichu": {
+      "fast": [],
+      "charge": [
+        "Quick Attack"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [
+        "Quick Attack"
+      ],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Cleffa": {
+      "fast": [],
+      "charge": [
+        "Body Slam",
+        "Psychic"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Body Slam",
+        "Psychic"
+      ]
+    },
+    "Igglybuff": {
+      "fast": [],
+      "charge": [
+        "Body Slam"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Body Slam"
+      ]
+    },
+    "Togepi": {
+      "fast": [],
+      "charge": [
+        "Zen Headbutt"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Zen Headbutt"
+      ]
+    },
+    "Togetic": {
+      "fast": [],
+      "charge": [
+        "Steel Wing",
+        "Zen Headbutt"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Steel Wing",
+        "Zen Headbutt"
+      ]
+    },
+    "Ampharos": {
+      "fast": [],
+      "charge": [
+        "Dragon Pulse"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Dragon Pulse"
+      ]
+    },
+    "Ampharos (Mega)": {
+      "fast": [],
+      "charge": [
+        "Dragon Pulse"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Dragon Pulse"
+      ]
+    },
+    "Ampharos (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Dragon Pulse"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Dragon Pulse"
+      ]
+    },
+    "Politoed": {
+      "fast": [],
+      "charge": [
+        "Earthquake",
+        "Ice Beam"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Earthquake",
+        "Ice Beam"
+      ]
+    },
+    "Politoed (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Earthquake",
+        "Ice Beam"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Earthquake",
+        "Ice Beam"
+      ]
+    },
+    "Jumpluff": {
+      "fast": [],
+      "charge": [
+        "Acrobatics"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Acrobatics"
+      ]
+    },
+    "Jumpluff (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Acrobatics"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Acrobatics"
+      ]
+    },
+    "Quagsire": {
+      "fast": [],
+      "charge": [
+        "Aqua Tail"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Aqua Tail"
+      ]
+    },
+    "Quagsire (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Aqua Tail"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Aqua Tail"
+      ]
+    },
+    "Espeon": {
+      "fast": [],
+      "charge": [
+        "Last Resort",
+        "Shadow Ball"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Last Resort",
+        "Shadow Ball"
+      ]
+    },
+    "Umbreon": {
+      "fast": [],
+      "charge": [
+        "Last Resort",
+        "Psychic"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Last Resort",
+        "Psychic"
+      ]
+    },
+    "Slowking": {
+      "fast": [],
+      "charge": [
+        "Surf"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Surf"
+      ]
+    },
+    "Slowking (Galarian)": {
+      "fast": [],
+      "charge": [
+        "Surf"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Surf"
+      ]
+    },
+    "Slowking (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Surf"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Surf"
+      ]
+    },
+    "Delibird": {
+      "fast": [],
+      "charge": [
+        "Quick Attack"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [
+        "Quick Attack"
+      ],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Kingdra": {
+      "fast": [],
+      "charge": [
+        "Water Gun"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Water Gun"
+      ]
+    },
+    "Kingdra (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Water Gun"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Water Gun"
+      ]
+    },
+    "Smoochum": {
+      "fast": [],
+      "charge": [
+        "Frost Breath"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Frost Breath"
+      ]
+    },
+    "Elekid": {
+      "fast": [],
+      "charge": [
+        "Thunderbolt"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Thunderbolt"
+      ]
+    },
+    "Magby": {
+      "fast": [],
+      "charge": [
+        "Flamethrower"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Flamethrower"
+      ]
+    },
+    "Blissey": {
+      "fast": [],
+      "charge": [
+        "Wild Charge"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Wild Charge"
+      ]
+    },
+    "Suicune": {
+      "fast": [],
+      "charge": [
+        "Hidden Power (Bug)",
+        "Hidden Power (Dark)",
+        "Hidden Power (Dragon)",
+        "Hidden Power (Electric)",
+        "Hidden Power (Fighting)",
+        "Hidden Power (Fire)",
+        "Hidden Power (Flying)",
+        "Hidden Power (Ghost)",
+        "Hidden Power (Grass)",
+        "Hidden Power (Ground)",
+        "Hidden Power (Ice)",
+        "Hidden Power (Poison)",
+        "Hidden Power (Psychic)",
+        "Hidden Power (Rock)",
+        "Hidden Power (Steel)",
+        "Hidden Power (Water)"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Hidden Power (Bug)",
+        "Hidden Power (Dark)",
+        "Hidden Power (Dragon)",
+        "Hidden Power (Electric)",
+        "Hidden Power (Fighting)",
+        "Hidden Power (Fire)",
+        "Hidden Power (Flying)",
+        "Hidden Power (Ghost)",
+        "Hidden Power (Grass)",
+        "Hidden Power (Ground)",
+        "Hidden Power (Ice)",
+        "Hidden Power (Poison)",
+        "Hidden Power (Psychic)",
+        "Hidden Power (Rock)",
+        "Hidden Power (Steel)",
+        "Hidden Power (Water)"
+      ]
+    },
+    "Suicune (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Hidden Power (Bug)",
+        "Hidden Power (Dark)",
+        "Hidden Power (Dragon)",
+        "Hidden Power (Electric)",
+        "Hidden Power (Fighting)",
+        "Hidden Power (Fire)",
+        "Hidden Power (Flying)",
+        "Hidden Power (Ghost)",
+        "Hidden Power (Grass)",
+        "Hidden Power (Ground)",
+        "Hidden Power (Ice)",
+        "Hidden Power (Poison)",
+        "Hidden Power (Psychic)",
+        "Hidden Power (Rock)",
+        "Hidden Power (Steel)",
+        "Hidden Power (Water)"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Hidden Power (Bug)",
+        "Hidden Power (Dark)",
+        "Hidden Power (Dragon)",
+        "Hidden Power (Electric)",
+        "Hidden Power (Fighting)",
+        "Hidden Power (Fire)",
+        "Hidden Power (Flying)",
+        "Hidden Power (Ghost)",
+        "Hidden Power (Grass)",
+        "Hidden Power (Ground)",
+        "Hidden Power (Ice)",
+        "Hidden Power (Poison)",
+        "Hidden Power (Psychic)",
+        "Hidden Power (Rock)",
+        "Hidden Power (Steel)",
+        "Hidden Power (Water)"
+      ]
+    },
+    "Tyranitar": {
+      "fast": [],
+      "charge": [
+        "Smack Down"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Smack Down"
+      ]
+    },
+    "Tyranitar (Mega)": {
+      "fast": [],
+      "charge": [
+        "Smack Down"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Smack Down"
+      ]
+    },
+    "Tyranitar (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Smack Down"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Smack Down"
+      ]
+    },
+    "Lugia": {
+      "fast": [],
+      "charge": [
+        "Aeroblast"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Aeroblast"
+      ]
+    },
+    "Lugia (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Aeroblast"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Aeroblast"
+      ]
+    },
+    "Ho-Oh": {
+      "fast": [],
+      "charge": [
+        "Earthquake",
+        "Sacred Fire"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Earthquake",
+        "Sacred Fire"
+      ]
+    },
+    "Ho-Oh (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Earthquake",
+        "Sacred Fire"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Earthquake",
+        "Sacred Fire"
+      ]
+    },
+    "Celebi": {
+      "fast": [],
+      "charge": [
+        "Magical Leaf"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Magical Leaf"
+      ]
+    },
+    "Sceptile": {
+      "fast": [],
+      "charge": [
+        "Frenzy Plant"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Frenzy Plant"
+      ]
+    },
+    "Sceptile (Mega)": {
+      "fast": [],
+      "charge": [
+        "Frenzy Plant"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Frenzy Plant"
+      ]
+    },
+    "Sceptile (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Frenzy Plant"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Frenzy Plant"
+      ]
+    },
+    "Blaziken": {
+      "fast": [],
+      "charge": [
+        "Blast Burn",
+        "Stone Edge"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Blast Burn",
+        "Stone Edge"
+      ]
+    },
+    "Blaziken (Mega)": {
+      "fast": [],
+      "charge": [
+        "Blast Burn",
+        "Stone Edge"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Blast Burn",
+        "Stone Edge"
+      ]
+    },
+    "Blaziken (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Blast Burn",
+        "Stone Edge"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Blast Burn",
+        "Stone Edge"
+      ]
+    },
+    "Swampert": {
+      "fast": [],
+      "charge": [
+        "Hydro Cannon"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Hydro Cannon"
+      ]
+    },
+    "Swampert (Mega)": {
+      "fast": [],
+      "charge": [
+        "Hydro Cannon"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Hydro Cannon"
+      ]
+    },
+    "Swampert (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Hydro Cannon"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Hydro Cannon"
+      ]
+    },
+    "Shiftry": {
+      "fast": [],
+      "charge": [
+        "Bullet Seed"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Bullet Seed"
+      ]
+    },
+    "Shiftry (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Bullet Seed"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Bullet Seed"
+      ]
+    },
+    "Kirlia": {
+      "fast": [],
+      "charge": [
+        "Draining Kiss"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [
+        "Draining Kiss"
+      ],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Gardevoir": {
+      "fast": [],
+      "charge": [
+        "Synchronoise"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Synchronoise"
+      ]
+    },
+    "Gardevoir (Mega)": {
+      "fast": [],
+      "charge": [
+        "Synchronoise"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Synchronoise"
+      ]
+    },
+    "Gardevoir (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Synchronoise"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Synchronoise"
+      ]
+    },
+    "Breloom": {
+      "fast": [],
+      "charge": [
+        "Grass Knot"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Grass Knot"
+      ]
+    },
+    "Slaking": {
+      "fast": [],
+      "charge": [
+        "Body Slam"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Body Slam"
+      ]
+    },
+    "Slaking (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Body Slam"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Body Slam"
+      ]
+    },
+    "Shedinja": {
+      "fast": [],
+      "charge": [
+        "Struggle Bug"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Struggle Bug"
+      ]
+    },
+    "Flygon": {
+      "fast": [],
+      "charge": [
+        "Earth Power"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Earth Power"
+      ]
+    },
+    "Flygon (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Earth Power"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Earth Power"
+      ]
+    },
+    "Altaria": {
+      "fast": [],
+      "charge": [
+        "Moonblast"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Moonblast"
+      ]
+    },
+    "Altaria (Mega)": {
+      "fast": [],
+      "charge": [
+        "Moonblast"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Moonblast"
+      ]
+    },
+    "Altaria (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Moonblast"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Moonblast"
+      ]
+    },
+    "Absol": {
+      "fast": [],
+      "charge": [
+        "Brutal Swing"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Brutal Swing"
+      ]
+    },
+    "Absol (Mega)": {
+      "fast": [],
+      "charge": [
+        "Brutal Swing"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Brutal Swing"
+      ]
+    },
+    "Walrein": {
+      "fast": [],
+      "charge": [
+        "Icicle Spear",
+        "Powder Snow"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Icicle Spear",
+        "Powder Snow"
+      ]
+    },
+    "Walrein (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Icicle Spear",
+        "Powder Snow"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Icicle Spear",
+        "Powder Snow"
+      ]
+    },
+    "Salamence": {
+      "fast": [],
+      "charge": [
+        "Outrage"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Outrage"
+      ]
+    },
+    "Salamence (Mega)": {
+      "fast": [],
+      "charge": [
+        "Outrage"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Outrage"
+      ]
+    },
+    "Salamence (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Outrage"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Outrage"
+      ]
+    },
+    "Metagross": {
+      "fast": [],
+      "charge": [
+        "Meteor Mash"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Meteor Mash"
+      ]
+    },
+    "Metagross (Mega)": {
+      "fast": [],
+      "charge": [
+        "Meteor Mash"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Meteor Mash"
+      ]
+    },
+    "Metagross (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Meteor Mash"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Meteor Mash"
+      ]
+    },
+    "Regirock": {
+      "fast": [],
+      "charge": [
+        "Earthquake"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Earthquake"
+      ]
+    },
+    "Regirock (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Earthquake"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Earthquake"
+      ]
+    },
+    "Regice": {
+      "fast": [],
+      "charge": [
+        "Thunder"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Thunder"
+      ]
+    },
+    "Regice (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Thunder"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Thunder"
+      ]
+    },
+    "Registeel": {
+      "fast": [],
+      "charge": [
+        "Zap Cannon"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Zap Cannon"
+      ]
+    },
+    "Registeel (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Zap Cannon"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Zap Cannon"
+      ]
+    },
+    "Latias": {
+      "fast": [],
+      "charge": [
+        "Mist Ball"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Mist Ball"
+      ]
+    },
+    "Latias (Mega)": {
+      "fast": [],
+      "charge": [
+        "Mist Ball"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Mist Ball"
+      ]
+    },
+    "Latias (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Mist Ball"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Mist Ball"
+      ]
+    },
+    "Latios": {
+      "fast": [],
+      "charge": [
+        "Luster Purge"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Luster Purge"
+      ]
+    },
+    "Latios (Mega)": {
+      "fast": [],
+      "charge": [
+        "Luster Purge"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Luster Purge"
+      ]
+    },
+    "Latios (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Luster Purge"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Luster Purge"
+      ]
+    },
+    "Kyogre": {
+      "fast": [],
+      "charge": [
+        "Origin Pulse"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Origin Pulse"
+      ]
+    },
+    "Kyogre (Primal)": {
+      "fast": [],
+      "charge": [
+        "Origin Pulse"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Origin Pulse"
+      ]
+    },
+    "Kyogre (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Origin Pulse"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Origin Pulse"
+      ]
+    },
+    "Groudon": {
+      "fast": [],
+      "charge": [
+        "Fire Punch",
+        "Precipice Blades"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Fire Punch",
+        "Precipice Blades"
+      ]
+    },
+    "Groudon (Primal)": {
+      "fast": [],
+      "charge": [
+        "Fire Punch",
+        "Precipice Blades"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Fire Punch",
+        "Precipice Blades"
+      ]
+    },
+    "Groudon (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Fire Punch",
+        "Precipice Blades"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Fire Punch",
+        "Precipice Blades"
+      ]
+    },
+    "Rayquaza": {
+      "fast": [],
+      "charge": [
+        "Breaking Swipe",
+        "Dragon Ascent",
+        "Hurricane"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Breaking Swipe",
+        "Dragon Ascent",
+        "Hurricane"
+      ]
+    },
+    "Rayquaza (Mega)": {
+      "fast": [],
+      "charge": [
+        "Breaking Swipe",
+        "Dragon Ascent",
+        "Hurricane"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Breaking Swipe",
+        "Dragon Ascent",
+        "Hurricane"
+      ]
+    },
+    "Torterra": {
+      "fast": [],
+      "charge": [
+        "Frenzy Plant"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Frenzy Plant"
+      ]
+    },
+    "Torterra (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Frenzy Plant"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Frenzy Plant"
+      ]
+    },
+    "Infernape": {
+      "fast": [],
+      "charge": [
+        "Blast Burn"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Blast Burn"
+      ]
+    },
+    "Infernape (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Blast Burn"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Blast Burn"
+      ]
+    },
+    "Empoleon": {
+      "fast": [],
+      "charge": [
+        "Hydro Cannon"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Hydro Cannon"
+      ]
+    },
+    "Empoleon (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Hydro Cannon"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Hydro Cannon"
+      ]
+    },
+    "Staraptor": {
+      "fast": [],
+      "charge": [
+        "Gust"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Gust"
+      ]
+    },
+    "Staraptor (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Gust"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Gust"
+      ]
+    },
+    "Bidoof": {
+      "fast": [],
+      "charge": [
+        "Ice Beam",
+        "Shadow Ball",
+        "Superpower",
+        "Thunderbolt"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Ice Beam",
+        "Shadow Ball",
+        "Superpower",
+        "Thunderbolt"
+      ]
+    },
+    "Bidoof (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Ice Beam",
+        "Shadow Ball",
+        "Superpower",
+        "Thunderbolt"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Ice Beam",
+        "Shadow Ball",
+        "Superpower",
+        "Thunderbolt"
+      ]
+    },
+    "Luxray": {
+      "fast": [],
+      "charge": [
+        "Psychic Fangs"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Psychic Fangs"
+      ]
+    },
+    "Luxray (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Psychic Fangs"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Psychic Fangs"
+      ]
+    },
+    "Roserade": {
+      "fast": [],
+      "charge": [
+        "Bullet Seed",
+        "Weather Ball (Fire)"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Bullet Seed",
+        "Weather Ball (Fire)"
+      ]
+    },
+    "Garchomp": {
+      "fast": [],
+      "charge": [
+        "Earth Power"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Earth Power"
+      ]
+    },
+    "Garchomp (Mega)": {
+      "fast": [],
+      "charge": [
+        "Earth Power"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Earth Power"
+      ]
+    },
+    "Garchomp (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Earth Power"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Earth Power"
+      ]
+    },
+    "Lucario": {
+      "fast": [],
+      "charge": [
+        "Force Palm"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Force Palm"
+      ]
+    },
+    "Lucario (Mega)": {
+      "fast": [],
+      "charge": [
+        "Force Palm"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Force Palm"
+      ]
+    },
+    "Lickilicky": {
+      "fast": [],
+      "charge": [
+        "Body Slam"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Body Slam"
+      ]
+    },
+    "Rhyperior": {
+      "fast": [],
+      "charge": [
+        "Rock Wrecker"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Rock Wrecker"
+      ]
+    },
+    "Rhyperior (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Rock Wrecker"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Rock Wrecker"
+      ]
+    },
+    "Electivire": {
+      "fast": [],
+      "charge": [
+        "Flamethrower"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Flamethrower"
+      ]
+    },
+    "Electivire (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Flamethrower"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Flamethrower"
+      ]
+    },
+    "Magmortar": {
+      "fast": [],
+      "charge": [
+        "Thunderbolt"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Thunderbolt"
+      ]
+    },
+    "Magmortar (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Thunderbolt"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Thunderbolt"
+      ]
+    },
+    "Togekiss": {
+      "fast": [],
+      "charge": [
+        "Aura Sphere"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Aura Sphere"
+      ]
+    },
+    "Leafeon": {
+      "fast": [],
+      "charge": [
+        "Bullet Seed",
+        "Last Resort"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Bullet Seed",
+        "Last Resort"
+      ]
+    },
+    "Glaceon": {
+      "fast": [],
+      "charge": [
+        "Last Resort",
+        "Water Pulse"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Last Resort",
+        "Water Pulse"
+      ]
+    },
+    "Mamoswine": {
+      "fast": [],
+      "charge": [
+        "Ancient Power"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Ancient Power"
+      ]
+    },
+    "Mamoswine (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Ancient Power"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Ancient Power"
+      ]
+    },
+    "Porygon-Z": {
+      "fast": [],
+      "charge": [
+        "Tri Attack"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Tri Attack"
+      ]
+    },
+    "Porygon-Z (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Tri Attack"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Tri Attack"
+      ]
+    },
+    "Gallade": {
+      "fast": [],
+      "charge": [
+        "Synchronoise"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Synchronoise"
+      ]
+    },
+    "Gallade (Mega)": {
+      "fast": [],
+      "charge": [
+        "Synchronoise"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Synchronoise"
+      ]
+    },
+    "Gallade (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Synchronoise"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Synchronoise"
+      ]
+    },
+    "Dusknoir": {
+      "fast": [],
+      "charge": [
+        "Shadow Ball"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Shadow Ball"
+      ]
+    },
+    "Dusknoir (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Shadow Ball"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Shadow Ball"
+      ]
+    },
+    "Dialga (Origin)": {
+      "fast": [],
+      "charge": [
+        "Roar of Time"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [
+        "Roar of Time"
+      ],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Palkia (Origin)": {
+      "fast": [],
+      "charge": [
+        "Spacial Rend"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [
+        "Spacial Rend"
+      ],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Heatran": {
+      "fast": [],
+      "charge": [
+        "Magma Storm"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Magma Storm"
+      ]
+    },
+    "Heatran (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Magma Storm"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Magma Storm"
+      ]
+    },
+    "Regigigas": {
+      "fast": [],
+      "charge": [
+        "Crush Grip"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Crush Grip"
+      ]
+    },
+    "Regigigas (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Crush Grip"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Crush Grip"
+      ]
+    },
+    "Giratina (Altered)": {
+      "fast": [],
+      "charge": [
+        "Shadow Force"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Shadow Force"
+      ]
+    },
+    "Giratina (Altered) (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Shadow Force"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Shadow Force"
+      ]
+    },
+    "Giratina (Origin)": {
+      "fast": [],
+      "charge": [
+        "Shadow Force"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Shadow Force"
+      ]
+    },
+    "Cresselia": {
+      "fast": [],
+      "charge": [
+        "Grass Knot"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Grass Knot"
+      ]
+    },
+    "Cresselia (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Grass Knot"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Grass Knot"
+      ]
+    },
+    "Darkrai": {
+      "fast": [],
+      "charge": [
+        "Sludge Bomb"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Sludge Bomb"
+      ]
+    },
+    "Shaymin (Land)": {
+      "fast": [],
+      "charge": [
+        "Seed Flare"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Seed Flare"
+      ]
+    },
+    "Shaymin (Sky)": {
+      "fast": [],
+      "charge": [
+        "Seed Flare"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Seed Flare"
+      ]
+    },
+    "Serperior": {
+      "fast": [],
+      "charge": [
+        "Frenzy Plant"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Frenzy Plant"
+      ]
+    },
+    "Serperior (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Frenzy Plant"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Frenzy Plant"
+      ]
+    },
+    "Emboar": {
+      "fast": [],
+      "charge": [
+        "Blast Burn"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Blast Burn"
+      ]
+    },
+    "Emboar (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Blast Burn"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Blast Burn"
+      ]
+    },
+    "Samurott": {
+      "fast": [],
+      "charge": [
+        "Hydro Cannon"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Hydro Cannon"
+      ]
+    },
+    "Samurott (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Hydro Cannon"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Hydro Cannon"
+      ]
+    },
+    "Gigalith": {
+      "fast": [],
+      "charge": [
+        "Meteor Beam"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Meteor Beam"
+      ]
+    },
+    "Gigalith (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Meteor Beam"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Meteor Beam"
+      ]
+    },
+    "Audino": {
+      "fast": [],
+      "charge": [
+        "Body Slam"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Body Slam"
+      ]
+    },
+    "Audino (Mega)": {
+      "fast": [],
+      "charge": [
+        "Body Slam"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Body Slam"
+      ]
+    },
+    "Conkeldurr": {
+      "fast": [],
+      "charge": [
+        "Brutal Swing"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Brutal Swing"
+      ]
+    },
+    "Conkeldurr (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Brutal Swing"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Brutal Swing"
+      ]
+    },
+    "Leavanny": {
+      "fast": [],
+      "charge": [
+        "Shadow Claw"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Shadow Claw"
+      ]
+    },
+    "Vanilluxe": {
+      "fast": [],
+      "charge": [
+        "Avalanche"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Avalanche"
+      ]
+    },
+    "Escavalier": {
+      "fast": [],
+      "charge": [
+        "Razor Shell"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Razor Shell"
+      ]
+    },
+    "Escavalier (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Razor Shell"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Razor Shell"
+      ]
+    },
+    "Eelektross": {
+      "fast": [],
+      "charge": [
+        "Volt Switch"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Volt Switch"
+      ]
+    },
+    "Chandelure": {
+      "fast": [],
+      "charge": [
+        "Poltergeist"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Poltergeist"
+      ]
+    },
+    "Chandelure (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Poltergeist"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Poltergeist"
+      ]
+    },
+    "Haxorus": {
+      "fast": [],
+      "charge": [
+        "Breaking Swipe"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Breaking Swipe"
+      ]
+    },
+    "Accelgor": {
+      "fast": [],
+      "charge": [
+        "Energy Ball"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Energy Ball"
+      ]
+    },
+    "Accelgor (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Energy Ball"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Energy Ball"
+      ]
+    },
+    "Mienfoo": {
+      "fast": [],
+      "charge": [
+        "High Jump Kick"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "High Jump Kick"
+      ]
+    },
+    "Hydreigon": {
+      "fast": [],
+      "charge": [
+        "Brutal Swing"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Brutal Swing"
+      ]
+    },
+    "Hydreigon (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Brutal Swing"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Brutal Swing"
+      ]
+    },
+    "Cobalion": {
+      "fast": [],
+      "charge": [
+        "Sacred Sword"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Sacred Sword"
+      ]
+    },
+    "Terrakion": {
+      "fast": [],
+      "charge": [
+        "Sacred Sword"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Sacred Sword"
+      ]
+    },
+    "Virizion": {
+      "fast": [],
+      "charge": [
+        "Sacred Sword"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Sacred Sword"
+      ]
+    },
+    "Tornadus (Therian)": {
+      "fast": [],
+      "charge": [
+        "Bleakwind Storm"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Bleakwind Storm"
+      ]
+    },
+    "Thundurus (Therian)": {
+      "fast": [],
+      "charge": [
+        "Wildbolt Storm"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Wildbolt Storm"
+      ]
+    },
+    "Reshiram": {
+      "fast": [],
+      "charge": [
+        "Fusion Flare"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Fusion Flare"
+      ]
+    },
+    "Zekrom": {
+      "fast": [],
+      "charge": [
+        "Fusion Bolt"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Fusion Bolt"
+      ]
+    },
+    "Landorus (Therian)": {
+      "fast": [],
+      "charge": [
+        "Sandsear Storm"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Sandsear Storm"
+      ]
+    },
+    "Kyurem": {
+      "fast": [],
+      "charge": [
+        "Glaciate"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Glaciate"
+      ]
+    },
+    "Kyurem (Black)": {
+      "fast": [],
+      "charge": [
+        "Freeze Shock"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [
+        "Freeze Shock"
+      ],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Kyurem (White)": {
+      "fast": [],
+      "charge": [
+        "Ice Burn"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [
+        "Ice Burn"
+      ],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Keldeo (Resolute)": {
+      "fast": [],
+      "charge": [
+        "Sacred Sword"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Sacred Sword"
+      ]
+    },
+    "Genesect": {
+      "fast": [],
+      "charge": [
+        "Techno Blast (Normal)"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Techno Blast (Normal)"
+      ]
+    },
+    "Genesect (Burn)": {
+      "fast": [],
+      "charge": [
+        "Techno Blast (Burn)"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Techno Blast (Burn)"
+      ]
+    },
+    "Genesect (Chill)": {
+      "fast": [],
+      "charge": [
+        "Techno Blast (Chill)"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Techno Blast (Chill)"
+      ]
+    },
+    "Genesect (Douse)": {
+      "fast": [],
+      "charge": [
+        "Techno Blast (Douse)"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Techno Blast (Douse)"
+      ]
+    },
+    "Chesnaught": {
+      "fast": [],
+      "charge": [
+        "Frenzy Plant"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Frenzy Plant"
+      ]
+    },
+    "Delphox": {
+      "fast": [],
+      "charge": [
+        "Blast Burn"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Blast Burn"
+      ]
+    },
+    "Greninja": {
+      "fast": [],
+      "charge": [
+        "Hydro Cannon"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Hydro Cannon"
+      ]
+    },
+    "Talonflame": {
+      "fast": [],
+      "charge": [
+        "Incinerate"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Incinerate"
+      ]
+    },
+    "Talonflame (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Incinerate"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Incinerate"
+      ]
+    },
+    "Florges": {
+      "fast": [],
+      "charge": [
+        "Chilling Water"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Chilling Water"
+      ]
+    },
+    "Sylveon": {
+      "fast": [],
+      "charge": [
+        "Last Resort",
+        "Psyshock"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Last Resort",
+        "Psyshock"
+      ]
+    },
+    "Goodra": {
+      "fast": [],
+      "charge": [
+        "Thunder Punch"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Thunder Punch"
+      ]
+    },
+    "Noivern": {
+      "fast": [],
+      "charge": [
+        "Boomburst"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Boomburst"
+      ]
+    },
+    "Xerneas": {
+      "fast": [],
+      "charge": [
+        "Geomancy"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Geomancy"
+      ]
+    },
+    "Yveltal": {
+      "fast": [],
+      "charge": [
+        "Oblivion Wing"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Oblivion Wing"
+      ]
+    },
+    "Decidueye": {
+      "fast": [],
+      "charge": [
+        "Frenzy Plant"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Frenzy Plant"
+      ]
+    },
+    "Incineroar": {
+      "fast": [],
+      "charge": [
+        "Blast Burn"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Blast Burn"
+      ]
+    },
+    "Primarina": {
+      "fast": [],
+      "charge": [
+        "Hydro Cannon"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Hydro Cannon"
+      ]
+    },
+    "Charjabug": {
+      "fast": [],
+      "charge": [
+        "Volt Switch"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Volt Switch"
+      ]
+    },
+    "Charjabug (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Volt Switch"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Volt Switch"
+      ]
+    },
+    "Vikavolt": {
+      "fast": [],
+      "charge": [
+        "Volt Switch"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Volt Switch"
+      ]
+    },
+    "Vikavolt (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Volt Switch"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Volt Switch"
+      ]
+    },
+    "Bewear": {
+      "fast": [],
+      "charge": [
+        "Drain Punch"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Drain Punch"
+      ]
+    },
+    "Tsareena": {
+      "fast": [],
+      "charge": [
+        "High Jump Kick"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "High Jump Kick"
+      ]
+    },
+    "Kommo-o": {
+      "fast": [],
+      "charge": [
+        "Clanging Scales"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Clanging Scales"
+      ]
+    },
+    "Tapu Koko": {
+      "fast": [],
+      "charge": [
+        "Nature's Madness"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Nature's Madness"
+      ]
+    },
+    "Tapu Lele": {
+      "fast": [],
+      "charge": [
+        "Nature's Madness"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Nature's Madness"
+      ]
+    },
+    "Tapu Bulu": {
+      "fast": [],
+      "charge": [
+        "Nature's Madness"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Nature's Madness"
+      ]
+    },
+    "Tapu Fini": {
+      "fast": [],
+      "charge": [
+        "Nature's Madness"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Nature's Madness"
+      ]
+    },
+    "Melmetal": {
+      "fast": [],
+      "charge": [
+        "Double Iron Bash"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Double Iron Bash"
+      ]
+    },
+    "Corviknight": {
+      "fast": [],
+      "charge": [
+        "Air Cutter",
+        "Iron Head"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Air Cutter",
+        "Iron Head"
+      ]
+    },
+    "Obstagoon": {
+      "fast": [],
+      "charge": [
+        "Obstruct"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Obstruct"
+      ]
+    },
+    "Obstagoon (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Obstruct"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Obstruct"
+      ]
+    },
+    "Zacian (Crowned Sword)": {
+      "fast": [],
+      "charge": [
+        "Behemoth Blade"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [
+        "Behemoth Blade"
+      ],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Zamazenta (Crowned Shield)": {
+      "fast": [],
+      "charge": [
+        "Behemoth Bash"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [
+        "Behemoth Bash"
+      ],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Eternatus": {
+      "fast": [],
+      "charge": [
+        "Dynamax Cannon"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Dynamax Cannon"
+      ]
+    },
+    "Regieleki": {
+      "fast": [],
+      "charge": [
+        "Thunder Cage"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Thunder Cage"
+      ]
+    },
+    "Regidrago": {
+      "fast": [],
+      "charge": [
+        "Dragon Breath",
+        "Dragon Energy"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Dragon Breath",
+        "Dragon Energy"
+      ]
+    },
+    "Ursaluna": {
+      "fast": [],
+      "charge": [
+        "High Horsepower"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "High Horsepower"
+      ]
+    },
+    "Ursaluna (Shadow)": {
+      "fast": [],
+      "charge": [
+        "High Horsepower"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "High Horsepower"
+      ]
+    },
+    "Meowscarada": {
+      "fast": [],
+      "charge": [
+        "Frenzy Plant"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Frenzy Plant"
+      ]
+    },
+    "Skeledirge": {
+      "fast": [],
+      "charge": [
+        "Blast Burn"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Blast Burn"
+      ]
+    },
+    "Quaquaval": {
+      "fast": [],
+      "charge": [
+        "Hydro Cannon"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Hydro Cannon"
+      ]
+    },
+    "Pawmot": {
+      "fast": [],
+      "charge": [
+        "Brick Break"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Brick Break"
+      ]
+    },
+    "Annihilape": {
+      "fast": [],
+      "charge": [
+        "Rage Fist"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Rage Fist"
+      ]
+    },
+    "Annihilape (Shadow)": {
+      "fast": [],
+      "charge": [
+        "Rage Fist"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Rage Fist"
+      ]
+    },
+    "Clodsire": {
+      "fast": [],
+      "charge": [
+        "Megahorn"
+      ],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": [
+        "Megahorn"
+      ]
+    }
+  }
+}

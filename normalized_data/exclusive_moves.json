@@ -1,0 +1,3224 @@
+{
+  "metadata": {
+    "source": "pvpoke-gamemaster",
+    "notes": "Per-species legacy/elite moves parsed from gamemaster"
+  },
+  "exclusives": {
+    "Venusaur": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Venusaur (Mega)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Venusaur (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Charmeleon": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Charmeleon (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Charizard": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Charizard (Mega X)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Charizard (Mega Y)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Charizard (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Blastoise": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Blastoise (Mega)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Blastoise (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Butterfree": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Butterfree (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Beedrill": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Beedrill (Mega)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Beedrill (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Pidgeot": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Pidgeot (Mega)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Pidgeot (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Spearow": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Fearow": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Ekans": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Ekans (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Pikachu": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Pikachu (5th Anniversary)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Pikachu (Horizons)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Pikachu (Shaymin Scarf)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Raichu": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Sandshrew": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Sandshrew (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Sandslash": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Sandslash (Alolan)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Sandslash (Alolan) (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Sandslash (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Nidoking": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Nidoking (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Clefable": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Ninetales": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Ninetales (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Jigglypuff": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Zubat": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Zubat (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Golbat": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Golbat (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Parasect": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Venomoth": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Venomoth (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Meowth": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Meowth (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Persian": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Persian (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Primeape": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Primeape (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Arcanine": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Arcanine (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Poliwhirl": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Poliwhirl (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Poliwrath": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Poliwrath (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Alakazam": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Alakazam (Mega)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Alakazam (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Machop": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Machop (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Machoke": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Machoke (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Machamp": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Machamp (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Weepinbell": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Weepinbell (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Victreebel": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Victreebel (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Graveler": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Graveler (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Golem (Alolan)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Golem (Alolan) (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Ponyta": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Rapidash": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Rapidash (Galarian)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Slowbro": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Slowbro (Galarian)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Slowbro (Mega)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Slowbro (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Farfetch'd": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Doduo": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Dodrio": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Seel": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Dewgong": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Grimer": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Muk": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Muk (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Cloyster": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Cloyster (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Gastly": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Gastly (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Haunter": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Haunter (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Gengar": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Gengar (Mega)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Gengar (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Onix": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Onix (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Hypno": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Hypno (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Kingler": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Voltorb": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Voltorb (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Electrode": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Electrode (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Exeggutor": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Exeggutor (Alolan)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Exeggutor (Alolan) (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Exeggutor (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Marowak (Alolan)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Marowak (Alolan) (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Hitmonlee": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Hitmonlee (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Hitmonchan": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Hitmonchan (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Lickitung": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Koffing": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Weezing": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Rhydon": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Rhydon (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Chansey": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Tangela": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Tangela (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Kangaskhan": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Kangaskhan (Mega)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Seadra": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Seadra (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Seaking": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Staryu": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Starmie": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Starmie (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Scyther": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Scyther (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Jynx": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Pinsir": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Pinsir (Mega)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Pinsir (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Gyarados": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Gyarados (Mega)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Gyarados (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Lapras": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Lapras (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Eevee": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Vaporeon": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Jolteon": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Flareon": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Porygon": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Porygon (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Omanyte": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Omanyte (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Omastar": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Omastar (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Kabutops": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Snorlax": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Snorlax (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Articuno": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Articuno (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Zapdos": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Zapdos (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Moltres": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Moltres (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Dragonite": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Dragonite (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Mewtwo": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Mewtwo (Armored)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Mewtwo (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Meganium": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Meganium (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Typhlosion": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Typhlosion (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Feraligatr": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Feraligatr (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Pichu": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Cleffa": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Igglybuff": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Togepi": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Togetic": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Ampharos": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Ampharos (Mega)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Ampharos (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Politoed": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Politoed (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Jumpluff": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Jumpluff (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Quagsire": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Quagsire (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Espeon": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Umbreon": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Slowking": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Slowking (Galarian)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Slowking (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Delibird": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Kingdra": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Kingdra (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Smoochum": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Elekid": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Magby": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Blissey": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Suicune": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Suicune (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Tyranitar": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Tyranitar (Mega)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Tyranitar (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Lugia": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Lugia (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Ho-Oh": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Ho-Oh (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Celebi": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Sceptile": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Sceptile (Mega)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Sceptile (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Blaziken": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Blaziken (Mega)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Blaziken (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Swampert": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Swampert (Mega)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Swampert (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Shiftry": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Shiftry (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Kirlia": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Gardevoir": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Gardevoir (Mega)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Gardevoir (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Breloom": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Slaking": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Slaking (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Shedinja": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Flygon": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Flygon (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Altaria": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Altaria (Mega)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Altaria (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Absol": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Absol (Mega)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Walrein": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Walrein (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Salamence": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Salamence (Mega)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Salamence (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Metagross": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Metagross (Mega)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Metagross (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Regirock": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Regirock (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Regice": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Regice (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Registeel": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Registeel (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Latias": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Latias (Mega)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Latias (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Latios": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Latios (Mega)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Latios (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Kyogre": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Kyogre (Primal)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Kyogre (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Groudon": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Groudon (Primal)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Groudon (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Rayquaza": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Rayquaza (Mega)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Torterra": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Torterra (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Infernape": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Infernape (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Empoleon": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Empoleon (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Staraptor": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Staraptor (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Bidoof": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Bidoof (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Luxray": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Luxray (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Roserade": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Garchomp": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Garchomp (Mega)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Garchomp (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Lucario": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Lucario (Mega)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Lickilicky": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Rhyperior": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Rhyperior (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Electivire": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Electivire (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Magmortar": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Magmortar (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Togekiss": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Leafeon": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Glaceon": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Mamoswine": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Mamoswine (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Porygon-Z": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Porygon-Z (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Gallade": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Gallade (Mega)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Gallade (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Dusknoir": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Dusknoir (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Dialga (Origin)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Palkia (Origin)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Heatran": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Heatran (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Regigigas": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Regigigas (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Giratina (Altered)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Giratina (Altered) (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Giratina (Origin)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Cresselia": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Cresselia (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Darkrai": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Shaymin (Land)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Shaymin (Sky)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Serperior": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Serperior (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Emboar": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Emboar (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Samurott": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Samurott (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Gigalith": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Gigalith (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Audino": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Audino (Mega)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Conkeldurr": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Conkeldurr (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Leavanny": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Vanilluxe": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Escavalier": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Escavalier (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Eelektross": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Chandelure": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Chandelure (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Haxorus": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Accelgor": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Accelgor (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Mienfoo": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Hydreigon": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Hydreigon (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Cobalion": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Terrakion": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Virizion": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Tornadus (Therian)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Thundurus (Therian)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Reshiram": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Zekrom": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Landorus (Therian)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Kyurem": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Kyurem (Black)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Kyurem (White)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Keldeo (Resolute)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Genesect": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Genesect (Burn)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Genesect (Chill)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Genesect (Douse)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Chesnaught": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Delphox": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Greninja": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Talonflame": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Talonflame (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Florges": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Sylveon": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Goodra": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Noivern": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Xerneas": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Yveltal": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Decidueye": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Incineroar": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Primarina": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Charjabug": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Charjabug (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Vikavolt": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Vikavolt (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Bewear": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Tsareena": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Kommo-o": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Tapu Koko": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Tapu Lele": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Tapu Bulu": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Tapu Fini": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Melmetal": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Corviknight": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Obstagoon": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Obstagoon (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Zacian (Crowned Sword)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Zamazenta (Crowned Shield)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Eternatus": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Regieleki": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Regidrago": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Ursaluna": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Ursaluna (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Meowscarada": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Skeledirge": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Quaquaval": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Pawmot": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Annihilape": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Annihilape (Shadow)": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    },
+    "Clodsire": {
+      "fast": [],
+      "charge": [],
+      "legacy_fast": [],
+      "legacy_charge": [],
+      "elite_fast": [],
+      "elite_charge": []
+    }
+  }
+}

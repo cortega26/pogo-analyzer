@@ -247,6 +247,18 @@ def _tab_single_pokemon(st: "object") -> None:  # pragma: no cover - UI only
             # Always evaluate best moves and mega availability automatically
             note = st.text_input("Notes (optional)", value="")
 
+            # Quick confirmation line for Lucky / Best Buddy status
+            _chips: list[str] = []
+            if lucky:
+                _chips.append("Lucky")
+            if best_buddy:
+                _chips.append("Best Buddy")
+            if _chips:
+                st.markdown(
+                    "Status: " + " ".join(f"<span class='badge'>{c}</span>" for c in _chips),
+                    unsafe_allow_html=True,
+                )
+
             # Hint when the selected species' family has a Mega form
             try:
                 repo = _base_stats_repo()
